@@ -3,7 +3,7 @@ import { NextResponse, userAgent } from "next/server";
 
 function detectDeviceAndSetCookies(
   request: NextRequest,
-  response: NextResponse
+  response: NextResponse,
 ) {
   const { device, ua } = userAgent(request);
 
@@ -39,7 +39,7 @@ const DEV_INDICATOR_FILES = [
   "/injection-tss-mv3.js.map",
   "/installHook.js.map",
   "/_vercel/insights",
-  "/_vercel/speed-insights"
+  "/_vercel/speed-insights",
 ];
 
 export function middleware(request: NextRequest) {
@@ -52,13 +52,13 @@ export function middleware(request: NextRequest) {
   // 2) If this path is excluded or is a static asset, skip rewriting.
   const { pathname } = request.nextUrl;
   if (
-    EXCLUDED_PATHS.some(excluded => pathname.startsWith(excluded)) ||
+    EXCLUDED_PATHS.some((excluded) => pathname.startsWith(excluded)) ||
     // Skip known static file types
     pathname.match(
-      /\.(jpg|jpeg|png|gif|svg|ico|webp|css|js|wasm|json|txt|xml)$/
+      /\.(jpg|jpeg|png|gif|svg|ico|webp|css|js|wasm|json|txt|xml)$/,
     ) ||
     // Skip Vercel development indicator files
-    DEV_INDICATOR_FILES.some(file => pathname.includes(file))
+    DEV_INDICATOR_FILES.some((file) => pathname.includes(file))
   ) {
     const res = NextResponse.next();
     return detectDeviceAndSetCookies(request, res);
@@ -70,14 +70,14 @@ export function middleware(request: NextRequest) {
 
   // 3) Check if user has visited before (i.e. "has-visited" cookie).
   const hasVisitedCookie = JSON.parse(
-    request.cookies.get("has-visited")?.value ?? "false"
+    request.cookies.get("has-visited")?.value ?? "false",
   ) as boolean;
 
   // Log the cookie state and headers for debugging
   console.log("[SERVER] Cookie check:", {
     hasVisitedCookie: hasVisitedCookie,
     path: pathname,
-    cookieHeader: request.headers.get("cookie")
+    cookieHeader: request.headers.get("cookie"),
   });
 
   const hasVisited = hasVisitedCookie;
@@ -100,7 +100,7 @@ export function middleware(request: NextRequest) {
     // Only set the POI cookie if it doesn't already exist AND it's not a development file
     if (
       !request.cookies.has("poi") &&
-      !DEV_INDICATOR_FILES.some(file => pathname.includes(file))
+      !DEV_INDICATOR_FILES.some((file) => pathname.includes(file))
     ) {
       // Store the original path the user was trying to access
       response.cookies.set("poi", decodeURIComponent(pathname));
@@ -126,12 +126,5 @@ export function middleware(request: NextRequest) {
 export const config = {
   // This matcher ensures we run middleware on all routes
   // except the explicitly excluded static paths (/_next/static, /_next/image, etc.).
-  matcher: [
-    "/",
-    "/elevator",
-    "/posts/:path",
-    "/projects/:path",
-    "/resume",
-    "/elevator"
-  ]
+  matcher: ["/", "/elevator", "/resume"],
 };

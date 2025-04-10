@@ -17,7 +17,8 @@ const ArLogo: FC<
     role="img"
     aria-label="AR Logo Dark"
     fill="none"
-    {...svg}>
+    {...svg}
+  >
     <path
       fill="currentColor"
       d="M107.701 334.338L177.229 173.979H202.963L272.49 334.338H243.144L227.117 295.897H152.397L136.144 334.338H107.701ZM162.556 271.103H216.959L189.644 207.417L162.556 271.103Z"
@@ -35,10 +36,10 @@ const ArLogo: FC<
 
 const menuItems = [
   { name: "Home", href: "/" },
-  { name: "Posts", href: "/#posts" },
-  { name: "Projects", href: "/#projects" },
+  { name: "Posts", href: "/#" },
+  { name: "Projects", href: "/#" },
   { name: "Resume", href: "/resume" },
-  { name: "World Tour", href: "/#world-tour" }
+  { name: "World Tour", href: "/#" },
 ];
 
 export default function Navbar() {
@@ -53,13 +54,13 @@ export default function Navbar() {
       (!isMobile
         ? {
             duration: 0.5,
-            ease: [0.77, 0, 0.175, 1]
+            ease: [0.77, 0, 0.175, 1],
           }
         : {
             duration: 0.3,
-            ease: [0.4, 0.0, 0.2, 1]
+            ease: [0.4, 0.0, 0.2, 1],
           }) satisfies Transition,
-    [isMobile]
+    [isMobile],
   );
 
   // Faster transition for mobile menu overlay
@@ -67,9 +68,9 @@ export default function Navbar() {
     () =>
       ({
         duration: 0.25,
-        ease: [0.4, 0.0, 0.2, 1]
+        ease: [0.4, 0.0, 0.2, 1],
       }) satisfies Transition,
-    []
+    [],
   );
 
   useEffect(() => {
@@ -106,7 +107,7 @@ export default function Navbar() {
     (e: KeyboardEvent) => {
       if (e.key === "Escape" && isMenuOpen) closeMenu();
     },
-    [closeMenu, isMenuOpen]
+    [closeMenu, isMenuOpen],
   );
 
   useEffect(() => {
@@ -117,7 +118,8 @@ export default function Navbar() {
   return (
     <header
       className="fixed top-0 left-0 z-50 mx-auto w-screen self-center overflow-hidden"
-      id="top">
+      id="top"
+    >
       <AnimatePresence mode="wait">
         {isMobile && isMenuOpen ? (
           <motion.div
@@ -126,7 +128,8 @@ export default function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={mobileMenuTransition}>
+            transition={mobileMenuTransition}
+          >
             <div
               className="bg-background/70 absolute inset-0 after:absolute after:inset-0 after:z-[-1] after:backdrop-blur-[2px] after:content-['']"
               onClick={closeMenu}
@@ -137,7 +140,8 @@ export default function Navbar() {
               <div className="absolute top-2 right-2 p-2.5">
                 <button
                   onClick={closeMenu}
-                  className="text-foreground bg-background/20 hover:bg-background/30 rounded-full transition-colors">
+                  className="text-foreground bg-background/20 hover:bg-background/30 rounded-full transition-colors"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -146,7 +150,8 @@ export default function Navbar() {
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className="size-6">
+                    className="size-6"
+                  >
                     <path d="M18 6 6 18" />
                     <path d="m6 6 12 12" />
                   </svg>
@@ -165,13 +170,15 @@ export default function Navbar() {
                     exit={{ y: -20, opacity: 0 }}
                     transition={{
                       ...viewportEasing,
-                      delay: index * 0.05
+                      delay: index * 0.05,
                     }}
-                    className="relative w-full overflow-hidden">
+                    className="relative w-full overflow-hidden"
+                  >
                     <Link
                       href={item.href}
                       className="relative block w-full px-4 py-4 text-center"
-                      onClick={closeMenu}>
+                      onClick={closeMenu}
+                    >
                       <div className="text-foreground">{item.name}</div>
                     </Link>
                   </motion.div>
@@ -193,11 +200,12 @@ export default function Navbar() {
                   onMouseLeave: () => {
                     setIsHovered(false);
                     setHoveredItem(null);
-                  }
+                  },
                 }
               : {
-                  onClick: () => setIsMenuOpen(!isMenuOpen)
-                })}>
+                  onClick: () => setIsMenuOpen(!isMenuOpen),
+                })}
+          >
             <div className="relative z-10 w-full" id="top">
               <AnimatePresence mode="wait">
                 {!isHovered && !isMenuOpen ? (
@@ -207,10 +215,12 @@ export default function Navbar() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
                     transition={viewportEasing}
-                    className="mx-auto grid w-screen grid-cols-5 justify-between px-4 py-2 text-center md:px-10 md:py-4 2xl:max-w-[96rem]">
+                    className="mx-auto grid w-screen grid-cols-5 justify-between px-4 py-2 text-center md:px-10 md:py-4 2xl:max-w-[96rem]"
+                  >
                     <Link
                       href="/"
-                      className="text-foreground mx-0 block justify-start text-left">
+                      className="text-foreground mx-0 block justify-start text-left"
+                    >
                       <ArLogo className="size-5 md:size-7" />
                     </Link>
                     <span className="col-start-5 block text-right md:text-right">
@@ -224,7 +234,8 @@ export default function Navbar() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 20 }}
                     transition={viewportEasing}
-                    className="w-full">
+                    className="w-full"
+                  >
                     <AnimatePresence>
                       <motion.div className="grid w-full grid-cols-1 grid-rows-5 md:grid-cols-5 md:grid-rows-1">
                         {menuItems.map((item, index) => (
@@ -235,7 +246,7 @@ export default function Navbar() {
                             exit={{ y: -20, opacity: 0 }}
                             transition={{
                               ...viewportEasing,
-                              delay: index * 0.05
+                              delay: index * 0.05,
                             }}
                             className="relative w-full overflow-hidden"
                             onMouseEnter={() =>
@@ -243,20 +254,23 @@ export default function Navbar() {
                             }
                             onMouseLeave={() =>
                               !isMobile && setHoveredItem(null)
-                            }>
+                            }
+                          >
                             <Link
                               href={item.href}
                               className="relative block w-full px-4 py-2 text-center md:py-4"
-                              onClick={() => isMobile && setIsMenuOpen(false)}>
+                              onClick={() => isMobile && setIsMenuOpen(false)}
+                            >
                               <motion.div
                                 className="relative z-50 w-full md:z-10"
                                 animate={{
                                   color:
                                     !isMobile && hoveredItem === item.name
                                       ? "#020817"
-                                      : "#f8fafc"
+                                      : "#f8fafc",
                                 }}
-                                transition={viewportEasing}>
+                                transition={viewportEasing}
+                              >
                                 {item.name}
                               </motion.div>
                             </Link>
