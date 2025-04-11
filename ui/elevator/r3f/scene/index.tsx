@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import { AudioController } from "@/ui/elevator/r3f/audio-controller";
 import { CeilingLight } from "@/ui/elevator/r3f/ceiling-light";
 import { CombinedCameraController } from "@/ui/elevator/r3f/combined-camera-controller";
@@ -11,6 +10,7 @@ import { ElevatorFrame } from "@/ui/elevator/r3f/elevator-frame";
 import { ElevatorInterior } from "@/ui/elevator/r3f/elevator-interior";
 import { FloorIndicator } from "@/ui/elevator/r3f/floor-indicator";
 import { Wall } from "@/ui/elevator/r3f/wall";
+import { useEffect, useRef, useState } from "react";
 
 export function ElevatorScene() {
   const [activated, setActivated] = useState(false);
@@ -83,7 +83,7 @@ export function ElevatorScene() {
   };
 
   return (
-    <group>
+    <group position={[0, -0.5, 0]}>
       <Wall />
       <ElevatorFrame />
       <FloorIndicator activated={activated} />
@@ -96,7 +96,7 @@ export function ElevatorScene() {
         isTransitioning={isTransitioning}
         transitionProgress={transitionProgress}
       />
-      <ambientLight intensity={0.2} />
+      <ambientLight intensity={0.03} color="#1e222c" />
     </group>
   );
 }

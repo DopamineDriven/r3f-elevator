@@ -1,16 +1,17 @@
 "use client";
 
+import type { ElevatorTransitionEventDetail } from "@/ui/elevator/r3f/custom-event";
+import { useCookies } from "@/context/cookie-context";
+import { getCookieDomain } from "@/lib/site-domain";
+import { ElevatorScene } from "@/ui/elevator/r3f/scene";
+import { TriangleGeometry } from "@/ui/elevator/r3f/triangle-geometry";
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ContactShadows, PerspectiveCamera } from "@react-three/drei";
 import { Canvas, extend } from "@react-three/fiber";
 import Cookies from "js-cookie";
-import type { ElevatorTransitionEventDetail } from "@/ui/elevator/r3f/custom-event";
+import { Leva } from "leva";
 import type { ThreeElement } from "@react-three/fiber";
-import { useCookies } from "@/context/cookie-context";
-import { getCookieDomain } from "@/lib/site-domain";
-import { ElevatorScene } from "@/ui/elevator/r3f/scene";
-import { TriangleGeometry } from "@/ui/elevator/r3f/triangle-geometry";
 
 extend({ TriangleGeometry });
 
@@ -20,6 +21,7 @@ declare module "@react-three/fiber" {
     triangleGeometry: ThreeElement<typeof TriangleGeometry>;
   }
 }
+
 export default function ElevatorApp() {
   const [loading, setLoading] = useState(true);
 
@@ -108,19 +110,12 @@ export default function ElevatorApp() {
         className="pointer-events-none absolute inset-0 z-10 bg-black transition-opacity duration-500"
         style={{ opacity: fadeOpacity }}
       />
-
       <Canvas
         className="absolute top-0 left-0 z-20 min-h-[100dvh] min-w-screen items-center justify-center bg-black/80"
         shadows
-        camera={{ fov: 60, near: 0.1, far: 1000, position: [0, 1.6, 5] }}>
+        camera={{ fov: 40, near: 0.1, far: 1000, position: [0, 0, 6] }}>
         <Suspense fallback={null}>
-          <PerspectiveCamera
-            makeDefault
-            position={[0, 0, 6]}
-            fov={30}
-            near={0.1}
-            far={100}
-          />
+        <PerspectiveCamera makeDefault position={[0, 0, 6]} fov={40} near={0.1} far={100} />
           <ElevatorScene />
           <ContactShadows
             position={[0, -2, 0]}
@@ -132,6 +127,7 @@ export default function ElevatorApp() {
           />
         </Suspense>
       </Canvas>
+      {process.env.NODE_ENV !== "production" && <Leva collapsed />}
     </>
   );
 }

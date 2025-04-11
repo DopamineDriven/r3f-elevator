@@ -12,6 +12,7 @@
     "forceConsistentCasingInFileNames": true,
     "checkJs": false,
     "noEmit": true,
+    "useUnknownInCatchVariables": true,
     "esModuleInterop": true,
     "module": "ESNext",
     "moduleResolution": "Bundler",
