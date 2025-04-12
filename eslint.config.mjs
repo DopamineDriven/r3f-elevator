@@ -19,6 +19,7 @@ const config =  [
       "@typescript-eslint/no-floating-promises": "off",
       "@typescript-eslint/prefer-nullish-coalescing": "off",
       "@typescript-eslint/no-unsafe-function-type": "off",
+      "@typescript-eslint/no-unused-expressions": "off",
       "@typescript-eslint/prefer-for-of": "off",
     },
   },

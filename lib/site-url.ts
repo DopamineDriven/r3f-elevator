@@ -1,6 +1,6 @@
-export const prodUrl = "https://r3f.asross.com" as const;
+export const prodUrl = "https://test.r3f.asross.com" as const;
 
-export const prevUrl = "https://dev.r3f.asross.com" as const;
+export const prevUrl = "https://dev.test.r3f.asross.com" as const;
 
 export const localUrl = "http://localhost:3007" as const;
 
