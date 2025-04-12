@@ -4,6 +4,7 @@ export default {
   eslint: { ignoreDuringBuilds: false },
   typescript: { ignoreBuildErrors: false, tsconfigPath: "./tsconfig.json" },
   devIndicators: false,
+  experimental: { optimizePackageImports: ["three"] },
   images: {
     loader: "default",
     formats: ["image/avif", "image/webp"],

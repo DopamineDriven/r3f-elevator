@@ -3,6 +3,7 @@
 import type { ElevatorTransitionEventDetail } from "@/ui/elevator/r3f/custom-event";
 import { useCookies } from "@/context/cookie-context";
 import { getCookieDomain } from "@/lib/site-domain";
+import { DownTriangleGeometry } from "@/ui/elevator/r3f/down-triangle-geometry";
 import { ElevatorScene } from "@/ui/elevator/r3f/scene";
 import { TriangleGeometry } from "@/ui/elevator/r3f/triangle-geometry";
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
@@ -13,14 +14,15 @@ import Cookies from "js-cookie";
 import { Leva } from "leva";
 import type { ThreeElement } from "@react-three/fiber";
 
-extend({ TriangleGeometry });
-
-// Add types to ThreeElements so TypeScript understands triangleGeometry
+extend({ DownTriangleGeometry, TriangleGeometry });
 declare module "@react-three/fiber" {
   interface ThreeElements {
     triangleGeometry: ThreeElement<typeof TriangleGeometry>;
+    downTriangleGeometry: ThreeElement<typeof DownTriangleGeometry>;
   }
 }
+
+
 
 export default function ElevatorApp() {
   const [loading, setLoading] = useState(true);
@@ -80,7 +82,7 @@ export default function ElevatorApp() {
           console.log("[CLIENT] router.push event to: ", destination);
           router.push(decodeURIComponent(destination));
           router.refresh();
-        }, 1000);
+        }, 10);
       }
     };
 
@@ -115,14 +117,20 @@ export default function ElevatorApp() {
         shadows
         camera={{ fov: 40, near: 0.1, far: 1000, position: [0, 0, 6] }}>
         <Suspense fallback={null}>
-        <PerspectiveCamera makeDefault position={[0, 0, 6]} fov={40} near={0.1} far={100} />
+          <PerspectiveCamera
+            makeDefault
+            position={[0, 0, 6]}
+            fov={40}
+            near={0.1}
+            far={100}
+          />
           <ElevatorScene />
           <ContactShadows
             position={[0, -2, 0]}
-            opacity={0.5}
+            opacity={0.65}
             scale={10}
-            blur={2}
-            far={4}
+            blur={4}
+            far={10}
             resolution={256}
           />
         </Suspense>

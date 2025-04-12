@@ -96,7 +96,7 @@ export function ElevatorScene() {
         isTransitioning={isTransitioning}
         transitionProgress={transitionProgress}
       />
-      <ambientLight intensity={0.03} color="#1e222c" />
+      <ambientLight intensity={0.5} color="#1e222c" />
     </group>
   );
 }

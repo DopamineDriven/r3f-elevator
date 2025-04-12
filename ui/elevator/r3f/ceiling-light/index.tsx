@@ -110,4 +110,3 @@ export function CeilingLight({
     </group>
   );
 }
-CeilingLight.displayName = "CeilingLight";

@@ -4,7 +4,6 @@
 @config "../tailwind.config.ts";
 @plugin "tailwindcss-motion";
 
-
 /*
   The default border color has changed to `currentColor` in Tailwind CSS v4,
   so we've added these compatibility styles to make sure everything still
@@ -23,7 +22,6 @@
   }
 }
 
-
 /*
 background ~= #020817
 #030816ff (p3)
@@ -39,8 +37,105 @@ background ~= #020817
   }
 }
 
+/* ---------------------------------------------- */
+/* 1) Declare Basis Grotesque Pro @font-face rules */
+/* ---------------------------------------------- */
+
+@font-face {
+  font-family: "BasisGrotesquePro";
+  src: url("/fonts/BasisGrotesquePro-Regular.woff2") format("woff2");
+  font-weight: 400; /* Regular */
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "BasisGrotesquePro";
+  src: url("/fonts/BasisGrotesquePro-Italic.woff2") format("woff2");
+  font-weight: 400; /* Regular Italic */
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "BasisGrotesquePro";
+  src: url("/fonts/BasisGrotesquePro-Light.woff2") format("woff2");
+  font-weight: 300; /* Light */
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "BasisGrotesquePro";
+  src: url("/fonts/BasisGrotesquePro-LightItalic.woff2") format("woff2");
+  font-weight: 300; /* Light Italic */
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "BasisGrotesquePro";
+  src: url("/fonts/BasisGrotesquePro-Medium.woff2") format("woff2");
+  font-weight: 500; /* Medium */
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "BasisGrotesquePro";
+  src: url("/fonts/BasisGrotesquePro-MediumItalic.woff2") format("woff2");
+  font-weight: 500; /* Medium Italic */
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "BasisGrotesquePro";
+  src: url("/fonts/BasisGrotesquePro-Bold.woff2") format("woff2");
+  font-weight: 700; /* Bold */
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "BasisGrotesquePro";
+  src: url("/fonts/BasisGrotesquePro-BoldItalic.woff2") format("woff2");
+  font-weight: 700; /* Bold Italic */
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "BasisGrotesquePro";
+  src: url("/fonts/BasisGrotesquePro-Black.woff2") format("woff2");
+  font-weight: 900; /* Black */
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "BasisGrotesquePro";
+  src: url("/fonts/BasisGrotesquePro-BlackItalic.woff2") format("woff2");
+  font-weight: 900; /* Black Italic */
+  font-style: italic;
+  font-display: swap;
+}
+
+/*
+  --font-basis-grotesque-pro-regular: var(--font-basis-grotesque-pro-regular);
+  --font-basis-grotesque-pro-italic: var(--font-basis-grotesque-pro-italic);
+  --font-basis-grotesque-pro-black: var(--font-basis-grotesque-pro-black);
+  --font-basis-grotesque-pro-black-italic: var(--font-basis-grotesque-pro-black-italic);
+  --font-basis-grotesque-pro-bold: var(--font-basis-grotesque-pro-bold);
+  --font-basis-grotesque-pro-bold-italic: var(--font-basis-grotesque-pro-bold-italic);
+  --font-basis-grotesque-pro-light: var(--font-basis-grotesque-pro-light);
+  --font-basis-grotesque-pro-light-italic: var(--font-basis-grotesque-pro-light-italic);
+  --font-basis-grotesque-pro-medium: var(--font-basis-grotesque-pro-medium);
+  --font-basis-grotesque-pro-medium-italic: var(--font-basis-grotesque-pro-medium-italic);
+*/
 /* prettier-ignore */
 @theme {
+  --font-basis-grotesque-pro: BasisGrotesquePro, sans-serif;
   --color-background: oklch(0.1370608055115447 0.03597153479968494 258.52581130794215);
   --color-foreground: oklch(0.9838344645156718 0.0034812390010849543 247.85852240790712);
   --color-card: oklch(0.1370608055115447 0.03597153479968494 258.52581130794215);
@@ -204,7 +299,6 @@ background ~= #020817
   }
 }
 
-
 /* Global scrollbar styling */
 * {
   scrollbar-width: thin;
@@ -255,22 +349,6 @@ html {
   scrollbar-color: #f8fafc #020817;
 }
 
-
-@layer utilities {
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-  }
-
-  input,
-  button,
-  textarea,
-  select {
-    font: inherit;
-  }
-}
-
 @layer base {
   * {
     border-color: var(--color-border);
@@ -308,4 +386,16 @@ html {
 
 body {
   overflow-x: hidden;
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
 }
