@@ -1,10 +1,10 @@
 "use client";
 
+import { FluorescentLight } from "@/ui/elevator/r3f/fluorescent-light";
 import { useEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { animate, useSpring } from "motion/react";
 import * as THREE from "three";
-import { FluorescentLight } from "@/ui/elevator/r3f/fluorescent-light";
 
 export const ElevatorInterior = ({ activated }: { activated: boolean }) => {
   // Light intensity animation

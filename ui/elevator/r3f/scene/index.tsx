@@ -85,12 +85,12 @@ export function ElevatorScene() {
   return (
     <group position={[0, -0.5, 0]}>
       <Wall />
-      <ElevatorFrame />
-      <FloorIndicator activated={activated} />
-      <ElevatorButton activated={activated} onClickAction={handleClick} />
       <ElevatorDoor position={0} isLeft={true} activated={activated} />
       <ElevatorDoor position={0} isLeft={false} activated={activated} />
+      <ElevatorFrame />
       <ElevatorInterior activated={activated} />
+      <FloorIndicator activated={activated} />
+      <ElevatorButton activated={activated} onClickAction={handleClick} />
       <CeilingLight />
       <CombinedCameraController
         isTransitioning={isTransitioning}
