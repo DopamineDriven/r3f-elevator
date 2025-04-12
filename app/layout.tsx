@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html suppressHydrationWarning lang="en">
-      <body className={`antialiased`}>
+      <body className={`font-basis-grotesque-pro antialiased`}>
         <CookieProvider>{children}</CookieProvider>
       </body>
     </html>

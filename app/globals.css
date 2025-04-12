@@ -121,18 +121,7 @@ background ~= #020817
   font-display: swap;
 }
 
-/*
-  --font-basis-grotesque-pro-regular: var(--font-basis-grotesque-pro-regular);
-  --font-basis-grotesque-pro-italic: var(--font-basis-grotesque-pro-italic);
-  --font-basis-grotesque-pro-black: var(--font-basis-grotesque-pro-black);
-  --font-basis-grotesque-pro-black-italic: var(--font-basis-grotesque-pro-black-italic);
-  --font-basis-grotesque-pro-bold: var(--font-basis-grotesque-pro-bold);
-  --font-basis-grotesque-pro-bold-italic: var(--font-basis-grotesque-pro-bold-italic);
-  --font-basis-grotesque-pro-light: var(--font-basis-grotesque-pro-light);
-  --font-basis-grotesque-pro-light-italic: var(--font-basis-grotesque-pro-light-italic);
-  --font-basis-grotesque-pro-medium: var(--font-basis-grotesque-pro-medium);
-  --font-basis-grotesque-pro-medium-italic: var(--font-basis-grotesque-pro-medium-italic);
-*/
+
 /* prettier-ignore */
 @theme {
   --font-basis-grotesque-pro: BasisGrotesquePro, sans-serif;
