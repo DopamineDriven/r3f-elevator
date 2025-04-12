@@ -2,11 +2,11 @@ import type { Config as TailwindConfig } from "tailwindcss";
 
 export default {
   content: [
-    "./app/**/*.{js,ts,jsx,tsx,md,mdx}",
-    "./ui/**/*.{js,ts,jsx,tsx,md,mdx}",
-    "./hooks/**/*.{js,ts,jsx,tsx,md,mdx}",
-    "./lib/**/*.{js,ts,jsx,tsx,md,mdx}",
-    "./context/**/*.{js,ts,jsx,tsx,md,mdx}"
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./ui/**/*.{js,ts,jsx,tsx,mdx}",
+    "./hooks/**/*.{js,ts,jsx,tsx,mdx}",
+    "./lib/**/*.{js,ts,jsx,tsx,mdx}",
+    "./context/**/*.{js,ts,jsx,tsx,mdx}"
   ],
   darkMode: "selector",
   future: { hoverOnlyWhenSupported: true },
@@ -19,29 +19,6 @@ export default {
       }
     },
     extend: {
-      // fontFamily: {
-      //   "basis-grotesque-pro-italic": [
-      //     "var(--font-basis-grotesque-pro-italic)"
-      //   ],
-      //   "basis-grotesque-pro-black": ["var(--font-basis-grotesque-pro-black)"],
-      //   "basis-grotesque-pro-black-italic": [
-      //     "var(--font-basis-grotesque-pro-black-italic)"
-      //   ],
-      //   "basis-grotesque-pro-bold": ["var(--font-basis-grotesque-pro-bold)"],
-      //   "basis-grotesque-pro-bold-italic": [
-      //     "var(--font-basis-grotesque-pro-bold-italic)"
-      //   ],
-      //   "basis-grotesque-pro-light": ["var(--font-basis-grotesque-pro-light)"],
-      //   "basis-grotesque-pro-light-italic": [
-      //     "var(--font-basis-grotesque-pro-light-italic)"
-      //   ],
-      //   "basis-grotesque-pro-medium": [
-      //     "var(--font-basis-grotesque-pro-medium)"
-      //   ],
-      //   "basis-grotesque-pro-medium-italic": [
-      //     "var(--font-basis-grotesque-pro-medium-italic)"
-      //   ]
-      // },
       transitionDuration: {
         theme: "var(--theme-transition-duration)",
         loading: "var(--loading-animation-duration)"
