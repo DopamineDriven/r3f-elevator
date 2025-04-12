@@ -1,5 +1,6 @@
 "use client";
 
+import type { RefObject } from "react";
 import { useEffect, useMemo, useRef } from "react";
 import { useHelper } from "@react-three/drei";
 import { SpotLightMaterial } from "@react-three/drei/materials/SpotLightMaterial";
@@ -13,9 +14,9 @@ class DreiHelperHelper extends THREE.Object3D {
   dispose() {}
 }
 
-// 🔧 Safe wrapper for useHelper that doesn’t violate the rules of hooks
+// 🔧 Safe wrapper for useHelper that doesn't violate the rules of hooks
 const useSpotLightHelperImpl = (
-  ref: React.RefObject<THREE.SpotLight>,
+  ref: RefObject<THREE.SpotLight>,
   showHelper: boolean,
   color?: string | number | THREE.Color
 ) => {
@@ -49,15 +50,15 @@ export function useVolumetricSpotLight({
   debug = false,
   showHelper = process.env.NODE_ENV !== "production",
   color = "white",
-  distance = 6, // spill onto the elevator frame and the floor around it
-  angle = 0.25, // tighter, more focused cone
+  distance = 20.0, // Updated to optimal value
+  angle = 1.07, // Updated to optimal value
   attenuation = 7, // faster falloff, tighter focus
   anglePower = 5,
-  intensity = 1,
-  opacity = 0.9, // strong yet transluscent
+  intensity = 9.0, // Updated to optimal value
+  opacity = 0.6, // Updated to optimal value
   radiusTop = 0.05, // narrower cone base
-  helperColor = "cyan",
-  radiusBottom=undefined, // default still based on angle
+  helperColor = "#ff00ff", // Updated to optimal value
+  radiusBottom = undefined, // default still based on angle
   shadowMapSize = 1024
 }: UseVolumetricSpotLightProps) {
   const spotlight = useMemo(
@@ -80,7 +81,12 @@ export function useVolumetricSpotLight({
   useEffect(() => {
     spotlight.castShadow = true;
     spotlight.shadow.mapSize.set(shadowMapSize, shadowMapSize);
-  }, [spotlight, shadowMapSize]);
+    spotlight.angle = angle;
+    spotlight.distance = distance;
+    spotlight.penumbra = 0.5;
+    spotlight.decay = 2;
+    spotlight.intensity = intensity;
+  }, [spotlight, shadowMapSize, angle, distance, intensity]);
 
   // Animate volumetric mesh to follow light
   useFrame(() => {
