@@ -1,17 +1,4 @@
 import type { Metadata } from "next";
-// import {
-//   BasisGrotesqueProBlack,
-//   BasisGrotesqueProBlackItalic,
-//   BasisGrotesqueProBold,
-//   BasisGrotesqueProBoldItalic,
-//   BasisGrotesqueProItalic,
-//   BasisGrotesqueProLight,
-//   BasisGrotesqueProLightItalic,
-//   BasisGrotesqueProMedium,
-//   BasisGrotesqueProMediumItalic,
-//   BasisGrotesqueProRegular,
-// } from "@/lib/fonts";
-// import { cn } from "@/lib/utils";
 import { CookieProvider } from "@/context/cookie-context";
 import "./globals.css";
 import { getSiteUrl } from "@/lib/site-url";
@@ -28,27 +15,12 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children,
+  children
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      suppressHydrationWarning
-      lang="en"
-      // className={cn(
-      //   BasisGrotesqueProLight.variable,
-      //   BasisGrotesqueProMedium.variable,
-      //   BasisGrotesqueProMediumItalic.variable,
-      //   BasisGrotesqueProRegular.variable,
-      //   BasisGrotesqueProItalic.variable,
-      //   BasisGrotesqueProLightItalic.variable,
-      //   BasisGrotesqueProBold.variable,
-      //   BasisGrotesqueProBlack.variable,
-      //   BasisGrotesqueProBlackItalic.variable,
-      //   BasisGrotesqueProBoldItalic.variable,
-      // )}
-    >
+    <html suppressHydrationWarning lang="en">
       <body className={`antialiased`}>
         <CookieProvider>{children}</CookieProvider>
       </body>

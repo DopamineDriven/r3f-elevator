@@ -6,17 +6,24 @@ import { useEffect, useRef } from "react";
 import { useControls } from "leva";
 import * as THREE from "three";
 
+type PositionProps =
+  | THREE.Vector3
+  | [x: number, y: number, z: number]
+  | Readonly<
+      number | THREE.Vector3 | [x: number, y: number, z: number] | undefined
+    >;
+
 type CeilingLightProps = {
   showHelper?: boolean;
   intensity?: number;
-  color?: string;
-  position?: [number, number, number];
+  color?: string | number | THREE.Color;
+  position?: PositionProps;
   debug?: boolean;
 };
 
 export function CeilingLight({
   showHelper = process.env.NODE_ENV !== "production",
-  intensity = 1.5,
+  intensity = 9.0,
   color = "#ffffff",
   position = [0, 4.5, 1],
   debug = false
@@ -26,10 +33,17 @@ export function CeilingLight({
     helperColor,
     targetHeight,
     lightAngle,
+    groupPosition,
     lightDistance,
     lightIntensity,
     showHelper: showHelperLeva = showHelper
   } = useControls("CeilingLight", {
+    groupPosition: {
+      value: { x: 0, y: 4.5, z: 1 },
+      x: { step: 0.1, min: -10, max: 10 },
+      y: { step: 0.1, min: 0, max: 10 },
+      z: { step: 0.1, min: -10, max: 10 }
+    },
     showHelper: {
       value: true,
       label: "Show Helper"
@@ -45,26 +59,26 @@ export function CeilingLight({
       step: 0.1
     },
     lightDistance: {
-      value: 5,
+      value: 20,
       min: 1,
-      max: 20,
+      max: 30,
       step: 0.5
     },
     lightAngle: {
-      value: 0.4,
+      value: 1.07,
       min: 0.1,
       max: Math.PI / 2,
       step: 0.01
     },
     coneOpacity: {
-      value: 0.8,
+      value: 0.6,
       min: 0,
       max: 1,
       step: 0.05
     },
     targetHeight: {
-      value: -1,
-      min: -5,
+      value: -5.0,
+      min: -10,
       max: 0,
       step: 0.1
     }
@@ -93,7 +107,7 @@ export function CeilingLight({
   }, [spotlight]);
 
   return (
-    <group position={position}>
+    <group position={[groupPosition.x, groupPosition.y, groupPosition.z]}>
       {/* Fixture */}
       <mesh position={[0, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
         <cylinderGeometry args={[0.5, 0.5, 0.1, 32]} />
