@@ -32,14 +32,27 @@ export const FloorIndicator = ({ activated }: { activated: boolean }) => {
                 ? INDICATOR_COLORS.ACTIVE_EMISSIVE
                 : INDICATOR_COLORS.INACTIVE_BASE
             }
-            emissive={INDICATOR_COLORS.ACTIVE_EMISSIVE}
+            emissive={activated ? INDICATOR_COLORS.ACTIVE_EMISSIVE : "#000000"}
             emissiveIntensity={
               activated
                 ? INDICATOR_COLORS.ACTIVE_INTENSITY
                 : INDICATOR_COLORS.INACTIVE_INTENSITY
             }
+            metalness={0.3}
+            roughness={0.4}
             toneMapped={false}
           />
+
+          {/* Optional subtle base glow under inactive state */}
+          <mesh position={[0, 0, 0.099]}>
+            <downTriangleGeometry args={[0.18, 0.18]} />
+            <meshBasicMaterial
+              color="#222"
+              opacity={activated ? 0 : 0.6}
+              transparent
+              toneMapped={false}
+            />
+          </mesh>
         </mesh>
       </group>
     </group>

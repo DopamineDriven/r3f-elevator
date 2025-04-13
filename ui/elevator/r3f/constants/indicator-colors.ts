@@ -10,7 +10,7 @@ export const INDICATOR_COLORS = {
   ACTIVE_EMISSIVE_GREEN: "#00d4a1", // Teal-green for the button (Severance palette)
 
   // Emissive intensity values
-  INACTIVE_INTENSITY: 0.05,
+  INACTIVE_INTENSITY: 0.15,
   ACTIVE_INTENSITY: 0.6,
 
   // Button specific colors
