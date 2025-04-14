@@ -1,33 +1,28 @@
 import * as THREE from "three";
 
 export class DownTriangleGeometry extends THREE.BufferGeometry {
-  constructor(width = 1, height = 1) {
+  constructor(
+    public width = 1,
+    public height = 1
+  ) {
     super();
 
     // Create vertices for a downward-pointing triangle
     // (0, height/2) is the top center
     // (-width/2, -height/2) is the bottom left
     // (width/2, -height/2) is the bottom right
+    // prettier-ignore
     const vertices = new Float32Array([
-      -width / 2,
-      height / 2,
-      0, // top left
-      width / 2,
-      height / 2,
-      0, // top right
-      0,
-      -height / 2,
-      0 // bottom center (point)
+     -width / 2,  height / 2,  0, // top left
+      width / 2,  height / 2,  0, // top right
+              0, -height / 2,  0 // bottom center (point)
     ]);
 
     // UV coordinates
+    // prettier-ignore
     const uvs = new Float32Array([
-      0,
-      1, // top left
-      1,
-      1, // top right
-      0.5,
-      0 // bottom center
+      0,    1,    1,
+      1,    0.5,  0
     ]);
 
     // Normals - all pointing forward for a 2D triangle
@@ -43,3 +38,4 @@ export class DownTriangleGeometry extends THREE.BufferGeometry {
     this.computeBoundingSphere();
   }
 }
+

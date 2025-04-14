@@ -1,6 +1,5 @@
 import { Fs } from "@d0paminedriven/fs";
 
-
 class HandleFs extends Fs {
   constructor(public override cwd: string) {
     super((cwd ??= process.cwd()));
@@ -33,10 +32,10 @@ class HandleFs extends Fs {
   }
 
   public fileExt(file: string) {
-    return file.split(/\./).reverse()[0] ?? "txt";
+    return file.split(/\./)?.reverse()?.[0] ?? "txt";
   }
   public filePathSansExt(file: string) {
-    return file.split(/\./)[0] ?? "";
+    return file.split(/\./)?.[0] ?? "";
   }
 
   public getRawFiles<const T extends `app/(elevator)/elevator` | `ui/elevator`>(
@@ -49,7 +48,6 @@ class HandleFs extends Fs {
           "utf-8"
         );
         const fileExtension = this.fileExt(file);
-        const filePathSansExtension = this.filePathSansExt(file);
         // prettier-ignore
         const toInject = `
 #### ${target}/${file}
@@ -74,7 +72,10 @@ ${fileContent}
   public incomingArgs(argv: string[]) {
     if (argv[3] && argv[3].length > 1) {
       if (argv[3]?.includes("ui")) {
-        this.withWs("utils/__out__/ui.md", this.getRawFiles("ui/elevator").join("\n\n"));
+        this.withWs(
+          "utils/__out__/ui.md",
+          this.getRawFiles("ui/elevator").join("\n\n")
+        );
       } else if (argv[3]?.includes("app")) {
         this.withWs(
           "utils/__out__/app.md",
@@ -88,9 +89,7 @@ ${fileContent}
       const msg = `must provide an argv3 command, \n\n where val = ui | app \n\n eg, \n\n \`\`\`bash \npnpm tsx utils/output-md.ts --target val\n \`\`\``;
       console.log(msg);
     }
-
   }
-
 }
 const fs = new HandleFs(process.cwd());
 
