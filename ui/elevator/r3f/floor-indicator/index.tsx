@@ -42,18 +42,19 @@ export const FloorIndicator = ({ activated }: { activated: boolean }) => {
             roughness={0.4}
             toneMapped={false}
           />
-
-          {/* Optional subtle base glow under inactive state */}
+        </mesh>
+        {/* subtle base glow under inactive state */}
+        {!activated && (
           <mesh position={[0, 0, 0.099]}>
             <downTriangleGeometry args={[0.18, 0.18]} />
             <meshBasicMaterial
               color="#222"
-              opacity={activated ? 0 : 0.6}
+              opacity={0.6}
               transparent
               toneMapped={false}
             />
           </mesh>
-        </mesh>
+        )}
       </group>
     </group>
   );

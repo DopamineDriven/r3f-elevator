@@ -22,8 +22,6 @@ declare module "@react-three/fiber" {
   }
 }
 
-
-
 export default function ElevatorApp() {
   const [loading, setLoading] = useState(true);
 
