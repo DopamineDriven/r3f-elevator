@@ -145,14 +145,22 @@ class HandleFs extends Fs {
             : this.readRootFile(file).toString("utf-8");
 
         // prettier-ignore
-const toInject = `#### ${handleInjectedTarget}
-- https://raw.githubusercontent.com/DopamineDriven/r3f-elevator/refs/heads/master/${handleInjectedTarget}
+const toInject = `**File:** \`${handleInjectedTarget}\`
+
+For more details, [visit the raw version of this file](https://raw.githubusercontent.com/DopamineDriven/r3f-elevator/refs/heads/master/${handleInjectedTarget}).
 
 \`\`\`${fileExtension}
 
 ${fileContent.replace(/(?:(?:\/\*(?:[^*]|(?:\*+[^*\/]))*\*+\/)|(?:(?<!\:|\\\|\')\/\/.*))/gm, "").trim()}
 
 \`\`\`
+
+
+**Related Resources:**
+  - Raw file URL: https://raw.githubusercontent.com/DopamineDriven/r3f-elevator/refs/heads/master/${handleInjectedTarget}
+
+
+---
 
 `
         arr.push(toInject);
@@ -169,37 +177,37 @@ ${fileContent.replace(/(?:(?:\/\*(?:[^*]|(?:\*+[^*\/]))*\*+\/)|(?:(?<!\:|\\\|\')
       if (argv[3]?.includes("ui")) {
         this.withWs(
           "utils/__out__/ui.md",
-          this.getRawFiles("ui/elevator").join("\n\n")
+          this.getRawFiles("ui/elevator").join("\n")
         );
       } else if (argv[3]?.includes("types")) {
         this.withWs(
           "utils/__out__/types.md",
-          this.getRawFiles("types").join("\n\n")
+          this.getRawFiles("types").join("\n")
         );
       } else if (argv[3]?.includes("app")) {
         this.withWs(
           "utils/__out__/app.md",
-          this.getRawFiles("app/(elevator)/elevator").join("\n\n")
+          this.getRawFiles("app/(elevator)/elevator").join("\n")
         );
       } else if (argv[3]?.includes("lib")) {
         this.withWs(
           "utils/__out__/lib.md",
-          this.getRawFiles("lib").join("\n\n")
+          this.getRawFiles("lib").join("\n")
         );
       } else if (argv[3]?.includes("hooks")) {
         this.withWs(
           "utils/__out__/hooks.md",
-          this.getRawFiles("hooks").join("\n\n")
+          this.getRawFiles("hooks").join("\n")
         );
       } else if (argv[3]?.includes("context")) {
         this.withWs(
           "utils/__out__/context.md",
-          this.getRawFiles("context").join("\n\n")
+          this.getRawFiles("context").join("\n")
         );
       } else if (argv[3]?.includes("root")) {
         this.withWs(
           "utils/__out__/root.md",
-          this.getRawFiles("root").join("\n\n")
+          this.getRawFiles("root").join("\n")
         );
       } else {
         console.log(`argv3 val must be either ui OR app`);
