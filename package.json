@@ -4,10 +4,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev -p 3007 --turbopack",
     "build": "next build",
+    "clean": "git clean -xdf node_modules pnpm-lock.yaml .next",
+    "dev": "next dev -p 3007 --turbopack",
+    "lint": "next lint",
     "start": "next start",
-    "lint": "next lint"
+    "latest:pnpm": "corepack use pnpm@latest",
+    "update:pnpm": "curl -fsSL https://get.pnpm.io/install.sh | sh -"
   },
   "dependencies": {
     "@d0paminedriven/motion": "^1.4.0",
@@ -18,8 +21,8 @@
     "clsx": "^2.1.1",
     "js-cookie": "^3.0.5",
     "leva": "^0.10.0",
-    "lucide-react": "^0.487.0",
-    "motion": "^12.6.5",
+    "lucide-react": "^0.488.0",
+    "motion": "^12.7.2",
     "motion-cursor": "^1.0.5",
     "motion-number": "^1.0.0",
     "motion-plus": "^0.1.6",
@@ -55,6 +58,15 @@
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.29.1"
   },
+  "overrides": {
+    "@radix-ui/react-portal": "^1.1.5",
+    "@radix-ui/react-tooltip": "^1.2.0"
+  },
+  "engines": {
+    "node": ">=22",
+    "npm": ">=11",
+    "pnpm": ">=10"
+  },
   "pnpm": {
     "onlyBuiltDependencies": [
       "esbuild"
@@ -62,5 +74,6 @@
     "patchedDependencies": {
       "leva": "patches/leva.patch"
     }
-  }
+  },
+  "packageManager": "pnpm@10.8.1+sha512.c50088ba998c67b8ca8c99df8a5e02fd2ae2e2b29aaf238feaa9e124248d3f48f9fb6db2424949ff901cffbb5e0f0cc1ad6aedb602cd29450751d11c35023677"
 }

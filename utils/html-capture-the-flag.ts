@@ -16,6 +16,7 @@ export class RampChallenge {
       )
     );
   }
+  
   private solveForUrl2(htmlContent: string) {
     const matches = this.extractMatches(htmlContent);
     const solution = Array.of<string>();
