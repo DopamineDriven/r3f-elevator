@@ -15,7 +15,7 @@ import { Leva } from "leva";
 import type { ThreeElement } from "@react-three/fiber";
 import { SoftWallLightImpl } from "./soft-wall-light/instance";
 
-type PB = React.JSX.IntrinsicElements["softWallLight"];
+
 
 extend({ DownTriangleGeometry, SoftWallLightImpl, TriangleGeometry });
 declare module "@react-three/fiber" {
