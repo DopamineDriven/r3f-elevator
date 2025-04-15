@@ -11,6 +11,7 @@ import { ElevatorInterior } from "@/ui/elevator/r3f/elevator-interior";
 import { FloorIndicator } from "@/ui/elevator/r3f/floor-indicator";
 import { Wall } from "@/ui/elevator/r3f/wall";
 import { useEffect, useRef, useState } from "react";
+import { SoftWallLight } from "../soft-wall-light";
 
 export function ElevatorScene() {
   const [activated, setActivated] = useState(false);
@@ -92,11 +93,57 @@ export function ElevatorScene() {
       <FloorIndicator activated={activated} />
       <ElevatorButton activated={activated} onClickAction={handleClick} />
       <CeilingLight />
+      <pointLight
+        position={[2, 1, 3]}
+        intensity={0.7}
+        distance={7}
+        decay={2}
+        color="#ffffff"
+      />
+      <pointLight
+        position={[-2, 1, 3]}
+        intensity={0.7}
+        distance={7}
+        decay={2}
+        color="#ffffff"
+      />
+      <ambientLight intensity={0.7} color="#1e222c" />
+      <pointLight
+        position={[2, 1, 3]}
+        intensity={0.7}
+        distance={7}
+        decay={2}
+        color="#ffffff"
+        castShadow={false}
+      />
+      <pointLight
+        position={[-2, 1, 3]}
+        intensity={0.7}
+        distance={7}
+        decay={2}
+        color="#ffffff"
+        castShadow={false}
+      />
+      <spotLight
+        position={[0, 2, -2.5]}
+        angle={0.5}
+        intensity={0.5}
+        penumbra={0.3}
+        color="#eeeeee"
+        castShadow={false}
+      />
+      <SoftWallLight
+        width={3}
+        height={3}
+        color="#ffffff"
+        intensity={1.0}
+        position={[0, 2, 2]}
+        rotation={[0, 0, 0]}
+      />
       <CombinedCameraController
         isTransitioning={isTransitioning}
         transitionProgress={transitionProgress}
       />
-      <ambientLight intensity={0.5} color="#1e222c" />
     </group>
   );
 }

@@ -6,19 +6,23 @@ import { getCookieDomain } from "@/lib/site-domain";
 import { DownTriangleGeometry } from "@/ui/elevator/r3f/down-triangle-geometry";
 import { ElevatorScene } from "@/ui/elevator/r3f/scene";
 import { TriangleGeometry } from "@/ui/elevator/r3f/triangle-geometry";
-import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import React, { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ContactShadows, PerspectiveCamera } from "@react-three/drei";
 import { Canvas, extend } from "@react-three/fiber";
 import Cookies from "js-cookie";
 import { Leva } from "leva";
 import type { ThreeElement } from "@react-three/fiber";
+import { SoftWallLightImpl } from "./soft-wall-light/instance";
 
-extend({ DownTriangleGeometry, TriangleGeometry });
+type PB = React.JSX.IntrinsicElements["softWallLight"];
+
+extend({ DownTriangleGeometry, SoftWallLightImpl, TriangleGeometry });
 declare module "@react-three/fiber" {
   interface ThreeElements {
     triangleGeometry: ThreeElement<typeof TriangleGeometry>;
     downTriangleGeometry: ThreeElement<typeof DownTriangleGeometry>;
+    softWallLight: ThreeElement<typeof SoftWallLightImpl>;
   }
 }
 
@@ -49,6 +53,14 @@ export default function ElevatorApp() {
       }
     }
   }, [pathOfIntent]);
+
+  useEffect(() => {
+    // must initialize Uniforms Lib once for RectAreaLight effect to have any impact on PBR Textured walls
+    (async () =>
+      (
+        await import("three/examples/jsm/lights/RectAreaLightUniformsLib.js")
+      ).RectAreaLightUniformsLib.init())().catch(v => console.error(v));
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1000);
