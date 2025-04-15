@@ -132,14 +132,7 @@ export function ElevatorScene() {
         color="#eeeeee"
         castShadow={false}
       />
-      <SoftWallLight
-        width={3}
-        height={3}
-        color="#ffffff"
-        intensity={1.0}
-        position={[0, 2, 2]}
-        rotation={[0, 0, 0]}
-      />
+      <SoftWallLight />
       <CombinedCameraController
         isTransitioning={isTransitioning}
         transitionProgress={transitionProgress}
