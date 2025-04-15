@@ -123,6 +123,27 @@ class HandleFs extends Fs {
       : file.split(/\./gim)?.reverse()?.[0];
   }
 
+  public handleComments<
+    const T extends
+      | `app/(elevator)/elevator`
+      | `ui/elevator`
+      | "root"
+      | "types"
+      | "hooks"
+      | "lib"
+      | "context"
+  >(target: T, file: string) {
+    if (target === "root") {
+      return file;
+    } else
+      return file
+        .replace(
+          /(?:(?:\/\*(?:[^*]|(?:\*+[^*\/]))*\*+\/)|(?:(?<!\:|\\\|\')\/\/.*))/gm,
+          ""
+        )
+        .trim();
+  }
+
   public getRawFiles<
     const T extends
       | `app/(elevator)/elevator`
@@ -145,13 +166,13 @@ class HandleFs extends Fs {
             : this.readRootFile(file).toString("utf-8");
 
         // prettier-ignore
-const toInject = `**File:** \`${handleInjectedTarget}\`
+        const toInject = `**File:** \`${handleInjectedTarget}\`
 
 For more details, [visit the raw version of this file](https://raw.githubusercontent.com/DopamineDriven/r3f-elevator/refs/heads/master/${handleInjectedTarget}).
 
 \`\`\`${fileExtension}
 
-${fileContent.replace(/(?:(?:\/\*(?:[^*]|(?:\*+[^*\/]))*\*+\/)|(?:(?<!\:|\\\|\')\/\/.*))/gm, "").trim()}
+${this.handleComments(target, fileContent)}
 
 \`\`\`
 
@@ -190,10 +211,7 @@ ${fileContent.replace(/(?:(?:\/\*(?:[^*]|(?:\*+[^*\/]))*\*+\/)|(?:(?<!\:|\\\|\')
           this.getRawFiles("app/(elevator)/elevator").join("\n")
         );
       } else if (argv[3]?.includes("lib")) {
-        this.withWs(
-          "utils/__out__/lib.md",
-          this.getRawFiles("lib").join("\n")
-        );
+        this.withWs("utils/__out__/lib.md", this.getRawFiles("lib").join("\n"));
       } else if (argv[3]?.includes("hooks")) {
         this.withWs(
           "utils/__out__/hooks.md",
