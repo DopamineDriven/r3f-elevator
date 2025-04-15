@@ -29,12 +29,12 @@ const useRectAreaLightHelperImpl = (
 export function SoftWallLight({
   position = [0, 2, 2],
   lookAt = [0, 0, 0],
-  rotation = [0, 0, 0],
+  rotation = [0, -0.9, 0],
   showHelper = process.env.NODE_ENV !== "production",
-  color = "#ffffff",
-  intensity = 1.0,
-  width = 3,
-  height = 3,
+  color = "#c9c7f1",
+  intensity = 1.1,
+  width = 0.7,
+  height = 7.2,
   helperColor = "#ff00ff"
 }: {
   position?: THREE.Vector3Tuple;
@@ -71,7 +71,7 @@ export function SoftWallLight({
           label: "Helper Color"
         },
         lightColor: {
-          value: (color as string) ?? "ffffff",
+          value: (color as string) ?? "c9c7f1",
           label: "Light Color"
         },
         lightIntensity: {
