@@ -5,6 +5,7 @@ import { useCookies } from "@/context/cookie-context";
 import { getCookieDomain } from "@/lib/site-domain";
 import { DownTriangleGeometry } from "@/ui/elevator/r3f/down-triangle-geometry";
 import { ElevatorScene } from "@/ui/elevator/r3f/scene";
+import { SoftWallLight } from "@/ui/elevator/r3f/soft-wall-light/instance";
 import { TriangleGeometry } from "@/ui/elevator/r3f/triangle-geometry";
 import React, { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -13,14 +14,13 @@ import { Canvas, extend } from "@react-three/fiber";
 import Cookies from "js-cookie";
 import { Leva } from "leva";
 import type { ThreeElement } from "@react-three/fiber";
-import { SoftWallLightImpl } from "./soft-wall-light/instance";
 
-extend({ DownTriangleGeometry, SoftWallLightImpl, TriangleGeometry });
+extend({ DownTriangleGeometry, SoftWallLight, TriangleGeometry });
 declare module "@react-three/fiber" {
   interface ThreeElements {
     triangleGeometry: ThreeElement<typeof TriangleGeometry>;
     downTriangleGeometry: ThreeElement<typeof DownTriangleGeometry>;
-    softWallLight: ThreeElement<typeof SoftWallLightImpl>;
+    softWallLight: ThreeElement<typeof SoftWallLight>;
   }
 }
 
