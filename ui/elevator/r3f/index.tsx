@@ -3,6 +3,7 @@
 import type { ElevatorTransitionEventDetail } from "@/ui/elevator/r3f/custom-event";
 import { useCookies } from "@/context/cookie-context";
 import { getCookieDomain } from "@/lib/site-domain";
+import { getSiteUrl } from "@/lib/site-url";
 import { DownTriangleGeometry } from "@/ui/elevator/r3f/down-triangle-geometry";
 import { ElevatorScene } from "@/ui/elevator/r3f/scene";
 import { SoftWallLight } from "@/ui/elevator/r3f/soft-wall-light/instance";
@@ -37,12 +38,11 @@ export default function ElevatorApp() {
 
   const isSecure = useMemo(() => process.env.NODE_ENV !== "development", []);
 
-
+  const siteUrlMemo = useMemo(() => getSiteUrl(process.env.NODE_ENV), []);
 
   const navigationTriggeredRef = useRef(false);
 
   useEffect(() => {
-    console.log(process.env.VERCEL_ENV ?? "no vercel env?")
     if (pathOfIntent) {
       pathOfIntentRef.current = pathOfIntent;
       console.log("[CLIENT] Path of intent from context:", pathOfIntent);
@@ -143,10 +143,11 @@ export default function ElevatorApp() {
           />
         </Suspense>
       </Canvas>
-      <Leva
-
-        hidden={process.env.VERCEL_ENV === "production" ? true : false}
-      />
+      {siteUrlMemo === "https://r3f-elevator.vercel.app" ? (
+        <Leva isRoot={true} hidden={true} />
+      ) : (
+        <Leva isRoot={true} collapsed />
+      )}
     </>
   );
 }
