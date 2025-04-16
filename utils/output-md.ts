@@ -132,16 +132,17 @@ class HandleFs extends Fs {
       | "hooks"
       | "lib"
       | "context"
-  >(target: T, file: string) {
+  >(target: T, file: string, removeComments = true) {
     if (target === "root") {
       return file;
-    } else
-      return file
-        .replace(
-          /(?:(?:\/\*(?:[^*]|(?:\*+[^*\/]))*\*+\/)|(?:(?<!\:|\\\|\')\/\/.*))/gm,
-          ""
-        )
-        .trim();
+    } else if (!removeComments) {
+      return file.trim();
+    } else {
+      return file.replace(
+        /(?:(?:\/\*(?:[^*]|(?:\*+[^*\/]))*\*+\/)|(?:(?<!\:|\\\|\')\/\/.*))/gm,
+        ""
+      );
+    }
   }
 
   public getRawFiles<
@@ -153,7 +154,7 @@ class HandleFs extends Fs {
       | "hooks"
       | "lib"
       | "context"
-  >(target: T) {
+  >(target: T, removeComments = true) {
     const arr = Array.of<string>();
     try {
       return this.getTargetedPaths(target).map(file => {
@@ -172,7 +173,7 @@ For more details, [visit the raw version of this file](https://raw.githubusercon
 
 \`\`\`${fileExtension}
 
-${this.handleComments(target, fileContent)}
+${this.handleComments(target, fileContent, removeComments)}
 
 \`\`\`
 
@@ -194,38 +195,42 @@ ${this.handleComments(target, fileContent)}
     }
   }
   public incomingArgs(argv: string[]) {
+    const omitComments = argv[4] && argv[4]?.includes("false") ? false : true;
     if (argv[3] && argv[3].length > 1) {
       if (argv[3]?.includes("ui")) {
         this.withWs(
           "utils/__out__/ui.md",
-          this.getRawFiles("ui/elevator").join("\n")
+          this.getRawFiles("ui/elevator", omitComments).join("\n")
         );
       } else if (argv[3]?.includes("types")) {
         this.withWs(
           "utils/__out__/types.md",
-          this.getRawFiles("types").join("\n")
+          this.getRawFiles("types", omitComments).join("\n")
         );
-      } else if (argv[3]?.includes("app")) {
+      } else if ((argv[3]?.includes("app"), omitComments)) {
         this.withWs(
           "utils/__out__/app.md",
-          this.getRawFiles("app/(elevator)/elevator").join("\n")
+          this.getRawFiles("app/(elevator)/elevator", omitComments).join("\n")
         );
       } else if (argv[3]?.includes("lib")) {
-        this.withWs("utils/__out__/lib.md", this.getRawFiles("lib").join("\n"));
+        this.withWs(
+          "utils/__out__/lib.md",
+          this.getRawFiles("lib", omitComments).join("\n")
+        );
       } else if (argv[3]?.includes("hooks")) {
         this.withWs(
           "utils/__out__/hooks.md",
-          this.getRawFiles("hooks").join("\n")
+          this.getRawFiles("hooks", omitComments).join("\n")
         );
       } else if (argv[3]?.includes("context")) {
         this.withWs(
           "utils/__out__/context.md",
-          this.getRawFiles("context").join("\n")
+          this.getRawFiles("context", omitComments).join("\n")
         );
       } else if (argv[3]?.includes("root")) {
         this.withWs(
           "utils/__out__/root.md",
-          this.getRawFiles("root").join("\n")
+          this.getRawFiles("root", omitComments).join("\n")
         );
       } else {
         console.log(`argv3 val must be either ui OR app`);
