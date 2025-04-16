@@ -143,7 +143,7 @@ export default function ElevatorApp() {
           />
         </Suspense>
       </Canvas>
-      {process.env.NODE_ENV !== "production" && <Leva collapsed />}
+      <Leva collapsed hidden={process.env.VERCEL_ENV === "production"} />
     </>
   );
 }
