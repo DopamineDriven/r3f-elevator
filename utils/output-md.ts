@@ -1,7 +1,5 @@
-import fsSync from "node:fs";
-import path, { join } from "path";
 import { Fs } from "@d0paminedriven/fs";
-import type { BufferEncodingUnion, ReadDirOptions } from "@d0paminedriven/fs";
+import type { BufferEncodingUnion } from "@d0paminedriven/fs";
 
 type Opts = {
   encoding?: BufferEncodingUnion | null | undefined;
@@ -12,22 +10,6 @@ type Opts = {
 class HandleFs extends Fs {
   constructor(public override cwd: string) {
     super((cwd ??= process.cwd()));
-  }
-
-  public rootFiles(
-    options = {
-      encoding: "utf-8",
-      recursive: true,
-      withFileTypes: false
-    } as Opts
-  ) {
-    return this.handleBuffStrArrUnion(
-      fsSync.readdirSync(path.resolve(join(this.cwd, "./")), options)
-    );
-  }
-
-  public readRootFile(file = "notes.md") {
-    return fsSync.readFileSync(path.resolve(join(this.cwd, `./${file}`)));
   }
 
   public getTargetedDirs<
@@ -49,8 +31,7 @@ class HandleFs extends Fs {
   ) {
     if (target === "root") {
       const { recursive: re, ...opts } = options;
-      const handleRe = !re ? false : re;
-      return this.rootFiles({ recursive: handleRe, ...opts })
+      return this.readDir(target, { recursive: re, ...opts })
         .filter(
           file =>
             /(?:(public|patches|node_modules|\.(next|git|vscode|husky|changeset|github|gitignore|env)|pnpm-lock\.yaml))/g.test(
@@ -162,9 +143,7 @@ class HandleFs extends Fs {
           target === "root" ? file : `${target}/${file}`;
         const fileExtension = this.fileExt(file);
         const fileContent =
-          target !== "root"
-            ? this.fileToBuffer(`${target}/${file}`).toString("utf-8")
-            : this.readRootFile(file).toString("utf-8");
+          this.fileToBuffer(handleInjectedTarget).toString("utf-8");
 
         // prettier-ignore
         const toInject = `**File:** \`${handleInjectedTarget}\`
