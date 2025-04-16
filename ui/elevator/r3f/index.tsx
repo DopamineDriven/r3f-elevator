@@ -2,6 +2,7 @@
 
 import type { ElevatorTransitionEventDetail } from "@/ui/elevator/r3f/custom-event";
 import { useCookies } from "@/context/cookie-context";
+import { useHostname } from "@/hooks/use-hostname";
 import { getCookieDomain } from "@/lib/site-domain";
 import { getSiteUrl } from "@/lib/site-url";
 import { DownTriangleGeometry } from "@/ui/elevator/r3f/down-triangle-geometry";
@@ -41,7 +42,7 @@ export default function ElevatorApp() {
   const siteUrlMemo = useMemo(() => getSiteUrl(process.env.NODE_ENV), []);
 
   const navigationTriggeredRef = useRef(false);
-
+  const getHostname = useHostname();
   useEffect(() => {
     if (pathOfIntent) {
       pathOfIntentRef.current = pathOfIntent;
@@ -143,8 +144,8 @@ export default function ElevatorApp() {
           />
         </Suspense>
       </Canvas>
-      {siteUrlMemo === "https://r3f-elevator.vercel.app" ? (
-        <Leva isRoot={true} hidden={true} />
+      {getHostname && getHostname.includes("r3f-elevator.vercel.app") ? (
+        <></>
       ) : (
         <Leva isRoot={true} collapsed />
       )}
