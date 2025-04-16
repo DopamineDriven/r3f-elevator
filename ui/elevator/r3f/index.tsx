@@ -37,9 +37,12 @@ export default function ElevatorApp() {
 
   const isSecure = useMemo(() => process.env.NODE_ENV !== "development", []);
 
+
+
   const navigationTriggeredRef = useRef(false);
 
   useEffect(() => {
+    console.log(process.env.VERCEL_ENV ?? "no vercel env?")
     if (pathOfIntent) {
       pathOfIntentRef.current = pathOfIntent;
       console.log("[CLIENT] Path of intent from context:", pathOfIntent);
@@ -106,7 +109,6 @@ export default function ElevatorApp() {
       );
     };
   }, [isSecure, memoizedCookieDomain, router, clearPathOfIntent]);
-
   return (
     <>
       {loading && (
@@ -114,8 +116,6 @@ export default function ElevatorApp() {
           <div className="text-xl text-white">Loading Elevator...</div>
         </div>
       )}
-
-      {/* Fade overlay */}
       <div
         className="pointer-events-none absolute inset-0 z-10 bg-black transition-opacity duration-500"
         style={{ opacity: fadeOpacity }}
@@ -143,7 +143,10 @@ export default function ElevatorApp() {
           />
         </Suspense>
       </Canvas>
-      <Leva collapsed hidden={process.env.VERCEL_ENV === "production"} />
+      <Leva
+
+        hidden={process.env.VERCEL_ENV === "production" ? true : false}
+      />
     </>
   );
 }
