@@ -17,6 +17,7 @@ import { Canvas, extend } from "@react-three/fiber";
 import Cookies from "js-cookie";
 import { Leva } from "leva";
 import type { ThreeElement } from "@react-three/fiber";
+import { Fog } from "three";
 
 extend({
   DownTriangleGeometry,
@@ -132,6 +133,7 @@ export default function ElevatorApp() {
         className="absolute top-0 left-0 z-20 min-h-[100dvh] min-w-screen items-center justify-center bg-black/80"
         shadows
         camera={{ fov: 40, near: 0.1, far: 1000, position: [0, 0, 6] }}>
+          <scene fog={new Fog("#000000", 5, 10)}></scene>
         <Suspense fallback={null}>
           <PerspectiveCamera
             makeDefault

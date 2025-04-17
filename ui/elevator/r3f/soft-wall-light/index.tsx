@@ -8,7 +8,7 @@ import * as THREE from "three";
 import { RectAreaLightHelper } from "three-stdlib";
 
 // 🔧 Helper fallback for production
-class DreiHelperHelper extends THREE.Object3D {
+class SoftWallLightHelper extends THREE.Object3D {
   update() {}
   dispose() {}
 }
@@ -21,7 +21,7 @@ const useRectAreaLightHelperImpl = (
   const helperConstructor =
     process.env.NODE_ENV !== "production" && showHelper
       ? RectAreaLightHelper
-      : DreiHelperHelper;
+      : SoftWallLightHelper;
 
   return useHelper(ref, helperConstructor, color);
 };

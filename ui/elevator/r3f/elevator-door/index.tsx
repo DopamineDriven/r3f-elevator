@@ -4,6 +4,8 @@ import { useEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { animate, useSpring } from "motion/react";
 import * as THREE from "three";
+import { PBRMaterial } from "../pbr-material";
+import { TEXTURES } from "../constants";
 
 export const ElevatorDoor = ({
   position,
@@ -15,6 +17,7 @@ export const ElevatorDoor = ({
   activated: boolean;
 }) => {
   const doorRef = useRef<THREE.Mesh>(null);
+
   const targetX = isLeft
     ? activated
       ? -0.55
@@ -22,6 +25,7 @@ export const ElevatorDoor = ({
     : activated
       ? 0.55
       : 0.025;
+
   const doorX = useSpring(isLeft ? -0.025 : 0.025, {
     stiffness: 80,
     damping: 20
@@ -38,11 +42,17 @@ export const ElevatorDoor = ({
   return (
     <mesh
       ref={doorRef}
-      position={[isLeft ? -0.025 : 0.025, 0, position+0.051]}
+      position={[isLeft ? -0.025 : 0.025, 0, position]} // Use Leva zOffset if needed
       castShadow
       receiveShadow>
       <boxGeometry args={[0.5, 2.5, 0.05]} />
-      <meshStandardMaterial color="#8c9399" metalness={0.6} roughness={0.3} />
+      <PBRMaterial
+        textures={TEXTURES.brushedMetal}
+        repeat={[2, 2]}
+        color="#8c9399"
+        metalness={0.8}
+        roughness={0.4}
+      />
     </mesh>
   );
 };
