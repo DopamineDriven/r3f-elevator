@@ -4,8 +4,8 @@ import { INDICATOR_COLORS } from "@/ui/elevator/r3f/constants/indicator-colors";
 
 export const FloorIndicator = ({ activated }: { activated: boolean }) => {
   return (
-    <group position={[0, 1.5, 0.2]} renderOrder={20}>
-      {/* Indicator housing - Severance style rectangular panel */}
+    <group position={[0, 1.5, 0.25]} renderOrder={20}>
+      {/* housing - severance-style rectangular panel */}
       <mesh position={[0, 0, 0]} castShadow>
         <boxGeometry args={[0.55, 0.3, 0.05]} />
         <meshStandardMaterial
@@ -15,7 +15,7 @@ export const FloorIndicator = ({ activated }: { activated: boolean }) => {
         />
       </mesh>
 
-      {/* Down triangle with Severance style internal illumination */}
+      {/* down triangle with internal illumination */}
       <group position={[0, 0, 0.026]} renderOrder={22}>
         {/* Background for the indicator */}
         <mesh>
@@ -23,7 +23,7 @@ export const FloorIndicator = ({ activated }: { activated: boolean }) => {
           <meshStandardMaterial color="#333" metalness={0.2} roughness={0.8} />
         </mesh>
 
-        {/* Down triangle - larger and with Severance amber color */}
+        {/* down triangle - larger and with amber color */}
         <mesh position={[0, 0, 0.1]}>
           <downTriangleGeometry args={[0.18, 0.18]} />
           <meshStandardMaterial
@@ -40,6 +40,9 @@ export const FloorIndicator = ({ activated }: { activated: boolean }) => {
             }
             metalness={0.3}
             roughness={0.4}
+            transparent
+            depthTest={false}
+            depthWrite={false}
             toneMapped={false}
           />
         </mesh>

@@ -38,7 +38,7 @@ export const ElevatorDoor = ({
   return (
     <mesh
       ref={doorRef}
-      position={[isLeft ? -0.025 : 0.025, 0, position]}
+      position={[isLeft ? -0.025 : 0.025, 0, position+0.051]}
       castShadow
       receiveShadow>
       <boxGeometry args={[0.5, 2.5, 0.05]} />
