@@ -1,4 +1,3 @@
 import * as THREE from "three";
 
-
-export class ElevatorFrameLightImpl extends THREE.RectAreaLight {};
+export class ElevatorFrameLight extends THREE.RectAreaLight {}

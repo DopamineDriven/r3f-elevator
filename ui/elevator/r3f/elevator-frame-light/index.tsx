@@ -43,7 +43,7 @@ export function ElevatorFrameLight({
   // Optional: Dev helper
   useElevatorFrameLightHelper(
     lightRef,
-    process.env.NODE_ENV !== "production", // can pass a "showHelper" boolean here instead of using this check
+    false, // can pass a "showHelper" boolean here instead of using this check
     "cyan"
   );
 

@@ -6,7 +6,7 @@ import { useHostname } from "@/hooks/use-hostname";
 import { getCookieDomain } from "@/lib/site-domain";
 import { getSiteUrl } from "@/lib/site-url";
 import { DownTriangleGeometry } from "@/ui/elevator/r3f/down-triangle-geometry";
-import { ElevatorFrameLightImpl } from "@/ui/elevator/r3f/elevator-frame-light/instance";
+import { ElevatorFrameLight } from "@/ui/elevator/r3f/elevator-frame-light/instance";
 import { ElevatorScene } from "@/ui/elevator/r3f/scene";
 import { SoftWallLight } from "@/ui/elevator/r3f/soft-wall-light/instance";
 import { TriangleGeometry } from "@/ui/elevator/r3f/triangle-geometry";
@@ -20,7 +20,7 @@ import type { ThreeElement } from "@react-three/fiber";
 
 extend({
   DownTriangleGeometry,
-  ElevatorFrameLightImpl,
+  ElevatorFrameLight,
   SoftWallLight,
   TriangleGeometry
 });
@@ -29,7 +29,7 @@ declare module "@react-three/fiber" {
     triangleGeometry: ThreeElement<typeof TriangleGeometry>;
     downTriangleGeometry: ThreeElement<typeof DownTriangleGeometry>;
     softWallLight: ThreeElement<typeof SoftWallLight>;
-    elevatorFrameLight: ThreeElement<typeof ElevatorFrameLightImpl>;
+    elevatorFrameLight: ThreeElement<typeof ElevatorFrameLight>;
   }
 }
 
