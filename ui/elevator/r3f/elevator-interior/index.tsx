@@ -97,6 +97,14 @@ export const ElevatorInterior = ({ activated }: { activated: boolean }) => {
         decay={2}
         color="#f0f0ff"
       />
+
+<pointLight
+  position={[0, -0.8, 0.15]} // near the floor
+  intensity={0.3}
+  distance={2}
+  decay={2}
+  color="#f0f0ff"
+/>
     </group>
   );
 };
