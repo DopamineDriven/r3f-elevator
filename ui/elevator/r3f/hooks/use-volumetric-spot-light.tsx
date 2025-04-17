@@ -18,7 +18,7 @@ class DreiHelperHelper extends THREE.Object3D {
 const useSpotLightHelperImpl = (
   ref: RefObject<THREE.SpotLight>,
   showHelper: boolean,
-  color?: string | number | THREE.Color
+  color?: THREE.ColorRepresentation
 ) => {
   const helperConstructor = (
     process.env.NODE_ENV !== "production" && showHelper
@@ -46,19 +46,30 @@ export type UseVolumetricSpotLightProps = {
   shadowMapSize?: number;
 };
 
+interface VolumetricSpotUniforms extends Record<string, THREE.IUniform<any>> {
+  lightColor: THREE.IUniform<THREE.Color>;
+  opacity: THREE.IUniform<number>;
+  attenuation: THREE.IUniform<number>;
+  anglePower: THREE.IUniform<number>;
+  spotPosition: THREE.IUniform<THREE.Vector3>;
+  cameraNear: THREE.IUniform<number>;
+  cameraFar: THREE.IUniform<number>;
+  resolution: THREE.IUniform<[number, number]>;
+}
+
 export function useVolumetricSpotLight({
   debug = false,
   showHelper = process.env.NODE_ENV !== "production",
   color = "white",
-  distance = 20.0, // Updated to optimal value
-  angle = 1.07, // Updated to optimal value
-  attenuation = 7, // faster falloff, tighter focus
+  distance = 20.0,
+  angle = 1.07,
+  attenuation = 7,
   anglePower = 5,
-  intensity = 9.0, // Updated to optimal value
-  opacity = 0.6, // Updated to optimal value
-  radiusTop = 0.05, // narrower cone base
-  helperColor = "#ff00ff", // Updated to optimal value
-  radiusBottom = undefined, // default still based on angle
+  intensity = 9.0,
+  opacity = 0.6,
+  radiusTop = 0.05,
+  helperColor = "#ff00ff",
+  radiusBottom = undefined,
   shadowMapSize = 1024
 }: UseVolumetricSpotLightProps) {
   const spotlight = useMemo(
@@ -69,15 +80,15 @@ export function useVolumetricSpotLight({
   const spotlightRef = useRef<THREE.SpotLight>(spotlight);
 
   const material = useMemo(() => new SpotLightMaterial(), []);
+  const uniforms = material.uniforms as VolumetricSpotUniforms;
+
   const vec = useMemo(() => new THREE.Vector3(), []);
   const camera = useThree(state => state.camera);
   const size = useThree(state => state.size);
   const dpr = useThree(state => state.viewport.dpr);
 
-  // conditional hook call workaround
   useSpotLightHelperImpl(spotlightRef, showHelper, helperColor);
 
-  // shadow map config
   useEffect(() => {
     spotlight.castShadow = true;
     spotlight.shadow.mapSize.set(shadowMapSize, shadowMapSize);
@@ -88,10 +99,9 @@ export function useVolumetricSpotLight({
     spotlight.intensity = intensity;
   }, [spotlight, shadowMapSize, angle, distance, intensity]);
 
-  // Animate volumetric mesh to follow light
   useFrame(() => {
     if (!volumetricMesh.current) return;
-    material.uniforms.spotPosition.value.copy(
+    uniforms.spotPosition.value.copy(
       volumetricMesh.current.getWorldPosition(vec)
     );
     volumetricMesh.current.lookAt(spotlight.target.getWorldPosition(vec));
@@ -111,17 +121,16 @@ export function useVolumetricSpotLight({
     return geom;
   }, [angle, distance, radiusBottom, radiusTop]);
 
-  // Update uniforms when necessary
   useEffect(() => {
-    material.uniforms.opacity.value = opacity;
-    material.uniforms.lightColor.value.set(color);
-    material.uniforms.attenuation.value = attenuation;
-    material.uniforms.anglePower.value = anglePower;
-    material.uniforms.cameraNear.value = camera.near;
-    material.uniforms.cameraFar.value = camera.far;
-    material.uniforms.resolution.value = [size.width * dpr, size.height * dpr];
+    uniforms.opacity.value = opacity;
+    uniforms.lightColor.value.set(color);
+    uniforms.attenuation.value = attenuation;
+    uniforms.anglePower.value = anglePower;
+    uniforms.cameraNear.value = camera.near;
+    uniforms.cameraFar.value = camera.far;
+    uniforms.resolution.value = [size.width * dpr, size.height * dpr];
   }, [
-    material,
+    uniforms,
     color,
     opacity,
     attenuation,
@@ -131,8 +140,9 @@ export function useVolumetricSpotLight({
     size,
     dpr
   ]);
-  const volumetricElementMemo = useMemo(() => {
-    return (
+
+  const volumetricElementMemo = useMemo(
+    () => (
       <mesh
         ref={volumetricMesh}
         geometry={meshGeometry}
@@ -140,8 +150,9 @@ export function useVolumetricSpotLight({
         visible={!debug}>
         <primitive object={material} attach="material" />
       </mesh>
-    );
-  }, [debug, material, meshGeometry]);
+    ),
+    [debug, material, meshGeometry]
+  );
 
   return {
     spotlight,

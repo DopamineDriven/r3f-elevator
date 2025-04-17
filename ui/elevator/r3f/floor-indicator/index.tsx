@@ -4,7 +4,7 @@ import { INDICATOR_COLORS } from "@/ui/elevator/r3f/constants/indicator-colors";
 
 export const FloorIndicator = ({ activated }: { activated: boolean }) => {
   return (
-    <group position={[0, 1.5, 0.25]} renderOrder={20}>
+    <group position={[0, 1.5, 0.3]} renderOrder={20}>
       {/* housing - severance-style rectangular panel */}
       <mesh position={[0, 0, 0]} castShadow>
         <boxGeometry args={[0.55, 0.3, 0.05]} />
@@ -12,6 +12,8 @@ export const FloorIndicator = ({ activated }: { activated: boolean }) => {
           color={INDICATOR_COLORS.PANEL_HOUSING}
           metalness={0.3}
           roughness={0.7}
+          depthTest={false}
+          depthWrite={false}
         />
       </mesh>
 
@@ -20,7 +22,15 @@ export const FloorIndicator = ({ activated }: { activated: boolean }) => {
         {/* Background for the indicator */}
         <mesh>
           <planeGeometry args={[0.45, 0.22]} />
-          <meshStandardMaterial color="#333" metalness={0.2} roughness={0.8} />
+          <meshStandardMaterial
+            color="#333"
+            emissive="#111"
+            emissiveIntensity={0.3}
+            metalness={0.2}
+            roughness={0.8}
+            depthTest={false}
+            depthWrite={false}
+          />
         </mesh>
 
         {/* down triangle - larger and with amber color */}
@@ -32,7 +42,7 @@ export const FloorIndicator = ({ activated }: { activated: boolean }) => {
                 ? INDICATOR_COLORS.ACTIVE_EMISSIVE
                 : INDICATOR_COLORS.INACTIVE_BASE
             }
-            emissive={activated ? INDICATOR_COLORS.ACTIVE_EMISSIVE : "#000000"}
+            emissive={activated ? INDICATOR_COLORS.ACTIVE_EMISSIVE : "#000"}
             emissiveIntensity={
               activated
                 ? INDICATOR_COLORS.ACTIVE_INTENSITY
@@ -40,7 +50,6 @@ export const FloorIndicator = ({ activated }: { activated: boolean }) => {
             }
             metalness={0.3}
             roughness={0.4}
-            transparent
             depthTest={false}
             depthWrite={false}
             toneMapped={false}
