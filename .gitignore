@@ -41,4 +41,5 @@ yarn-error.log*
 next-env.d.ts
 notes.md
 
-utils/**/*.md
+utils/__out__/**/*.md
+utils/*.md

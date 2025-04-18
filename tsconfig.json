@@ -5,6 +5,9 @@
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "allowJs": true,
     "skipLibCheck": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
     "strict": true,
     "useDefineForClassFields": true,
     "allowSyntheticDefaultImports": true,
@@ -28,7 +31,8 @@
     ],
     "paths": {
       "@/*": ["./*"]
-    }
+    },
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
   },
   "include": [
     "next-env.d.ts",
