@@ -1,39 +1,10 @@
-import type { PBRTextureSet } from "@/ui/elevator/r3f/types";
-
-export const brushedMetal = {
-  ao: "https://raw.githubusercontent.com/DopamineDriven/r3f-elevator/refs/heads/master/public/textures/enhanced/brushed-metal/brushed-metal-26-94-ao.jpg",
-  albedo:
-    "https://raw.githubusercontent.com/DopamineDriven/r3f-elevator/refs/heads/master/public/textures/enhanced/brushed-metal/brushed-metal-26-94-diffuse.jpg",
-  metalness:
-    "https://raw.githubusercontent.com/DopamineDriven/r3f-elevator/refs/heads/master/public/textures/enhanced/brushed-metal/brushed-metal-26-94-metalness.jpg",
-  normal:
-    "https://raw.githubusercontent.com/DopamineDriven/r3f-elevator/refs/heads/master/public/textures/enhanced/brushed-metal/brushed-metal-26-94-normal.jpg",
-  roughness:
-    "https://raw.githubusercontent.com/DopamineDriven/r3f-elevator/refs/heads/master/public/textures/enhanced/brushed-metal/brushed-metal-26-94-roughness.jpg"
+type PBRTextureSet = {
+  albedo: string;
+  ao: string;
+  metalness: string;
+  normal: string;
+  roughness: string;
 };
-
-export const elegantStoneTiles = {
-    albedo:
-      "https://raw.githubusercontent.com/DopamineDriven/r3f-elevator/refs/heads/master/public/textures/elegant-stone-tiles/elegant-stone-tiles-albedo.png",
-    ao: "https://raw.githubusercontent.com/DopamineDriven/r3f-elevator/refs/heads/master/public/textures/elegant-stone-tiles/elegant-stone-tiles-ao.png",
-    metallic:
-      "https://raw.githubusercontent.com/DopamineDriven/r3f-elevator/refs/heads/master/public/textures/elegant-stone-tiles/elegant-stone-tiles-metallic.png",
-    normal:
-      "https://raw.githubusercontent.com/DopamineDriven/r3f-elevator/refs/heads/master/public/textures/elegant-stone-tiles/elegant-stone-tiles-normal-ogl.png",
-    roughness:
-      "https://raw.githubusercontent.com/DopamineDriven/r3f-elevator/refs/heads/master/public/textures/elegant-stone-tiles/elegant-stone-tiles-roughness.png"
-  },
-  stuccoWall = {
-    albedo:
-      "https://raw.githubusercontent.com/DopamineDriven/portfolio-2025/master/apps/web/public/textures/smooth-stucco/smooth-stucco-albedo.png",
-    ao: "https://raw.githubusercontent.com/DopamineDriven/portfolio-2025/master/apps/web/public/textures/smooth-stucco/smooth-stucco-ao.png",
-    metalness:
-      "https://raw.githubusercontent.com/DopamineDriven/portfolio-2025/master/apps/web/public/textures/smooth-stucco/smooth-stucco-Metallic.png",
-    normal:
-      "https://raw.githubusercontent.com/DopamineDriven/portfolio-2025/master/apps/web/public/textures/smooth-stucco/smooth-stucco-Normal-ogl.png",
-    roughness:
-      "https://raw.githubusercontent.com/DopamineDriven/portfolio-2025/master/apps/web/public/textures/smooth-stucco/smooth-stucco-Roughness.png"
-  };
 
 // Texture definitions
 export const TEXTURES = {
@@ -50,9 +21,9 @@ export const TEXTURES = {
       "https://raw.githubusercontent.com/DopamineDriven/portfolio-2025/master/apps/web/public/textures/brushed-metal/brushed-metal-roughness.png"
   } satisfies PBRTextureSet,
   elegantStoneTiles: {
-    ao: "https://raw.githubusercontent.com/DopamineDriven/r3f-elevator/refs/heads/master/public/textures/elegant-stone-tiles/elegant-stone-tiles-ao.png",
     albedo:
       "https://raw.githubusercontent.com/DopamineDriven/r3f-elevator/refs/heads/master/public/textures/elegant-stone-tiles/elegant-stone-tiles-albedo.png",
+    ao: "https://raw.githubusercontent.com/DopamineDriven/r3f-elevator/refs/heads/master/public/textures/elegant-stone-tiles/elegant-stone-tiles-ao.png",
     metalness:
       "https://raw.githubusercontent.com/DopamineDriven/r3f-elevator/refs/heads/master/public/textures/elegant-stone-tiles/elegant-stone-tiles-metallic.png",
     normal:
@@ -84,12 +55,11 @@ export const TEXTURES = {
   } satisfies PBRTextureSet
 } as const;
 
-
 const getIt = <const T extends keyof typeof TEXTURES>(target: T) => {
-  return [target, TEXTURES[target]] as const;
+  return TEXTURES[target];
 };
 
-function mp() {
+export function mp() {
   const newMap = new Map<
     keyof typeof TEXTURES,
     (typeof TEXTURES)[keyof typeof TEXTURES]
@@ -97,20 +67,22 @@ function mp() {
 
   try {
     Object.entries(TEXTURES).forEach(function ([k, v]) {
-      newMap.set(...getIt(k as keyof typeof TEXTURES));
+      newMap.set(k as keyof typeof TEXTURES, getIt(k as keyof typeof TEXTURES));
     });
   } catch (err) {
     console.error(err);
   } finally {
-    return newMap satisfies Map<keyof typeof TEXTURES, PBRTextureSet>;
+    return newMap;
   }
 }
 
-export const getTextureMap = () => mp();
+/**
 
-export const ANIMATION_TIMING = {
-  BUTTON_PRESS: 391.813,
-  DOOR_OPEN: 1848,
-  ELEVATOR_SOUND: 1619.592,
-  TRANSITION: 2768.98,
-}
+example:
+
+Array.from(mp().entries()).map(([key, val]) => {
+  // much stronger type preservation when inferred, string literal union of keys detected instead of a string scalar 👀
+  return [key, val] as const;
+});
+
+*/
