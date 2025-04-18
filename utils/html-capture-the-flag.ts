@@ -16,7 +16,7 @@ export class RampChallenge {
       )
     );
   }
-  
+
   private solveForUrl2(htmlContent: string) {
     const matches = this.extractMatches(htmlContent);
     const solution = Array.of<string>();
@@ -53,3 +53,6 @@ export class RampChallenge {
     return { flag: this.url2Flag, url: this.url2Val };
   }
 }
+// new RampChallenge().captureTheFlag().then((res) => {
+//   console.log(res);
+// });
