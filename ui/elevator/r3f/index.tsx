@@ -49,10 +49,10 @@ export default function ElevatorApp() {
 
   const isSecure = useMemo(() => process.env.NODE_ENV !== "development", []);
 
-  const siteUrlMemo = useMemo(() => getSiteUrl(process.env.NODE_ENV), []);
+  const _siteUrlMemo = useMemo(() => getSiteUrl(process.env.NODE_ENV), []);
 
   const navigationTriggeredRef = useRef(false);
-  const getHostname = useHostname();
+  const getHostname = useHostname() ?? "";
   useEffect(() => {
     if (pathOfIntent) {
       pathOfIntentRef.current = pathOfIntent;
@@ -154,7 +154,7 @@ export default function ElevatorApp() {
           />
         </Suspense>
       </Canvas>
-      {getHostname && getHostname.includes("r3f-elevator.vercel.app") ? (
+      {/^r3f-elevator\.vercel\.app$/gm.test(getHostname) ? (
         <></>
       ) : (
         <Leva isRoot={true} collapsed />

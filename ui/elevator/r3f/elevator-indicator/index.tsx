@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import * as THREE from "three";
 
-export function TriangleIndicator() {
+export function TriangleIndicator({ activated = false }) {
   const geometry = useMemo(() => {
     const geom = new THREE.BufferGeometry();
     const vertices = new Float32Array([
@@ -27,13 +27,13 @@ export function TriangleIndicator() {
   }, []);
 
   return (
-    <mesh geometry={geometry} position={[0, 0, 0.08]} renderOrder={25}>
+    <mesh geometry={geometry} position={[0, 0, 0.075]} renderOrder={25}>
       <meshStandardMaterial
         color="#ff9a50"
-        emissive="#ff9a50"
-        emissiveIntensity={0.6}
+        emissive={activated === true ? "#ff9a50" : "#000"}
+        emissiveIntensity={1}
         metalness={0.2}
-        roughness={0.4}
+        roughness={1}
         toneMapped={false}
         side={THREE.DoubleSide}
       />

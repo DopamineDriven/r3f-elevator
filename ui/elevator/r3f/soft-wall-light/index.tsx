@@ -52,7 +52,7 @@ export function SoftWallLight({
   );
 
   const {
-    showHelperLeva,
+    showHelperLeva: _showHelperLeva,
     helperColorLeva,
     lightColor,
     lightIntensity,
@@ -107,7 +107,7 @@ export function SoftWallLight({
   });
 
   // 🛠 Attach dev helper
-  useRectAreaLightHelperImpl(lightRef, showHelperLeva, helperColorLeva);
+  useRectAreaLightHelperImpl(lightRef, false, helperColorLeva);
 
   // 🎯 LookAt behavior
   useEffect(() => {
