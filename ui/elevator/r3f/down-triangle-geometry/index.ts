@@ -2,41 +2,45 @@ import * as THREE from "three";
 
 export class DownTriangleGeometry extends THREE.BufferGeometry {
   constructor(
-     width = 1,
-    height = 1
+    public width = 0.18,
+    public height = 0.18
   ) {
     super();
+    this.build();
+  }
 
+  setWidth(w: number) {
+    this.width = w;
+    this.build();
+  }
 
-    // Create vertices for a downward-pointing triangle
-    // (0, height/2) is the top center
-    // (-width/2, -height/2) is the bottom left
-    // (width/2, -height/2) is the bottom right
-    // prettier-ignore
-    const vertices = new Float32Array([
-     -width / 2,  height / 2,  0, // top left
-      width / 2,  height / 2,  0, // top right
-              0, -height / 2,  0 // bottom center (point)
+  setHeight(h: number) {
+    this.height = h;
+    this.build();
+  }
+
+  private build() {
+    // 1) If you had other attributes (uv, normal, index), you'd remove them here:
+    // this.removeAttribute('uv');
+    // this.removeAttribute('normal');
+    // this.index = null;
+
+    // 2) Always replace the position attribute:
+    const hw = this.width / 2;
+    const hh = this.height / 2;
+    const verts = new Float32Array([
+      0,   -hh, 0,   // tip
+      hw,  hh,  0,   // bottom right
+     -hw,  hh,  0,   // bottom left
     ]);
+    this.setAttribute('position', new THREE.BufferAttribute(verts, 3));
 
-    // UV coordinates
-    // prettier-ignore
-    const uvs = new Float32Array([
-      0,    1,    1,
-      1,    0.5,  0
-    ]);
+    // 3) Recompute normals so lighting works:
+    this.computeVertexNormals();
 
-    // Normals - all pointing forward for a 2D triangle
-    const normals = new Float32Array([0, 0, 1, 0, 0, 1, 0, 0, 1]);
-
-    this.setAttribute("position", new THREE.BufferAttribute(vertices, 3));
-    this.setAttribute("normal", new THREE.BufferAttribute(normals, 3));
-    this.setAttribute("uv", new THREE.BufferAttribute(uvs, 2));
-
-    // Add face
-    this.setIndex([0, 1, 2]);
-
-    this.computeBoundingSphere();
+    // 4) If you were using draw groups:
+    // this.clearGroups();
+    // this.addGroup(0, 3, 0);
   }
 }
 
