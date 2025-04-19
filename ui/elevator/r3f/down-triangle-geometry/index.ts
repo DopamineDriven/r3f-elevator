@@ -2,10 +2,11 @@ import * as THREE from "three";
 
 export class DownTriangleGeometry extends THREE.BufferGeometry {
   constructor(
-    public width = 1,
-    public height = 1
+     width = 1,
+    height = 1
   ) {
     super();
+
 
     // Create vertices for a downward-pointing triangle
     // (0, height/2) is the top center

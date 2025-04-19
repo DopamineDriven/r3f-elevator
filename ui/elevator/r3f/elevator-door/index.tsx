@@ -50,8 +50,8 @@ export const ElevatorDoor = ({
         textures={TEXTURES.enhancedBrushedMetal}
         repeat={[2, 2]}
         color="#a6a6a6"
-        metalness={0.8}
-        roughness={0.35}
+        metalness={0}
+        roughness={1}
       />
     </mesh>
   );
