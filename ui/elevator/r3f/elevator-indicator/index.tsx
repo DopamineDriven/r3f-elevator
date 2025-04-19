@@ -6,7 +6,7 @@ export function TriangleIndicator({
   activated = false,
   width = 0.18,
   height = 0.18,
-  depth = 0.075
+  depth = 0.035
 }) {
   return (
     <mesh position={[0, 0, depth]} renderOrder={25}>
