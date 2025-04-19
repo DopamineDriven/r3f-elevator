@@ -1,28 +1,30 @@
-import { FlatCompat } from "@eslint/eslintrc";
+import baseConfig from "./base.mjs";
+import nextjsConfig from "./nextjs.mjs";
+import reactConfig from "./react.mjs";
 
-const compat = new FlatCompat({
-  baseDirectory: import.meta.dirname,
-});
 /** @type {import('typescript-eslint').Config} */
-const config =  [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+export default [
+  ...baseConfig,
+  ...reactConfig,
+  ...nextjsConfig,
   {
-    ignores: [".next/**", "!.next/types/**/*", "**node_modules**"],
+    ignores: [".next/**", "!.next/types/**/*"],
+    // https://typescript-eslint.io/troubleshooting/typed-linting/performance#eslint-plugin-import
     rules: {
       "@typescript-eslint/consistent-type-assertions": "off",
+      "import/named": "off",
+      "import/namespace": "off",
+      "import/default": "off",
+      "import/no-named-as-default-member": "off",
+      "import/no-unresolved": "off",
       "@typescript-eslint/prefer-string-starts-ends-with": "off",
       "@typescript-eslint/require-await": "off",
       "@typescript-eslint/prefer-regexp-exec": "off",
-      "@typescript-eslint/no-unused-vars": "off",
       "@typescript-eslint/prefer-find": "off",
-      "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-floating-promises": "off",
+      "import/consistent-type-specifier-style": "off",
       "@typescript-eslint/prefer-nullish-coalescing": "off",
-      "@typescript-eslint/no-unsafe-function-type": "off",
-      "@typescript-eslint/no-unused-expressions": "off",
-      "@typescript-eslint/prefer-for-of": "off",
-    },
-  },
+      "@typescript-eslint/prefer-for-of": "off"
+    }
+  }
 ];
-
-export default config;

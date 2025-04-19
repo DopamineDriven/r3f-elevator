@@ -2,13 +2,14 @@
 
 import { INDICATOR_COLORS } from "@/ui/elevator/r3f/constants/indicator-colors";
 import { TriangleIndicator } from "../elevator-indicator";
+import { DebugTriangle } from "../elevator-indicator/debug-triangle";
 
 export const FloorIndicator = ({ activated }: { activated: boolean }) => {
   return (
     <group position={[0, 1.5, 0.275]} renderOrder={20}>
       {/* Curved panel base */}
       <mesh castShadow>
-        <bentPlaneGeometry args={[0.55, 0.3, 32, 1]} radius={2.5} />
+        <bentPlaneGeometry args={[0.55, 0.3, 32, 1]} radius={1.25} />
         <meshStandardMaterial
           color={INDICATOR_COLORS.PANEL_HOUSING}
           metalness={0.3}
@@ -22,7 +23,7 @@ export const FloorIndicator = ({ activated }: { activated: boolean }) => {
 
       {/* glowing background */}
       <mesh position={[0, 0, 0.025]}>
-        <bentPlaneGeometry args={[0.45, 0.22, 32, 1]} radius={2.5} />
+        <bentPlaneGeometry args={[0.45, 0.22, 32, 1]} radius={1.25} />
         <meshStandardMaterial
           color="#111"
           emissive="#222"
@@ -32,7 +33,13 @@ export const FloorIndicator = ({ activated }: { activated: boolean }) => {
           toneMapped={false}
         />
       </mesh>
-      {activated && <TriangleIndicator />}
+      <TriangleIndicator activated={activated} />
+      <DebugTriangle
+        width={0.18}
+        height={0.18}
+        depth={0.075}
+        showHelper={true}
+      />
     </group>
   );
 };
