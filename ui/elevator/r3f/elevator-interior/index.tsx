@@ -34,7 +34,7 @@ export const ElevatorInterior = ({ activated }: { activated: boolean }) => {
   return (
     <group position={[0, 0, 0]} visible={true}>
       {/* back wall */}
-      <mesh position={[0, 0, -0.05]} receiveShadow>
+      <mesh position={[0, 0, -0.5]} receiveShadow>
         <boxGeometry args={[1, 2.5, 0.05]} />
         <meshStandardMaterial color="#777" metalness={0.4} roughness={0.6} />
       </mesh>
@@ -98,13 +98,13 @@ export const ElevatorInterior = ({ activated }: { activated: boolean }) => {
         color="#f0f0ff"
       />
 
-<pointLight
-  position={[0, -0.8, 0.15]} // near the floor
-  intensity={0.3}
-  distance={2}
-  decay={2}
-  color="#f0f0ff"
-/>
+      <pointLight
+        position={[0, -1.45, 0.25]} // near the floor
+        intensity={0.1}
+        distance={0.25}
+        decay={2}
+        color="#f0f0ff"
+      />
     </group>
   );
 };

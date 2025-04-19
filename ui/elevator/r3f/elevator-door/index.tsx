@@ -42,16 +42,16 @@ export const ElevatorDoor = ({
   return (
     <mesh
       ref={doorRef}
-      position={[isLeft ? -0.025 : 0.025, 0, position]} // Use Leva zOffset if needed
+      position={[isLeft ? -0.025 : 0.025, 0, position]}
       castShadow
       receiveShadow>
       <boxGeometry args={[0.5, 2.5, 0.05]} />
       <PBRMaterial
-        textures={TEXTURES.brushedMetal}
+        textures={TEXTURES.enhancedBrushedMetal}
         repeat={[2, 2]}
-        color="#8c9399"
-        metalness={0.8}
-        roughness={0.4}
+        color="#a6a6a6"
+        metalness={0}
+        roughness={1}
       />
     </mesh>
   );

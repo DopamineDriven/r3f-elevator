@@ -7,6 +7,7 @@ import { getCookieDomain } from "@/lib/site-domain";
 import { getSiteUrl } from "@/lib/site-url";
 import { DownTriangleGeometry } from "@/ui/elevator/r3f/down-triangle-geometry";
 import { ElevatorFrameLight } from "@/ui/elevator/r3f/elevator-frame-light/instance";
+import { BentPlaneGeometry } from "@/ui/elevator/r3f/floor-indicator/instance";
 import { ElevatorScene } from "@/ui/elevator/r3f/scene";
 import { SoftWallLight } from "@/ui/elevator/r3f/soft-wall-light/instance";
 import { TriangleGeometry } from "@/ui/elevator/r3f/triangle-geometry";
@@ -17,9 +18,9 @@ import { Canvas, extend } from "@react-three/fiber";
 import Cookies from "js-cookie";
 import { Leva } from "leva";
 import type { ThreeElement } from "@react-three/fiber";
-import { Fog } from "three";
 
 extend({
+  BentPlaneGeometry,
   DownTriangleGeometry,
   ElevatorFrameLight,
   SoftWallLight,
@@ -31,6 +32,7 @@ declare module "@react-three/fiber" {
     downTriangleGeometry: ThreeElement<typeof DownTriangleGeometry>;
     softWallLight: ThreeElement<typeof SoftWallLight>;
     elevatorFrameLight: ThreeElement<typeof ElevatorFrameLight>;
+    bentPlaneGeometry: ThreeElement<typeof BentPlaneGeometry>;
   }
 }
 
@@ -133,7 +135,6 @@ export default function ElevatorApp() {
         className="absolute top-0 left-0 z-20 min-h-[100dvh] min-w-screen items-center justify-center bg-black/80"
         shadows
         camera={{ fov: 40, near: 0.1, far: 1000, position: [0, 0, 6] }}>
-          <scene fog={new Fog("#000000", 5, 10)}></scene>
         <Suspense fallback={null}>
           <PerspectiveCamera
             makeDefault

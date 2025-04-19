@@ -135,7 +135,6 @@ export function ElevatorScene() {
       <SoftWallLight />
       <CombinedCameraController
         isTransitioning={isTransitioning}
-        transitionProgress={transitionProgress}
       />
     </group>
   );
