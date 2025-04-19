@@ -1,8 +1,9 @@
 "use client";
 
 import { INDICATOR_COLORS } from "@/ui/elevator/r3f/constants/indicator-colors";
-import { TriangleIndicator } from "../elevator-indicator";
-import { DebugTriangle } from "../elevator-indicator/debug-triangle";
+import { TriangleIndicator } from "@/ui/elevator/r3f/elevator-indicator";
+
+// import { DebugTriangle } from "../elevator-indicator/debug-triangle";
 
 export const FloorIndicator = ({ activated }: { activated: boolean }) => {
   return (
@@ -34,12 +35,12 @@ export const FloorIndicator = ({ activated }: { activated: boolean }) => {
         />
       </mesh>
       <TriangleIndicator activated={activated} />
-      <DebugTriangle
+      {/* <DebugTriangle
         width={0.18}
         height={0.18}
         depth={0.075}
         showHelper={true}
-      />
+      /> */}
     </group>
   );
 };
