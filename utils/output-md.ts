@@ -120,6 +120,7 @@ class HandleFs extends Fs {
       return file.trim();
     } else {
       return file.replace(
+        // eslint-disable-next-line no-useless-escape
         /(?:(?:\/\*(?:[^*]|(?:\*+[^*\/]))*\*+\/)|(?:(?<!\:|\\\|\')\/\/.*))/gm,
         ""
       );
@@ -174,7 +175,7 @@ ${this.handleComments(target, fileContent, removeComments)}
     }
   }
   public incomingArgs(argv: string[]) {
-    const omitComments = argv[4] && argv[4]?.includes("false") ? false : true;
+    const omitComments = argv[4]?.includes("false") ? false : true;
     if (argv[3] && argv[3].length > 1) {
       if (argv[3]?.includes("ui")) {
         this.withWs(
