@@ -12,7 +12,8 @@
     "lint": "eslint",
     "start": "next start",
     "latest:pnpm": "corepack use pnpm@latest",
-    "update:pnpm": "curl -fsSL https://get.pnpm.io/install.sh | sh -"
+    "update:pnpm": "curl -fsSL https://get.pnpm.io/install.sh | sh -",
+    "restore:git": "java -jar ../../../bfg.jar --delete-files 'Rubber001_8K-JPG_NormalGL.jpg'"
   },
   "dependencies": {
     "@d0paminedriven/motion": "^1.4.0",
@@ -40,6 +41,7 @@
     "zustand": "^5.0.3"
   },
   "devDependencies": {
+    "@aws-sdk/client-s3": "^3.787.0",
     "@d0paminedriven/fs": "^2.0.0",
     "@edge-runtime/cookies": "^6.0.0",
     "@edge-runtime/types": "^4.0.0",
@@ -56,6 +58,7 @@
     "@types/react-dom": "^19.1.2",
     "@types/three": "^0.175.0",
     "@types/webxr": "^0.5.22",
+    "dotenv": "^16.5.0",
     "eslint": "^9.25.0",
     "eslint-config-next": "^15.3.1",
     "eslint-plugin-import": "^2.31.0",
