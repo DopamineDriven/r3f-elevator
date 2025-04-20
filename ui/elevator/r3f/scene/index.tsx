@@ -88,7 +88,6 @@ export function ElevatorScene() {
       <Wall />
       <ElevatorFrame />
       <ElevatorDoor activated={activated} />
-      <ElevatorDoor activated={activated} />
       <ElevatorInterior activated={activated} />
       <FloorIndicator activated={activated} />
       <ElevatorButton activated={activated} onClickAction={handleClick} />
