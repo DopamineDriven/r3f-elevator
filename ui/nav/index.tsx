@@ -36,8 +36,8 @@ const ArLogo: FC<
 
 const menuItems = [
   { name: "Home", href: "/" },
-  { name: "Posts", href: "/#" },
-  { name: "Projects", href: "/#" },
+  { name: "Elevator", href: "/elevator" },
+  { name: "Test", href: "/test" },
   { name: "Resume", href: "/resume" },
   { name: "World Tour", href: "/#" },
 ];
