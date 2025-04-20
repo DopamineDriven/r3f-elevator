@@ -24,20 +24,28 @@ export const ElevatorDoor = ({ activated }: { activated: boolean }) => {
   });
 
   useFrame(() => {
+    const l = leftSpring.get();
+    const r = rightSpring.get();
+
     if (leftRef.current) {
-      leftRef.current.position.x = -THREE.MathUtils.lerp(
-        DOOR_CLOSED_X,
-        DOOR_OPEN_X,
-        leftSpring.get()
+      leftRef.current.position.set(
+        -THREE.MathUtils.lerp(DOOR_CLOSED_X, DOOR_OPEN_X, l),
+        0,
+        0.05
       );
     }
+
     if (rightRef.current) {
-      rightRef.current.position.x = THREE.MathUtils.lerp(
-        DOOR_CLOSED_X,
-        DOOR_OPEN_X,
-        rightSpring.get()
+      rightRef.current.position.set(
+        THREE.MathUtils.lerp(DOOR_CLOSED_X, DOOR_OPEN_X, r),
+        0,
+        0.05
       );
     }
+  });
+
+  useFrame(() => {
+    console.log("Left:", leftSpring.get(), "Right:", rightSpring.get());
   });
 
   return (

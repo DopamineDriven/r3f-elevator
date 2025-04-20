@@ -32,7 +32,7 @@ export const ElevatorInterior = ({ activated }: { activated: boolean }) => {
   });
 
   return (
-    <group position={[0, 0, 0]} visible={true}>
+    <group position={[0, 0, -0.005]} visible={true}>
       {/* back wall */}
       <mesh position={[0, 0, -0.5]} receiveShadow>
         <boxGeometry args={[1, 2.5, 0.05]} />
