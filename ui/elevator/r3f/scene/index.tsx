@@ -9,14 +9,14 @@ import { ElevatorDoor } from "@/ui/elevator/r3f/elevator-door";
 import { ElevatorFrame } from "@/ui/elevator/r3f/elevator-frame";
 import { ElevatorInterior } from "@/ui/elevator/r3f/elevator-interior";
 import { FloorIndicator } from "@/ui/elevator/r3f/floor-indicator";
+import { SoftWallLight } from "@/ui/elevator/r3f/soft-wall-light";
 import { Wall } from "@/ui/elevator/r3f/wall";
 import { useEffect, useRef, useState } from "react";
-import { SoftWallLight } from "../soft-wall-light";
 
 export function ElevatorScene() {
   const [activated, setActivated] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [transitionProgress, setTransitionProgress] = useState(0);
+  const [_transitionProgress, setTransitionProgress] = useState(0);
   const [_loading, setLoading] = useState(true);
   const audioControllerRef = useRef<AudioController | null>(null);
 
@@ -87,8 +87,8 @@ export function ElevatorScene() {
     <group position={[0, -0.5, 0]}>
       <Wall />
       <ElevatorFrame />
-      <ElevatorDoor position={0} isLeft={true} activated={activated} />
-      <ElevatorDoor position={0} isLeft={false} activated={activated} />
+      <ElevatorDoor activated={activated} />
+      <ElevatorDoor activated={activated} />
       <ElevatorInterior activated={activated} />
       <FloorIndicator activated={activated} />
       <ElevatorButton activated={activated} onClickAction={handleClick} />
@@ -133,9 +133,7 @@ export function ElevatorScene() {
         castShadow={false}
       />
       <SoftWallLight />
-      <CombinedCameraController
-        isTransitioning={isTransitioning}
-      />
+      <CombinedCameraController isTransitioning={isTransitioning} />
     </group>
   );
 }
