@@ -45,7 +45,7 @@ export class AudioController {
           } else
             throw new Error(
               typeof err === "string" ? err : JSON.stringify(err, null, 2)
-            ).message;
+            );
         });
     } catch (err) {
       if (err instanceof Error) {

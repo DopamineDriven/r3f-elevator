@@ -66,7 +66,7 @@ export function mp() {
   >();
 
   try {
-    Object.entries(TEXTURES).forEach(function ([k, v]) {
+    Object.entries(TEXTURES).forEach(function ([k, _v]) {
       newMap.set(k as keyof typeof TEXTURES, getIt(k as keyof typeof TEXTURES));
     });
   } catch (err) {

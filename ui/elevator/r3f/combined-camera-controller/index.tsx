@@ -2,7 +2,7 @@
 
 import { useMobile } from "@/hooks/use-mobile";
 import { dispatchElevatorTransition } from "@/ui/elevator/r3f/custom-event";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
@@ -13,10 +13,10 @@ export function CombinedCameraController({
 }: {
   isTransitioning: boolean;
 }) {
-  const size = useThree((state) => state.size);
-  const camera = useThree((state) => state.camera) as THREE.PerspectiveCamera;
+  const size = useThree(state => state.size);
+  const camera = useThree(state => state.camera) as THREE.PerspectiveCamera;
   const isMobile = useMobile();
-
+  const cameraRef = useRef(camera);
   const [targetZ, setTargetZ] = useState(5);
   const [targetY, setTargetY] = useState(0);
   const [targetFov, setTargetFov] = useState(42);
@@ -59,13 +59,13 @@ export function CombinedCameraController({
     setTargetZ(newZ);
     setTargetY(newY);
     setTargetFov(newFov);
-
+    if (!cameraRef.current) return;
     // Snap camera immediately to starting values
-    camera.position.z = newZ;
-    camera.position.y = newY;
-    camera.fov = newFov;
-    camera.aspect = aspect;
-    camera.updateProjectionMatrix();
+    cameraRef.current.position.z = newZ;
+    cameraRef.current.position.y = newY;
+    cameraRef.current.fov = newFov;
+    cameraRef.current.aspect = aspect;
+    cameraRef.current.updateProjectionMatrix();
   }, [size, isMobile, camera]);
 
   // 🎯 Update target values on transition trigger
@@ -75,19 +75,19 @@ export function CombinedCameraController({
   }, [isTransitioning]);
 
   useFrame((_, delta) => {
-    camera.position.z = THREE.MathUtils.damp(
+    cameraRef.current.position.z = THREE.MathUtils.damp(
       camera.position.z,
       targetZ,
       DAMPING,
       delta
     );
-    camera.position.y = THREE.MathUtils.damp(
+    cameraRef.current.position.y = THREE.MathUtils.damp(
       camera.position.y,
       targetY,
       DAMPING,
       delta
     );
-    camera.fov = THREE.MathUtils.damp(
+    cameraRef.current.fov = THREE.MathUtils.damp(
       camera.fov,
       targetFov,
       DAMPING,

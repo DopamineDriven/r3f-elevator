@@ -21,7 +21,7 @@ export class RampChallenge {
     const matches = this.extractMatches(htmlContent);
     const solution = Array.of<string>();
     try {
-      matches.forEach(function (match, i) {
+      matches.forEach(function (match, _i) {
         solution.push(match[1]);
       });
     } catch (err) {
