@@ -1,11 +1,13 @@
 import baseConfig from "./base.mjs";
 import nextjsConfig from "./nextjs.mjs";
 import reactConfig from "./react.mjs";
+import r3f from "./r3f.mjs";
 
 /** @type {import('typescript-eslint').Config} */
 export default [
   ...baseConfig,
   ...reactConfig,
+  ...r3f,
   ...nextjsConfig,
   {
     ignores: [".next/**", "!.next/types/**/*"],

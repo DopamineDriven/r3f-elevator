@@ -1,7 +1,6 @@
 "use client";
 
 import { Baseboard } from "@/ui/elevator/r3f/baseboard";
-import { TEXTURES } from "@/ui/elevator/r3f/constants";
 import { PBRMaterial } from "@/ui/elevator/r3f/pbr-material";
 
 export const Wall = () => {
@@ -12,7 +11,6 @@ export const Wall = () => {
         <boxGeometry args={[10, 5, 0.2]} />
         <PBRMaterial
           target="stuccoWall"
-          textures={TEXTURES.stuccoWall}
           repeat={[10, 5]}
           color="#b8b8b8"
           metalness={0.1}

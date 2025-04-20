@@ -1,6 +1,5 @@
 "use client";
 
-import { TEXTURES } from "@/ui/elevator/r3f/constants";
 import { useSpringySplit } from "@/ui/elevator/r3f/hooks/use-springy-split";
 import { PBRMaterial } from "@/ui/elevator/r3f/pbr-material";
 import { useRef } from "react";
@@ -43,7 +42,6 @@ export const ElevatorDoor = ({ activated }: { activated: boolean }) => {
         <boxGeometry args={[0.5, 2.5, 0.05]} />
         <PBRMaterial<"enhancedBrushedMetal">
           target="enhancedBrushedMetal"
-          textures={TEXTURES.enhancedBrushedMetal}
           repeat={[2, 2]}
           metalness={0}
           roughness={1}
@@ -55,7 +53,6 @@ export const ElevatorDoor = ({ activated }: { activated: boolean }) => {
         <boxGeometry args={[0.5, 2.5, 0.05]} />
         <PBRMaterial
           target="enhancedBrushedMetal"
-          textures={TEXTURES.enhancedBrushedMetal}
           repeat={[2, 2]}
           metalness={1}
           roughness={0.35}

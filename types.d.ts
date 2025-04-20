@@ -52,3 +52,13 @@ declare module "@next/eslint-plugin-next" {
   };
   export const rules: Record<string, Rule.RuleModule>;
 }
+
+declare module "@react-three/eslint-plugin" {
+  import type { Linter, Rule } from "eslint";
+
+  export const configs: {
+    recommended: { rules: Linter.RulesRecord };
+    all: { rules: Linter.RulesRecord };
+  };
+  export const rules: Record<string, Rule.RuleModule>;
+}
