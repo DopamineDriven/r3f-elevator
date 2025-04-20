@@ -6,7 +6,7 @@ import { Suspense, useEffect, useRef, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import {
   animate,
-  motion,motionValue,
+  motion,
   useMotionTemplate,
   useMotionValue,
   useMotionValueEvent,
