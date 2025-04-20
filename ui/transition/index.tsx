@@ -6,13 +6,14 @@ import { Suspense, useEffect, useRef, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import {
   animate,
-  motion,
+  motion,motionValue,
   useMotionTemplate,
   useMotionValue,
   useMotionValueEvent,
   useSpring,
   useTransform
 } from "motion/react";
+import {} from "motion-dom";
 
 // Simple in-memory cache to track visited routes
 const visitedRoutes = new Set<string>();
