@@ -11,7 +11,7 @@ import {
   useMotionValue,
   useMotionValueEvent,
   useSpring,
-  useTransform,
+  useTransform
 } from "motion/react";
 
 // Simple in-memory cache to track visited routes
@@ -25,7 +25,7 @@ const elevatorAudio = {
   secondShortest:
     "https://raw.githubusercontent.com/DopamineDriven/portfolio-2025/master/apps/web/public/audio/elevator-second-shortest.mp3",
   shortest:
-    "https://raw.githubusercontent.com/DopamineDriven/portfolio-2025/master/apps/web/public/audio/elevator-shortest.mp3",
+    "https://raw.githubusercontent.com/DopamineDriven/portfolio-2025/master/apps/web/public/audio/elevator-shortest.mp3"
 };
 
 function LoadingAnimation({ children }: { children: React.ReactNode }) {
@@ -62,7 +62,7 @@ function LoadingAnimation({ children }: { children: React.ReactNode }) {
             hasPlayedAudio.current = true;
             setShowPlayButton(false);
           })
-          .catch((error) => {
+          .catch(error => {
             console.log("Audio playback was prevented by the browser:", error);
             // Show play button if autoplay fails
             setShowPlayButton(true);
@@ -115,7 +115,7 @@ function LoadingAnimation({ children }: { children: React.ReactNode }) {
     };
   }, []);
 
-  useMotionValueEvent(progress, "change", (latest) => {
+  useMotionValueEvent(progress, "change", latest => {
     // When progress reaches 80%, try to play the elevator sound
     if (latest >= 0.8 && !isLoaded && !hasPlayedAudio.current) {
       playAudio();
@@ -132,7 +132,7 @@ function LoadingAnimation({ children }: { children: React.ReactNode }) {
     const transition: Transition = {
       type: "spring",
       visualDuration: 0.5,
-      bounce: 0,
+      bounce: 0
     };
 
     animate(leftEdge, "calc(0% - 0px)", transition);
@@ -161,8 +161,7 @@ function LoadingAnimation({ children }: { children: React.ReactNode }) {
       {showPlayButton && !isLoaded && (
         <button
           onClick={handlePlayButtonClick}
-          className="fixed right-4 bottom-4 z-[10000000002] rounded-md bg-[#f8fafc]/10 px-4 py-2 text-[#f8fafc] transition-colors hover:bg-[#f8fafc]/20"
-        >
+          className="fixed right-4 bottom-4 z-[10000000002] rounded-md bg-[#f8fafc]/10 px-4 py-2 text-[#f8fafc] transition-colors hover:bg-[#f8fafc]/20">
           Play Elevator Sound
         </button>
       )}
@@ -191,8 +190,7 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-        >
+          transition={{ duration: 0.3 }}>
           {children}
         </motion.div>
       </Suspense>
@@ -210,8 +208,7 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
           <div className="h-32 w-full animate-pulse bg-[#020817] dark:bg-[#020817]" />{" "}
           {/* Footer placeholder */}
         </div>
-      }
-    >
+      }>
       <LoadingAnimation>{children}</LoadingAnimation>
     </Suspense>
   );
