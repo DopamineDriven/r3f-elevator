@@ -1,39 +1,37 @@
 "use client";
 
 import { ElevatorFrameLight } from "@/ui/elevator/r3f/elevator-frame-light";
-
-/**
- architectural x-section
-
- ```txt
-[Camera]
-|
-|  z = 0       ← Wall + Doors (flush)
-|  z = -0.05   ← Metal Frame Reveal (Recess Frame)
-|  z = -0.15   ← Shaft Void
-|
- ```
- */
+import { PBRMaterial } from "@/ui/elevator/r3f/pbr-material";
 
 export const ElevatorFrame = () => {
   return (
     <group>
-      {/* wall panel — flush with elevator face */}
+      {/* 🧱 Wall panel — flush with elevator face */}
       <mesh position={[0, 0, 0]} castShadow receiveShadow>
         <boxGeometry args={[1.2, 3, 0.1]} />
-        <meshStandardMaterial color="#444" metalness={0.6} roughness={0.4} />
+        <PBRMaterial
+          target="brushedMetal"
+          repeat={[2, 3]}
+          metalness={0.7}
+          roughness={0.3}
+        />
       </mesh>
 
-      {/* architectural bounce light inside frame cavity */}
+      {/* 💡 Architectural bounce light inside frame cavity */}
       <ElevatorFrameLight />
 
-      {/* recess frame — revealed as doors slide open */}
+      {/* 🛗 Recessed brushed metal frame (door reveal) */}
       <mesh position={[0, 0, -0.05]} castShadow receiveShadow>
         <boxGeometry args={[1.05, 2.6, 0.05]} />
-        <meshStandardMaterial color="#555" metalness={0.6} roughness={0.4} />
+        <PBRMaterial
+          target="enhancedBrushedMetal"
+          repeat={[2, 3]}
+          metalness={1}
+          roughness={0.35}
+        />
       </mesh>
 
-      {/* ⚫ shaft void — deep black interior cavity for doors to occupy on open */}
+      {/* ⚫ Shaft void — deep black cavity behind doors */}
       <mesh position={[0, 0, -0.15]} receiveShadow>
         <boxGeometry args={[1.05, 2.6, 0.2]} />
         <meshStandardMaterial
@@ -44,10 +42,49 @@ export const ElevatorFrame = () => {
         />
       </mesh>
 
-      {/* 🧱 header panel — flush above door frame */}
+      {/* 🕳️ Door cavity - left */}
+      <mesh position={[-0.55, 0, -0.12]} receiveShadow>
+        <boxGeometry args={[0.5, 2.5, 0.05]} />
+        <meshStandardMaterial
+          color="#0a0a0a"
+          roughness={0.95}
+          metalness={0}
+          toneMapped={false}
+        />
+      </mesh>
+
+      {/* 🕳️ Door cavity - right */}
+      <mesh position={[0.55, 0, -0.12]} receiveShadow>
+        <boxGeometry args={[0.5, 2.5, 0.05]} />
+        <meshStandardMaterial
+          color="#0a0a0a"
+          roughness={0.95}
+          metalness={0}
+          toneMapped={false}
+        />
+      </mesh>
+
+      {/* 🔳 Header panel — top reveal */}
       <mesh position={[0, 1.4, 0.01]} castShadow receiveShadow>
         <boxGeometry args={[1, 0.2, 0.1]} />
-        <meshStandardMaterial color="#444" metalness={0.6} roughness={0.4} />
+        <PBRMaterial
+          target="brushedMetal"
+          repeat={[2, 1]}
+          metalness={0.7}
+          roughness={0.4}
+        />
+      </mesh>
+
+      {/* 🟫 Frame lip - left */}
+      <mesh position={[-0.275, 0, 0.01]}>
+        <boxGeometry args={[0.005, 2.5, 0.06]} />
+        <meshStandardMaterial color="#333" metalness={0.6} roughness={0.3} />
+      </mesh>
+
+      {/* 🟫 Frame lip - right */}
+      <mesh position={[0.275, 0, 0.01]}>
+        <boxGeometry args={[0.005, 2.5, 0.06]} />
+        <meshStandardMaterial color="#333" metalness={0.6} roughness={0.3} />
       </mesh>
     </group>
   );
