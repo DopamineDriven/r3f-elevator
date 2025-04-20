@@ -1,45 +1,34 @@
-import type { Easing, SpringOptions } from "motion/react";
-import { useEffect, useMemo } from "react";
-import {
-  animate,
-  motionValue,
-  useSpring,
-  ValueAnimationTransition
-} from "motion/react";
+"use client";
+
+import type { Easing, MotionValue, SpringOptions } from "motion/react";
+import { useCallback, useEffect } from "react";
+import { animate, motionValue } from "motion/react";
 
 export interface SpringySplitOptions extends SpringOptions {
   ease?: Easing | Easing[];
 }
 
-export function useSpringySplit(open: boolean, config?: SpringySplitOptions) {
-  const {
-    ease = [0.4, 0, 0.2, 1],
-    duration,
-    visualDuration,
-    bounce,
-    stiffness = 150,
-    damping = 25,
-    mass,
-    restSpeed,
-    restDelta,
-    velocity
-  } = config ?? {};
+export function useSpringySplit(
+  open: boolean,
+  config?: SpringySplitOptions
+): MotionValue<number> {
+  const target = open ? 1 : 0;
+  const x = motionValue(target);
 
-  const x = motionValue(open ? 1 : 0);
-
-  const spring = useSpring(x, {
-    stiffness,
-    damping,
-    mass,
-    restSpeed,
-    restDelta,
-    velocity
-  });
-
-  const animateOptsMemo = useMemo(() => {
+  const optionsCb = useCallback(() => {
+    const {
+      ease = [0.4, 0, 0.2, 1],
+      visualDuration = 0.75,
+      bounce,
+      stiffness,
+      damping,
+      mass = 1,
+      restSpeed = 0,
+      restDelta = 0,
+      velocity
+    } = config ?? {};
     return {
       ease,
-      duration,
       visualDuration,
       bounce,
       stiffness,
@@ -48,23 +37,15 @@ export function useSpringySplit(open: boolean, config?: SpringySplitOptions) {
       restSpeed,
       restDelta,
       velocity
-    } satisfies ValueAnimationTransition;
-  }, [
-    bounce,
-    damping,
-    duration,
-    ease,
-    mass,
-    restDelta,
-    restSpeed,
-    stiffness,
-    velocity,
-    visualDuration
-  ]);
+    } satisfies SpringySplitOptions;
+  }, [config]);
 
   useEffect(() => {
-    animate(x, open ? 1 : 0, animateOptsMemo);
-  }, [open, animateOptsMemo, x]);
+    const cb = optionsCb();
+    const controls = animate(x, target, cb);
 
-  return spring;
+    return () => controls.stop();
+  }, [target, optionsCb, x]);
+
+  return x;
 }

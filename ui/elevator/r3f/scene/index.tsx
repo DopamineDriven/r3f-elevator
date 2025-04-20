@@ -12,7 +12,7 @@ import { FloorIndicator } from "@/ui/elevator/r3f/floor-indicator";
 import { SoftWallLight } from "@/ui/elevator/r3f/soft-wall-light";
 import { Wall } from "@/ui/elevator/r3f/wall";
 import { useEffect, useRef, useState } from "react";
-import { DebugDoor } from "../elevator-door/debug-door";
+// import { DebugDoor } from "../elevator-door/debug-door";
 
 export function ElevatorScene() {
   const [activated, setActivated] = useState(false);
@@ -89,8 +89,8 @@ export function ElevatorScene() {
       <Wall />
       <ElevatorFrame />
       <ElevatorDoor activated={activated} />
-      <DebugDoor position={[-0.25, 0, 0.05]} color="lime" />
-      <DebugDoor position={[0.25, 0, 0.05]} color="cyan" />
+      {/* <DebugDoor position={[-0.25, 0, 0.05]} color="lime" />
+      <DebugDoor position={[0.25, 0, 0.05]} color="cyan" /> */}
       <ElevatorInterior activated={activated} />
       <FloorIndicator activated={activated} />
       <ElevatorButton activated={activated} onClickAction={handleClick} />

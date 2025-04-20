@@ -4,19 +4,21 @@ import type { PBRTextureSet } from "@/ui/elevator/r3f/types";
 import { useEffect } from "react";
 import { useTexture } from "@react-three/drei";
 import * as THREE from "three";
+import {TEXTURES} from "@/ui/elevator/r3f/constants"
 
-export function PBRMaterial({
+export function PBRMaterial<const Target extends keyof typeof TEXTURES>({
   textures,
   repeat = [1, 1],
   color = "#ffffff",
   metalness = undefined,
-  roughness = undefined
+  roughness = undefined,target
 }: {
   textures: PBRTextureSet;
   repeat?: [number, number];
   color?: string;
   metalness?: number;
   roughness?: number;
+  target: Target
 }) {
   // TODO utilize onload callback (second optional arg in useTexture...maybe?)
   const textureProps = useTexture({
@@ -40,6 +42,17 @@ export function PBRMaterial({
       Object.values(textureProps).forEach(tex => tex?.dispose());
     };
   }, [textureProps, repeat]);
+
+  if (target === "brushedMetal" || target === "enhancedBrushedMetal") {
+    return (
+      <meshPhysicalMaterial
+      {...textureProps}
+      color={color}
+      metalness={metalness}
+      roughness={roughness}
+    />
+    )
+  }
 
   return (
     <meshStandardMaterial
