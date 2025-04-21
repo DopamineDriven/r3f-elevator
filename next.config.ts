@@ -16,6 +16,7 @@ export default {
         port: "3007",
         protocol: "http"
       },
+      { hostname: "asrosscloud.com", protocol: "https" },
       {
         protocol: "https",
         hostname: "**.vercel-storage.com"
