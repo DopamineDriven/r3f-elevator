@@ -5,6 +5,7 @@
   "type": "module",
   "packageManager": "pnpm@10.8.1+sha512.c50088ba998c67b8ca8c99df8a5e02fd2ae2e2b29aaf238feaa9e124248d3f48f9fb6db2424949ff901cffbb5e0f0cc1ad6aedb602cd29450751d11c35023677",
   "scripts": {
+    "prebuild": "tsx utils/prebuild.ts",
     "build": "next build --turbopack",
     "clean": "git clean -xdf node_modules pnpm-lock.yaml .next",
     "clean:house": "pnpm clean && pnpm install && next build --turbopack",
@@ -42,7 +43,7 @@
   },
   "devDependencies": {
     "@aws-sdk/client-s3": "^3.787.0",
-    "@d0paminedriven/fs": "^2.0.0",
+    "@d0paminedriven/fs": "^3.0.0",
     "@edge-runtime/cookies": "^6.0.0",
     "@edge-runtime/types": "^4.0.0",
     "@eslint/compat": "^1.2.8",

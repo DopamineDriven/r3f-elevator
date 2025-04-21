@@ -1,51 +1,51 @@
 import type { NextRequest } from "next/server";
 import { NextResponse, userAgent } from "next/server";
 
-const allowedOrigins = ['*']
+// const allowedOrigins = ['*']
 
-const corsOptions = {
-  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, HEAD, OPTIONS',
-  'Access-Control-Allow-Headers': '*',
-}
+// const corsOptions = {
+//   'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, HEAD, OPTIONS',
+//   'Access-Control-Allow-Headers': '*',
+// }
 
- function cors(request: NextRequest) {
-  // Check the origin from the request
-  const origin = request.headers.get('origin') ?? ''
-  const isAllowedOrigin = allowedOrigins.includes(origin)
+//  function cors(request: NextRequest, response: typeof NextResponse) {
+//   // Check the origin from the request
+//   const origin = request.headers.get('origin') ?? ''
+//   const isAllowedOrigin = allowedOrigins.includes(origin)
 
-  // Handle preflighted requests
-  const isPreflight = request.method === 'OPTIONS'
+//   // Handle preflighted requests
+//   const isPreflight = request.method === 'OPTIONS'
 
-  if (isPreflight) {
-    const preflightHeaders = {
-      ...(isAllowedOrigin && { 'Access-Control-Allow-Origin': origin }),
-      ...corsOptions,
-    }
-    return NextResponse.json({}, { headers: preflightHeaders })
-  }
+//   if (isPreflight) {
+//     const preflightHeaders = {
+//       ...(isAllowedOrigin && { 'Access-Control-Allow-Origin': origin }),
+//       ...corsOptions,
+//     }
+//     return response.json({}, { headers: preflightHeaders })
+//   }
 
-  // Handle simple requests
-  const response = NextResponse.next()
+//   // Handle simple requests
+//   const res = response.next();
 
-  if (isAllowedOrigin) {
-    response.headers.set('Access-Control-Allow-Origin', origin)
-  }
+//   if (isAllowedOrigin) {
+//     res.headers.set('Access-Control-Allow-Origin', origin)
+//   }
 
-  Object.entries(corsOptions).forEach(([key, value]) => {
-    response.headers.set(key, value)
-  })
+//   Object.entries(corsOptions).forEach(([key, value]) => {
+//     res.headers.set(key, value)
+//   })
 
-  return response
-}
+//   return res;
+// }
 
 function detectDeviceAndSetCookies(
   request: NextRequest,
   response: NextResponse
 ) {
-  cors(request);
+
   const { device, ua } = userAgent(request);
 
-  const {hostname} = request.nextUrl;
+  const { hostname } = request.nextUrl;
 
   if (request.cookies.has("hostname")) {
     response.cookies.delete("hostname");
@@ -71,6 +71,7 @@ function detectDeviceAndSetCookies(
   response.cookies.set("hostname", hostname);
   response.cookies.set("viewport", viewport);
   response.cookies.set("ios", ios);
+  response.headers.set("Access-Control-Allow-Origin", "*")
 
   return response;
 }

@@ -87,8 +87,8 @@ importers:
         specifier: ^3.787.0
         version: 3.787.0
       '@d0paminedriven/fs':
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: ^3.0.0
+        version: 3.0.0
       '@edge-runtime/cookies':
         specifier: ^6.0.0
         version: 6.0.0
@@ -465,8 +465,8 @@ packages:
     resolution: {integrity: sha512-H45s8fVLYjbhFH62dIJ3WtmJ6RSPt/3DRO0ZcT2SUiYiQyz3BLVb9ADEnLl91m74aQPS3AzzeajZHYOalWe3bg==}
     engines: {node: '>=6.9.0'}
 
-  '@d0paminedriven/fs@2.0.0':
-    resolution: {integrity: sha512-TLaQ7We0LaeocYiwTXSpgOyXaz48c1mPYI3nO+xj/i03ze6Hwc0crhnnDHbM+DMyC7eHvEgKW4SUMwZ9uj0WFg==}
+  '@d0paminedriven/fs@3.0.0':
+    resolution: {integrity: sha512-PmFcoHcn+Yzc2ia1OOEPhtSMC7aseAkYUu1GZZ/wsSU+bhqu4TPY0sQBxL/lActM8TU3Mwwao9hpAumlm84TVA==}
 
   '@d0paminedriven/motion@1.4.0':
     resolution: {integrity: sha512-EZb2+c8ffbW4CQe9FWFb2NfxxCn0vVUG1a9FZ/3HO0DtemaR6pEr6iAGfHRCfzwUZYYRCiE2K50Cq8541cnejQ==}
@@ -4077,7 +4077,7 @@ snapshots:
       '@babel/helper-string-parser': 7.25.9
       '@babel/helper-validator-identifier': 7.25.9
 
-  '@d0paminedriven/fs@2.0.0':
+  '@d0paminedriven/fs@3.0.0':
     dependencies:
       dotenv: 16.5.0
       sharp: 0.34.1

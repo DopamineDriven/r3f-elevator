@@ -43,3 +43,5 @@ notes.md
 
 utils/__out__/**/*.md
 utils/*.md
+
+public/r3f/*

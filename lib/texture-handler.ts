@@ -173,6 +173,13 @@ export type PBRTextureSet = PBRTextureMap[TextureKey];
 export function getPBRTexture<const T extends TextureKey>(target: T) {
   return PBR_TEXTURES[target] satisfies PBRTextureSet;
 }
+const ORIGIN = "https://asrosscloud.com/";
+const LOCAL_ROOT = "/r3f/"; // browser-visible path (omit "public")
+
+function toLocal(url: string) {
+  return url.replace(ORIGIN, LOCAL_ROOT);
+}
+
 export function handleUnknown(textureSet: PBRTextureSet):
   | {
       map: string;
@@ -187,20 +194,16 @@ export function handleUnknown(textureSet: PBRTextureSet):
       normalMap: string;
       roughnessMap: string;
     } {
+  const map = textureSet.albedo && toLocal(textureSet.albedo);
+  const aoMap = textureSet.ao && toLocal(textureSet.ao);
+  const normalMap = textureSet.normal && toLocal(textureSet.normal);
+  const roughnessMap = textureSet.roughness && toLocal(textureSet.roughness);
+
   if (textureSet.metalness) {
-    return {
-      map: textureSet.albedo as string,
-      aoMap: textureSet.ao as string,
-      metalnessMap: textureSet.metalness as string,
-      normalMap: textureSet.normal as string,
-      roughnessMap: textureSet.roughness as string
-    };
+    const metalnessMap = toLocal(textureSet.metalness);
+    return { map, aoMap, metalnessMap, normalMap, roughnessMap };
   } else {
-    return {
-      map: textureSet.albedo as string,
-      aoMap: textureSet.ao as string,
-      normalMap: textureSet.normal as string,
-      roughnessMap: textureSet.roughness as string
-    };
+    return { map, aoMap, normalMap, roughnessMap };
   }
 }
+
