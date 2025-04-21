@@ -40,27 +40,8 @@ export function PBRMaterial<const Target extends TextureKey>({
     };
   }, [textureProps, repeat]);
 
-  const isNotPhysical = useMemo(
-    () =>
-      target === "trueStuccoWhite" ||
-      target === "smoothStucco" ||
-      target === "paintedStuccoWhite",
-    [target]
-  );
-
-  if (isNotPhysical) {
-    return (
-      <meshStandardMaterial
-        attach="material"
-        {...textureProps}
-        color={color}
-        metalness={metalness}
-        roughness={roughness}
-      />
-    );
-  }
   return (
-    <meshPhysicalMaterial
+    <meshStandardMaterial
       attach="material"
       {...textureProps}
       color={color}
