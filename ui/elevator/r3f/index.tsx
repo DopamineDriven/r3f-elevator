@@ -18,11 +18,13 @@ import { Canvas, extend } from "@react-three/fiber";
 import Cookies from "js-cookie";
 import { Leva } from "leva";
 import type { ThreeElement } from "@react-three/fiber";
+import { RectAreaLightImpl } from "./elevator-frame/instance";
 
 extend({
   BentPlaneGeometry,
   DownTriangleGeometry,
   ElevatorFrameLight,
+  RectAreaLightImpl,
   SoftWallLight,
   TriangleGeometry
 });
@@ -32,6 +34,7 @@ declare module "@react-three/fiber" {
     downTriangleGeometry: ThreeElement<typeof DownTriangleGeometry>;
     softWallLight: ThreeElement<typeof SoftWallLight>;
     elevatorFrameLight: ThreeElement<typeof ElevatorFrameLight>;
+    rectAreaLightImpl: ThreeElement<typeof RectAreaLightImpl>;
     bentPlaneGeometry: ThreeElement<typeof BentPlaneGeometry>;
   }
 }

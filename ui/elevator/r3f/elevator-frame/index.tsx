@@ -6,14 +6,24 @@ import { PBRMaterial } from "@/ui/elevator/r3f/pbr-material";
 export const ElevatorFrame = () => {
   return (
     <group>
+      <rectAreaLightImpl
+        position={[0, 1.51, 0.8]} // Just above the header
+        width={1.2}
+        height={0.2}
+        intensity={0.45}
+        color="#ffffff"
+
+        lookAt={[0, 1.4, 0]}
+        castShadow={false}
+      />
       {/* 🧱 Wall panel — flush with elevator face */}
       <mesh position={[0, 0, 0]} castShadow receiveShadow>
         <boxGeometry args={[1.2, 3, 0.1]} />
         <PBRMaterial
-          target="brushedMetal"
-          repeat={[2, 3]}
-          metalness={0.7}
-          roughness={0.3}
+          target="brushedSteelVerticalFine"
+          repeat={[2.25, 3]}
+          metalness={0.9}
+          roughness={0.4}
         />
       </mesh>
 
@@ -24,10 +34,10 @@ export const ElevatorFrame = () => {
       <mesh position={[0, 0, -0.05]} castShadow receiveShadow>
         <boxGeometry args={[1.05, 2.6, 0.05]} />
         <PBRMaterial
-          target="enhancedBrushedMetal"
-          repeat={[2, 3]}
+          target="brushedSteelVerticalGlossy"
+          repeat={[2.5, 3]}
           metalness={1}
-          roughness={0.35}
+          roughness={0.25}
         />
       </mesh>
 
@@ -68,10 +78,10 @@ export const ElevatorFrame = () => {
       <mesh position={[0, 1.4, 0.01]} castShadow receiveShadow>
         <boxGeometry args={[1, 0.2, 0.1]} />
         <PBRMaterial
-          target="brushedMetal"
+          target="brushedSteelVerticalFine"
           repeat={[2, 1]}
-          metalness={0.7}
-          roughness={0.4}
+          metalness={0.8}
+          roughness={0.35}
         />
       </mesh>
 
