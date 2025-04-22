@@ -10,6 +10,7 @@
     "clean": "git clean -xdf node_modules pnpm-lock.yaml .next",
     "clean:house": "pnpm clean && pnpm install",
     "dev": "next dev -p 3007 --turbopack",
+    "ktx2": "./convert-to-ktx2.sh",
     "lint": "eslint",
     "start": "next start",
     "latest:pnpm": "corepack use pnpm@latest",

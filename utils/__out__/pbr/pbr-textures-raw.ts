@@ -10,17 +10,6 @@ export const PBR_TEXTURES_RAW = {
     roughness:
       "https://asrosscloud.com/textures/brushed-stainless-steel-satin/brushed_metal_26_94_roughness.jpg"
   },
-  brushedSteelDarkScuffed: {
-    ao: "https://asrosscloud.com/textures/brushed-steel-dark-scuffed/Poliigon_MetalSteelBrushed_7174_AmbientOcclusion.jpg",
-    albedo:
-      "https://asrosscloud.com/textures/brushed-steel-dark-scuffed/Poliigon_MetalSteelBrushed_7174_BaseColor.jpg",
-    metalness:
-      "https://asrosscloud.com/textures/brushed-steel-dark-scuffed/Poliigon_MetalSteelBrushed_7174_Metallic.jpg",
-    normal:
-      "https://asrosscloud.com/textures/brushed-steel-dark-scuffed/Poliigon_MetalSteelBrushed_7174_Normal.png",
-    roughness:
-      "https://asrosscloud.com/textures/brushed-steel-dark-scuffed/Poliigon_MetalSteelBrushed_7174_Roughness.jpg"
-  },
   brushedSteelVerticalFine: {
     ao: "https://asrosscloud.com/textures/brushed-steel-vertical-fine/metal_ledges_26_52_ao.jpg",
     albedo:

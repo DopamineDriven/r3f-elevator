@@ -64,7 +64,6 @@ function aggregate(helper = Array.of<string>()) {
 function manipulate(
   arrAgg = {
     brushedStainlessSteelSatin: Array.of<[string, string]>(),
-    brushedSteelDarkScuffed: Array.of<[string, string]>(),
     brushedSteelVerticalFine: Array.of<[string, string]>(),
     brushedSteelVerticalGlossy: Array.of<[string, string]>(),
     diamondPlatedBlackened: Array.of<[string, string]>(),

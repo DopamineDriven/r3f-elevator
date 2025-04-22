@@ -1,5 +1,10 @@
-import { PBR_TEXTURES, PBRTextureSet, TextureKey } from "@/lib/texture-handler";
+import { PBR_TEXTURES_RAW } from "@/utils/__out__/pbr/pbr-textures-raw";
 import { Fs } from "@d0paminedriven/fs";
+
+export type TextureKey = keyof typeof PBR_TEXTURES_RAW;
+export type PBRTextureMap = typeof PBR_TEXTURES_RAW;
+export type PBRTextureSet = PBRTextureMap[TextureKey];
+
 
 const fs = new Fs(process.cwd());
 
@@ -14,7 +19,7 @@ function toLocalPath(url: string) {
 }
 
 async function downloadAllPBRTextures() {
-  const textureSets = Object.entries(PBR_TEXTURES) as [
+  const textureSets = Object.entries(PBR_TEXTURES_RAW) as [
     TextureKey,
     PBRTextureSet
   ][];
