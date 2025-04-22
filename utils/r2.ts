@@ -1,4 +1,5 @@
 import { ListObjectsV2Command, S3Client } from "@aws-sdk/client-s3";
+import { Fs } from "@d0paminedriven/fs";
 import * as dotenv from "dotenv";
 import type { ListObjectsV2CommandOutput } from "@aws-sdk/client-s3";
 
@@ -38,8 +39,12 @@ async function listR2Files() {
 (async () => {
   return await listR2Files();
 })().then(data => {
+  const fs = new Fs(process.cwd());
   const prepend = data.map(v => `https://asrosscloud.com/${v}`);
-  console.log(prepend);
+  fs.withWs(
+    "utils/__out__/r2/r2-file-list.ts",
+    `export const r2FileList = ${JSON.stringify(prepend, null, 2)} as const;`
+  );
   return data;
 });
 
