@@ -1,88 +1,37 @@
-type PBRTextureSet = {
-  albedo: string;
-  ao: string;
-  metalness: string;
-  normal: string;
-  roughness: string;
-};
+import { Fs } from "@d0paminedriven/fs";
+const fs = new Fs(process.cwd());
 
-// Texture definitions
-export const TEXTURES = {
-  // could use with elevator doors
-  brushedMetal: {
-    albedo:
-      "https://raw.githubusercontent.com/DopamineDriven/portfolio-2025/master/apps/web/public/textures/brushed-metal/brushed-metal-albedo.png",
-    ao: "https://raw.githubusercontent.com/DopamineDriven/portfolio-2025/master/apps/web/public/textures/brushed-metal/brushed-metal-ao.png",
-    metalness:
-      "https://raw.githubusercontent.com/DopamineDriven/portfolio-2025/master/apps/web/public/textures/brushed-metal/brushed-metal-metallic.png",
-    normal:
-      "https://raw.githubusercontent.com/DopamineDriven/portfolio-2025/master/apps/web/public/textures/brushed-metal/brushed-metal-normal-ogl.png",
-    roughness:
-      "https://raw.githubusercontent.com/DopamineDriven/portfolio-2025/master/apps/web/public/textures/brushed-metal/brushed-metal-roughness.png"
-  } satisfies PBRTextureSet,
-  elegantStoneTiles: {
-    albedo:
-      "https://raw.githubusercontent.com/DopamineDriven/r3f-elevator/refs/heads/master/public/textures/elegant-stone-tiles/elegant-stone-tiles-albedo.png",
-    ao: "https://raw.githubusercontent.com/DopamineDriven/r3f-elevator/refs/heads/master/public/textures/elegant-stone-tiles/elegant-stone-tiles-ao.png",
-    metalness:
-      "https://raw.githubusercontent.com/DopamineDriven/r3f-elevator/refs/heads/master/public/textures/elegant-stone-tiles/elegant-stone-tiles-metallic.png",
-    normal:
-      "https://raw.githubusercontent.com/DopamineDriven/r3f-elevator/refs/heads/master/public/textures/elegant-stone-tiles/elegant-stone-tiles-normal-ogl.png",
-    roughness:
-      "https://raw.githubusercontent.com/DopamineDriven/r3f-elevator/refs/heads/master/public/textures/elegant-stone-tiles/elegant-stone-tiles-roughness.png"
-  } satisfies PBRTextureSet,
-  enhancedBrushedMetal: {
-    ao: "https://raw.githubusercontent.com/DopamineDriven/r3f-elevator/refs/heads/master/public/textures/enhanced/brushed-metal/brushed-metal-26-94-ao.jpg",
-    albedo:
-      "https://raw.githubusercontent.com/DopamineDriven/r3f-elevator/refs/heads/master/public/textures/enhanced/brushed-metal/brushed-metal-26-94-diffuse.jpg",
-    metalness:
-      "https://raw.githubusercontent.com/DopamineDriven/r3f-elevator/refs/heads/master/public/textures/enhanced/brushed-metal/brushed-metal-26-94-metalness.jpg",
-    normal:
-      "https://raw.githubusercontent.com/DopamineDriven/r3f-elevator/refs/heads/master/public/textures/enhanced/brushed-metal/brushed-metal-26-94-normal.jpg",
-    roughness:
-      "https://raw.githubusercontent.com/DopamineDriven/r3f-elevator/refs/heads/master/public/textures/enhanced/brushed-metal/brushed-metal-26-94-roughness.jpg"
-  } satisfies PBRTextureSet,
-  stuccoWall: {
-    albedo:
-      "https://raw.githubusercontent.com/DopamineDriven/portfolio-2025/master/apps/web/public/textures/smooth-stucco/smooth-stucco-albedo.png",
-    ao: "https://raw.githubusercontent.com/DopamineDriven/portfolio-2025/master/apps/web/public/textures/smooth-stucco/smooth-stucco-ao.png",
-    metalness:
-      "https://raw.githubusercontent.com/DopamineDriven/portfolio-2025/master/apps/web/public/textures/smooth-stucco/smooth-stucco-Metallic.png",
-    normal:
-      "https://raw.githubusercontent.com/DopamineDriven/portfolio-2025/master/apps/web/public/textures/smooth-stucco/smooth-stucco-Normal-ogl.png",
-    roughness:
-      "https://raw.githubusercontent.com/DopamineDriven/portfolio-2025/master/apps/web/public/textures/smooth-stucco/smooth-stucco-Roughness.png"
-  } satisfies PBRTextureSet
-} as const;
+const fileSize = <const T extends string>(t: T) => fs.fileSizeMb(`public/${t}`);
 
-const getIt = <const T extends keyof typeof TEXTURES>(target: T) => {
-  return TEXTURES[target];
-};
+const r3fDirs =fs.readDir("public", {recursive: true}).filter((pub) => pub.startsWith("r3f")).filter((filepaths) => /\./g.test(filepaths));
 
-export function mp() {
-  const newMap = new Map<
-    keyof typeof TEXTURES,
-    (typeof TEXTURES)[keyof typeof TEXTURES]
-  >();
+const h = Array.of<string>();
 
-  try {
-    Object.entries(TEXTURES).forEach(function ([k, _v]) {
-      newMap.set(k as keyof typeof TEXTURES, getIt(k as keyof typeof TEXTURES));
-    });
-  } catch (err) {
-    console.error(err);
-  } finally {
-    return newMap;
-  }
-}
-
-/**
-
-example:
-
-Array.from(mp().entries()).map(([key, val]) => {
-  // much stronger type preservation when inferred, string literal union of keys detected instead of a string scalar 👀
-  return [key, val] as const;
+r3fDirs.forEach(function (filePaths) {
+  h.push(`${fileSize(filePaths)}; public/${filePaths}`);
 });
 
-*/
+const isolate = <const T extends string>(props: T) => {
+  const [size, path] = props.split(/;/g) as [string, string];
+return [Number.parseFloat(size), path.trim()] as const;
+}
+
+const sortBySize = (props: string[]) => {
+  return props.sort((a,b) => isolate(a)[0] - isolate(b)[0]);
+}
+
+const getPaths = (props: string) => {
+  return props.split(/public\/((r3f)|(r3f-ktx2))\/textures\//g)?.[1];
+}
+
+const sortByPaths = (props: string[]) => {
+  return props.sort((a,b) => getPaths(isolate(a)[1]).localeCompare(getPaths(isolate(b)[1])) - getPaths(isolate(b)[1]).localeCompare(getPaths(isolate(a)[1])) );
+}
+sortBySize(sortByPaths(h)).forEach(function (file) {
+  const [size, path] = file.split(/;/g) as [string, string];
+  console.log([Number.parseFloat(size), path.trim()]);
+})
+
+
+// const mb = (target: "r3f-ktx2" | "r3f") => fs.fileSizeMb(`public/${target}/textures/painted-stucco-white/white_plaster_21_27_ao.ktx2`)
+// console.log(mb);

@@ -10,7 +10,7 @@ Ohhhh yes — now we’re in **peak TypeScript philosophy mode**. Let's unpack y
 It’s a **Turing-complete, statically evaluated, type-level meta-language** with its **own programming paradigm**, runtime-less semantics, and compiler-stage execution model.
 
 ---
-
+ 
 ## ⚙️ Typescript vs JavaScript: Two Different Realms
 
 | Feature | JavaScript | TypeScript |

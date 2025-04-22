@@ -1,4 +1,5 @@
 import { ListObjectsV2Command, S3Client } from "@aws-sdk/client-s3";
+import { Fs } from "@d0paminedriven/fs";
 import * as dotenv from "dotenv";
 import type { ListObjectsV2CommandOutput } from "@aws-sdk/client-s3";
 
@@ -38,24 +39,11 @@ async function listR2Files() {
 (async () => {
   return await listR2Files();
 })().then(data => {
+  const fs = new Fs(process.cwd());
   const prepend = data.map(v => `https://asrosscloud.com/${v}`);
-  console.log(prepend);
+  fs.withWs(
+    "utils/__out__/r2/r2-file-list.ts",
+    `export const r2FileList = ${JSON.stringify(prepend, null, 2)} as const;`
+  );
   return data;
 });
-
-// (async () => {
-//   const files = await listR2Files(subdir);
-//   // Only names in this subdir, filter out "folders"
-//   const filtered = files.filter(f => !f.endsWith("/"))
-//     .map(f => f.replace(/^textures\//, "")); // strip 'textures/' prefix
-//   // Group by PBR convention: last '-' part, or whatever logic you want
-//   const entries = filtered.map(f => [
-//     f.split(/(-)/g).reverse()[0].split(".")[0],
-//     `${baseUrl}/${f}`,
-//   ]);
-//   const outStr = `
-// export const ${exportName} = ${JSON.stringify(Object.fromEntries(entries), null, 2)};
-// `;
-//   writeFileSync(`utils/__out__/pbr/${subdir.replace(/\//g, "_")}.ts`, outStr);
-//   console.log(`Wrote utils/__out__/pbr/${subdir.replace(/\//g, "_")}.ts`);
-// })();

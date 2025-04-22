@@ -20,7 +20,7 @@ export const ElevatorFrame = () => {
       <mesh position={[0, 0, 0]} castShadow receiveShadow>
         <boxGeometry args={[1.2, 3, 0.1]} />
         <PBRMaterial
-          target="brushedSteelVerticalFine"
+          target="brushedStainlessSteelSatin"
           repeat={[2.25, 3]}
           metalness={0.9}
           roughness={0.4}
@@ -34,7 +34,7 @@ export const ElevatorFrame = () => {
       <mesh position={[0, 0, -0.05]} castShadow receiveShadow>
         <boxGeometry args={[1.05, 2.6, 0.05]} />
         <PBRMaterial
-          target="brushedSteelVerticalGlossy"
+          target="brushedStainlessSteelSatin"
           repeat={[2.5, 3]}
           metalness={1}
           roughness={0.25}
@@ -78,7 +78,7 @@ export const ElevatorFrame = () => {
       <mesh position={[0, 1.4, 0.01]} castShadow receiveShadow>
         <boxGeometry args={[1, 0.2, 0.1]} />
         <PBRMaterial
-          target="brushedSteelVerticalFine"
+          target="brushedStainlessSteelSatin"
           repeat={[2, 1]}
           metalness={0.8}
           roughness={0.35}
