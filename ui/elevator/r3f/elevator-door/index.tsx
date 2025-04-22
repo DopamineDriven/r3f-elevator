@@ -41,7 +41,7 @@ export const ElevatorDoor = ({ activated }: { activated: boolean }) => {
       <mesh ref={leftRef} castShadow>
         <boxGeometry args={[0.5, 2.5, 0.05]} />
         <PBRMaterial
-          target="enhancedBrushedMetal"
+          target="brushedStainlessSteelSatin"
           repeat={[2, 2]}
           metalness={0}
           roughness={1}
@@ -52,7 +52,7 @@ export const ElevatorDoor = ({ activated }: { activated: boolean }) => {
       <mesh ref={rightRef} castShadow>
         <boxGeometry args={[0.5, 2.5, 0.05]} />
         <PBRMaterial
-          target="enhancedBrushedMetal"
+          target="brushedStainlessSteelSatin"
           repeat={[2, 2]}
           metalness={1}
           roughness={0.35}
