@@ -176,7 +176,7 @@ export function getPBRTexture<const T extends TextureKey>(target: T) {
 const ORIGIN = "https://asrosscloud.com/";
 const LOCAL_ROOT = "/r3f/"; // browser-visible path (omit "public")
 
-function toLocal(url: string) {
+function toLocal<const T extends string>(url: T) {
   return url.replace(ORIGIN, LOCAL_ROOT);
 }
 
@@ -199,11 +199,10 @@ export function handleUnknown(textureSet: PBRTextureSet):
   const normalMap = textureSet.normal && toLocal(textureSet.normal);
   const roughnessMap = textureSet.roughness && toLocal(textureSet.roughness);
 
-  if (textureSet.metalness) {
+  if (typeof textureSet.metalness !== "undefined") {
     const metalnessMap = toLocal(textureSet.metalness);
     return { map, aoMap, metalnessMap, normalMap, roughnessMap };
   } else {
     return { map, aoMap, normalMap, roughnessMap };
   }
 }
-
