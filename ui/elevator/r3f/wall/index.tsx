@@ -10,7 +10,7 @@ export const Wall = () => {
       <mesh position={[0, 0, -0.1]} receiveShadow>
         <boxGeometry args={[10, 5, 0.2]} />
         <PBRMaterial
-          target="trueStuccoWhiteVaried"
+          target="trueStuccoWhite"
           repeat={[10, 5]}
           color="#b8b8b8"
           metalness={0.1}
