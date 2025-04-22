@@ -47,20 +47,3 @@ async function listR2Files() {
   );
   return data;
 });
-
-// (async () => {
-//   const files = await listR2Files(subdir);
-//   // Only names in this subdir, filter out "folders"
-//   const filtered = files.filter(f => !f.endsWith("/"))
-//     .map(f => f.replace(/^textures\//, "")); // strip 'textures/' prefix
-//   // Group by PBR convention: last '-' part, or whatever logic you want
-//   const entries = filtered.map(f => [
-//     f.split(/(-)/g).reverse()[0].split(".")[0],
-//     `${baseUrl}/${f}`,
-//   ]);
-//   const outStr = `
-// export const ${exportName} = ${JSON.stringify(Object.fromEntries(entries), null, 2)};
-// `;
-//   writeFileSync(`utils/__out__/pbr/${subdir.replace(/\//g, "_")}.ts`, outStr);
-//   console.log(`Wrote utils/__out__/pbr/${subdir.replace(/\//g, "_")}.ts`);
-// })();
