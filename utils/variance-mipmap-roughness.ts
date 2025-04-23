@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { Jimp, rgbaToInt } from "jimp";
 
-// Helper function: Compute next variance-preserving mip level
+// compute next variance-preserving mip level
 function mipmapVariance(inputImg: InstanceType<typeof Jimp>) {
   const w = inputImg.bitmap.width;
   const h = inputImg.bitmap.height;

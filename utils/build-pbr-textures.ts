@@ -10,7 +10,6 @@ const TMPDIR = "tmp/variance-mips";
 const SRGB_KEYS = ["albedo", "basecolor", "diffuse"] as const;
 
 function urlToRelPath(url: string): string {
-  // E.g. https://asrosscloud.com/textures/xxx.png → textures/xxx.png
   return url.replace("https://asrosscloud.com/", "");
 }
 
