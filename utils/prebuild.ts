@@ -5,6 +5,31 @@ export type TextureKey = keyof typeof PBR_TEXTURES_RAW;
 export type PBRTextureMap = typeof PBR_TEXTURES_RAW;
 export type PBRTextureSet = PBRTextureMap[TextureKey];
 
+// type ObjUnion = | {
+//   readonly albedo: string
+//   readonly ao: string
+//   readonly metalness: string
+//   readonly normal: string
+//   readonly roughness: string
+// }
+// | {
+//   readonly ao: string
+//   readonly albedo: string
+//   readonly normal: string
+//   readonly roughness: string
+// }
+
+// type PBRTextureMapped<T extends keyof typeof PBR_TEXTURES_RAW> = {
+//   [P in T]: (typeof PBR_TEXTURES_RAW)[P];
+// }[T];
+
+// const test = (
+//   props: PBRTextureMapped<keyof typeof PBR_TEXTURES_RAW>
+// ) => {
+//   if ("metalness" in props) {
+//     return props satisfies ObjUnion;
+//   } else return props satisfies ObjUnion;
+// };
 
 const fs = new Fs(process.cwd());
 

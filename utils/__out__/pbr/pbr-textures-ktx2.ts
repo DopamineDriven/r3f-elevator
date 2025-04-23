@@ -1,4 +1,3 @@
-
 export const PBR_TEXTURES_KTX2 = {
   "brushedStainlessSteelSatin": {
     "ao": "/r3f-ktx2/textures/brushed-stainless-steel-satin/brushed_metal_26_94_ao.ktx2",
