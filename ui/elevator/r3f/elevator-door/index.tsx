@@ -6,8 +6,8 @@ import { animate, useSpring } from "motion/react";
 import * as THREE from "three";
 import { PBRMaterial } from "@/ui/elevator/r3f/pbr-material";
 
-const DOOR_OPEN_X = 0.55;
-const DOOR_CLOSED_X = 0.025;
+const DOOR_OPEN_X = 0.6;
+const DOOR_CLOSED_X = 0.25;
 
 export function ElevatorDoor({
   isLeft,
