@@ -1,4 +1,5 @@
 import type { Viewport } from "next";
+import { ElevatorClientWrapper } from "@/ui/elevator";
 import React from "react";
 
 export const viewport = {
@@ -21,6 +22,7 @@ export default function ElevatorLayout({
 }>) {
   return (
     <div className="relative h-[100dvh] min-h-screen w-[100vw] overflow-hidden bg-black">
+      <ElevatorClientWrapper />
       {children}
     </div>
   );
