@@ -17,10 +17,10 @@ const DAMP_ELEVATOR = 4.5;
 
 export function CombinedCameraController({
   isTransitioning,
-  onProgress
+  onProgressAction
 }: {
   isTransitioning: boolean;
-  onProgress: (progress: number) => void;
+  onProgressAction: (progress: number) => void;
 }) {
   const { size, camera: defaultCamera } = useThree();
   const isMobile = useMobile();
@@ -109,7 +109,7 @@ export function CombinedCameraController({
     const progress = Math.max(0, Math.min(1, Math.abs(cam.position.z - startZ) / Math.abs(endZ - startZ)));
 
     if (isTransitioning || progress < 0.01) {
-      onProgress(isTransitioning ? progress : 0);
+      onProgressAction(isTransitioning ? progress : 0);
       dispatchElevatorTransition(isTransitioning ? progress : 0);
     }
   });

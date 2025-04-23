@@ -137,7 +137,7 @@ export function ElevatorScene() {
       />
       <SoftWallLight />
       <CombinedCameraController
-        onProgress={setTransitionProgress}
+        onProgressAction={setTransitionProgress}
         isTransitioning={isTransitioning}
       />
     </group>
