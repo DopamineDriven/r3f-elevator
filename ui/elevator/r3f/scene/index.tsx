@@ -18,7 +18,7 @@ import { useEffect, useRef, useState } from "react";
 export function ElevatorScene() {
   const [activated, setActivated] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [_transitionProgress, setTransitionProgress] = useState(0);
+  const [transitionProgress, setTransitionProgress] = useState(0);
   const [_loading, setLoading] = useState(true);
   const audioControllerRef = useRef<AudioController | null>(null);
 
@@ -137,7 +137,7 @@ export function ElevatorScene() {
       />
       <SoftWallLight />
       <CombinedCameraController
-        onProgressAction={setTransitionProgress}
+        transitionProgress={transitionProgress}
         isTransitioning={isTransitioning}
       />
     </group>
