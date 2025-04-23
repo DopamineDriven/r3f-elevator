@@ -42,7 +42,7 @@ export const ElevatorFrame = () => {
       </mesh>
 
       {/* ⚫ Shaft void — deep black cavity behind doors */}
-      <mesh position={[0, 0, -0.15]} receiveShadow>
+      {/* <mesh position={[0, 0, -0.15]} receiveShadow>
         <boxGeometry args={[1.05, 2.6, 0.2]} />
         <meshStandardMaterial
           color="#0a0a0a"
@@ -50,7 +50,7 @@ export const ElevatorFrame = () => {
           metalness={0}
           toneMapped={false}
         />
-      </mesh>
+      </mesh> */}
 
       {/* 🕳️ Door cavity - left */}
       <mesh position={[-0.55, 0, -0.12]} receiveShadow>
