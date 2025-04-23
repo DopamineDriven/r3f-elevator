@@ -1,12 +1,13 @@
 "use client";
 
-import type { PBRTextureSet, TextureKey } from "@/lib/texture-handler";
-import { handleUnknown, PBR_TEXTURES } from "@/lib/texture-handler";
-import { useEffect, useMemo } from "react";
-import { useTexture } from "@react-three/drei";
+import { useKTX2Texture } from "@/ui/elevator/r3f/hooks/use-ktx2-texture";
+import { PBR_TEXTURES_KTX2 } from "@/utils/__out__/pbr/pbr-textures-ktx2";
+import { useEffect } from "react";
 import * as THREE from "three";
 
-export function PBRMaterial<const Target extends TextureKey>({
+type MaterialKey = keyof typeof PBR_TEXTURES_KTX2;
+
+export function PBRMaterial<const Target extends MaterialKey>({
   target,
   repeat = [1, 1],
   color = "#ffffff",
@@ -19,20 +20,14 @@ export function PBRMaterial<const Target extends TextureKey>({
   metalness?: number;
   roughness?: number;
 }) {
-  const textureSet = useMemo(
-    () => PBR_TEXTURES[target] as PBRTextureSet,
-    [target]
-  );
-
-  const textureProps = useTexture(handleUnknown(textureSet));
+  const textureProps = useKTX2Texture(target);
 
   useEffect(() => {
-    Object.entries(textureProps).forEach(([_k, tex]) => {
-      if (tex) {
-        tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
-        tex.repeat.set(...repeat);
-        tex.flipY = false;
-      }
+    Object.values(textureProps).forEach(tex => {
+      if (!tex) return;
+      tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+      tex.repeat.set(...repeat);
+      tex.flipY = false;
     });
 
     return () => {
