@@ -12,31 +12,29 @@ import {
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
+// 🎬 Smoothing factor
+const DAMP_ELEVATOR = 4.5;
+
 export function CombinedCameraController({
   isTransitioning,
-  transitionProgress
+  onProgress
 }: {
   isTransitioning: boolean;
-  transitionProgress: number;
+  onProgress: (progress: number) => void;
 }) {
-
-  const size = useThree(state => state.size);
-  const defaultCamera = useThree(state => state.camera);
-
+  const { size, camera: defaultCamera } = useThree();
   const isMobile = useMobile();
-
-  const [defaultZ, setDefaultZ] = useState(5);
-  const [_cameraReady, setCameraReady] = useState(false);
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
+  const [desiredPosition, setDesiredPosition] = useState({ y: 0, z: 5 });
+  const [desiredFov, setDesiredFov] = useState(42);
 
-  // safe, dynamic ref assignment
   const assignCamera = useCallback((cam: THREE.Camera | null) => {
-    if (cam && cam instanceof THREE.PerspectiveCamera) {
+    if (cam instanceof THREE.PerspectiveCamera) {
       cameraRef.current = cam;
-      setCameraReady(true);
     }
   }, []);
 
+  // Set target camera values based on screen
   useLayoutEffect(() => {
     if (!cameraRef.current) return;
 
@@ -72,50 +70,52 @@ export function CombinedCameraController({
       }
     }
 
+    setDesiredPosition({ y: newY, z: newZ });
+    setDesiredFov(newFov);
+
+    // Immediately snap to new position
     const cam = cameraRef.current;
-    cam.position.z = newZ;
-    cam.position.y = newY;
+    cam.position.set(0, newY, newZ);
     cam.fov = newFov;
     cam.aspect = aspect;
     cam.updateProjectionMatrix();
-    setDefaultZ(newZ);
   }, [size, isMobile]);
 
-  // ✅ Now safe to use in memo
-  const initialPosition = useCallback(() => {
-    return new THREE.Vector3(0, cameraRef.current?.position.y ?? 0, defaultZ);
-  }, [defaultZ]);
+  // When transition starts, update camera targets
+  useEffect(() => {
+    setDesiredPosition(prev => ({
+      ...prev,
+      z: isTransitioning ? prev.z - 1.5 : prev.z + 1.5
+    }));
+    setDesiredFov(prev => (isTransitioning ? prev - 2 : prev + 2));
+  }, [isTransitioning]);
 
-  const targetPosition = useCallback(() => {
-    return new THREE.Vector3(
-      0,
-      cameraRef.current?.position.y ?? 0,
-      defaultZ - 1.5
-    );
-  }, [defaultZ]);
-
-  useFrame(() => {
+  // Smooth camera motion every frame
+  useFrame((_, delta) => {
     const cam = cameraRef.current;
     if (!cam) return;
 
-    if (isTransitioning) {
-      cam.position.lerpVectors(
-        initialPosition(),
-        targetPosition(),
-        transitionProgress
-      );
-      cam.fov = cam.fov - transitionProgress * 2;
-      cam.updateProjectionMatrix();
-      dispatchElevatorTransition(transitionProgress);
-    } else {
-      cam.position.copy(initialPosition());
-      cam.updateProjectionMatrix();
-      dispatchElevatorTransition(0);
+    // Damped camera transition
+    cam.position.y = THREE.MathUtils.damp(cam.position.y, desiredPosition.y, DAMP_ELEVATOR, delta);
+    cam.position.z = THREE.MathUtils.damp(cam.position.z, desiredPosition.z, DAMP_ELEVATOR, delta);
+    cam.fov = THREE.MathUtils.damp(cam.fov, desiredFov, DAMP_ELEVATOR, delta);
+    cam.updateProjectionMatrix();
+
+    // Calculate progress from camera Z position
+    const zDistance = 1.5;
+    const startZ = isTransitioning ? desiredPosition.z + zDistance : desiredPosition.z;
+    const endZ = isTransitioning ? desiredPosition.z : desiredPosition.z + zDistance;
+
+    const progress = Math.max(0, Math.min(1, Math.abs(cam.position.z - startZ) / Math.abs(endZ - startZ)));
+
+    if (isTransitioning || progress < 0.01) {
+      onProgress(isTransitioning ? progress : 0);
+      dispatchElevatorTransition(isTransitioning ? progress : 0);
     }
   });
 
   useEffect(() => {
-    assignCamera(defaultCamera); // or set in useEffect directly
+    assignCamera(defaultCamera);
   }, [defaultCamera, assignCamera]);
 
   return null;
