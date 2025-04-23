@@ -12,10 +12,10 @@ export const ElevatorFrame = () => {
         height={0.2}
         intensity={0.45}
         color="#ffffff"
-
         lookAt={[0, 1.4, 0]}
         castShadow={false}
       />
+      
       {/* 🧱 Wall panel — flush with elevator face */}
       <mesh position={[0, 0, 0]} castShadow receiveShadow>
         <boxGeometry args={[1.2, 3, 0.1]} />
@@ -26,8 +26,6 @@ export const ElevatorFrame = () => {
           roughness={0.4}
         />
       </mesh>
-
-      {/* 💡 Architectural bounce light inside frame cavity */}
       <ElevatorFrameLight />
 
       {/* 🛗 Recessed brushed metal frame (door reveal) */}
@@ -38,39 +36,6 @@ export const ElevatorFrame = () => {
           repeat={[2.5, 3]}
           metalness={1}
           roughness={0.25}
-        />
-      </mesh>
-
-      {/* ⚫ Shaft void — deep black cavity behind doors */}
-      <mesh position={[0, 0, -0.15]} receiveShadow>
-        <boxGeometry args={[1.05, 2.6, 0.2]} />
-        <meshStandardMaterial
-          color="#0a0a0a"
-          roughness={0.9}
-          metalness={0}
-          toneMapped={false}
-        />
-      </mesh>
-
-      {/* 🕳️ Door cavity - left */}
-      <mesh position={[-0.55, 0, -0.12]} receiveShadow>
-        <boxGeometry args={[0.5, 2.5, 0.05]} />
-        <meshStandardMaterial
-          color="#0a0a0a"
-          roughness={0.95}
-          metalness={0}
-          toneMapped={false}
-        />
-      </mesh>
-
-      {/* 🕳️ Door cavity - right */}
-      <mesh position={[0.55, 0, -0.12]} receiveShadow>
-        <boxGeometry args={[0.5, 2.5, 0.05]} />
-        <meshStandardMaterial
-          color="#0a0a0a"
-          roughness={0.95}
-          metalness={0}
-          toneMapped={false}
         />
       </mesh>
 
@@ -99,3 +64,36 @@ export const ElevatorFrame = () => {
     </group>
   );
 };
+
+/* ⚫ Shaft void — deep black cavity behind doors */
+/* <mesh position={[0, 0, -0.15]} receiveShadow>
+  <boxGeometry args={[1.05, 2.6, 0.2]} />
+  <meshStandardMaterial
+    color="#0a0a0a"
+    roughness={0.9}
+    metalness={0}
+    toneMapped={false}
+  />
+</mesh> */
+
+/* 🕳️ Door cavity - left */
+/* <mesh position={[-0.55, 0, -0.12]} receiveShadow>
+  <boxGeometry args={[0.5, 2.5, 0.05]} />
+  <meshStandardMaterial
+    color="#0a0a0a"
+    roughness={0.95}
+    metalness={0}
+    toneMapped={false}
+  />
+</mesh> */
+
+/* 🕳️ Door cavity - right */
+/* <mesh position={[0.55, 0, -0.12]} receiveShadow>
+  <boxGeometry args={[0.5, 2.5, 0.05]} />
+  <meshStandardMaterial
+    color="#0a0a0a"
+    roughness={0.95}
+    metalness={0}
+    toneMapped={false}
+  />
+</mesh> */

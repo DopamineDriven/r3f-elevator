@@ -22,7 +22,7 @@ const useElevatorFrameLightHelper = (
 
   return useHelper(ref, helperConstructor, color);
 };
-
+/** 💡 Architectural bounce light inside frame cavity */
 export function ElevatorFrameLight({
   position = [0, 2, 1.5],
   intensity = 0.5,

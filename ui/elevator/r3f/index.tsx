@@ -7,6 +7,7 @@ import { getCookieDomain } from "@/lib/site-domain";
 import { getSiteUrl } from "@/lib/site-url";
 import { DownTriangleGeometry } from "@/ui/elevator/r3f/down-triangle-geometry";
 import { ElevatorFrameLight } from "@/ui/elevator/r3f/elevator-frame-light/instance";
+import { RectAreaLightImpl } from "@/ui/elevator/r3f/elevator-frame/instance";
 import { BentPlaneGeometry } from "@/ui/elevator/r3f/floor-indicator/instance";
 import { ElevatorScene } from "@/ui/elevator/r3f/scene";
 import { SoftWallLight } from "@/ui/elevator/r3f/soft-wall-light/instance";
@@ -18,7 +19,6 @@ import { Canvas, extend } from "@react-three/fiber";
 import Cookies from "js-cookie";
 import { Leva } from "leva";
 import type { ThreeElement } from "@react-three/fiber";
-import { RectAreaLightImpl } from "./elevator-frame/instance";
 
 extend({
   BentPlaneGeometry,
