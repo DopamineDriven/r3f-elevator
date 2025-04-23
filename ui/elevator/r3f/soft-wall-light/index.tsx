@@ -5,7 +5,8 @@ import { useEffect, useRef } from "react";
 import { useHelper } from "@react-three/drei";
 import { folder, useControls } from "leva";
 import * as THREE from "three";
-import { RectAreaLightHelper } from "three-stdlib";
+import * as THREESTDLIB from "three-stdlib";
+
 
 // 🔧 Helper fallback for production
 class SoftWallLightHelper extends THREE.Object3D {
@@ -20,7 +21,7 @@ const useRectAreaLightHelperImpl = (
 ) => {
   const helperConstructor =
     process.env.NODE_ENV !== "production" && showHelper
-      ? RectAreaLightHelper
+      ? THREESTDLIB.RectAreaLightHelper
       : SoftWallLightHelper;
 
   return useHelper(ref, helperConstructor, color);
