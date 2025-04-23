@@ -125,42 +125,45 @@ export default function ElevatorApp() {
   }, [isSecure, memoizedCookieDomain, router, clearPathOfIntent]);
   return (
     <>
-      {loading && (
+      {loading ? (
         <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/80">
           <div className="text-xl text-white">Loading Elevator...</div>
         </div>
+      ) : (
+        <>
+          <div
+            className="pointer-events-none static inset-0 z-10 bg-black transition-opacity duration-500"
+            style={{ opacity: fadeOpacity }}
+          />
+          <Canvas
+            className="absolute top-0 left-0 z-20 min-h-[100dvh] min-w-screen items-center justify-center bg-black/80"
+            shadows
+            camera={{ fov: 40, near: 0.1, far: 1000, position: [0, 0, 6] }}>
+            <Suspense fallback={null}>
+              <PerspectiveCamera
+                makeDefault
+                position={[0, 0, 6]}
+                fov={40}
+                near={0.1}
+                far={100}
+              />
+              <ElevatorScene />
+              <ContactShadows
+                position={[0, -2, 0]}
+                opacity={0.65}
+                scale={10}
+                blur={4}
+                far={10}
+                resolution={256}
+              />
+            </Suspense>
+          </Canvas>
+        </>
       )}
-      <div
-        className="pointer-events-none absolute inset-0 z-10 bg-black transition-opacity duration-500"
-        style={{ opacity: fadeOpacity }}
-      />
-      <Canvas
-        className="absolute top-0 left-0 z-20 min-h-[100dvh] min-w-screen items-center justify-center bg-black/80"
-        shadows
-        camera={{ fov: 40, near: 0.1, far: 1000, position: [0, 0, 6] }}>
-        <Suspense fallback={null}>
-          <PerspectiveCamera
-            makeDefault
-            position={[0, 0, 6]}
-            fov={40}
-            near={0.1}
-            far={100}
-          />
-          <ElevatorScene />
-          <ContactShadows
-            position={[0, -2, 0]}
-            opacity={0.65}
-            scale={10}
-            blur={4}
-            far={10}
-            resolution={256}
-          />
-        </Suspense>
-      </Canvas>
       {/^r3f-elevator\.vercel\.app$/gm.test(getHostname) ? (
         <></>
       ) : (
-        <Leva isRoot={true} collapsed />
+        <Leva collapsed />
       )}
     </>
   );

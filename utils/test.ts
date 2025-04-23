@@ -3,7 +3,7 @@ const fs = new Fs(process.cwd());
 
 const fileSize = <const T extends string>(t: T) => fs.fileSizeMb(`public/${t}`);
 
-const r3fDirs =fs.readDir("public", {recursive: true}).filter((pub) => pub.startsWith("r3f")).filter((filepaths) => /\./g.test(filepaths));
+const r3fDirs =fs.readDir("public", {recursive: true}).filter((pub) => pub.startsWith("r3f-ktx2")).filter((filepaths) => /\./g.test(filepaths));
 
 const h = Array.of<string>();
 
@@ -27,9 +27,30 @@ const getPaths = (props: string) => {
 const sortByPaths = (props: string[]) => {
   return props.sort((a,b) => getPaths(isolate(a)[1]).localeCompare(getPaths(isolate(b)[1])) - getPaths(isolate(b)[1]).localeCompare(getPaths(isolate(a)[1])) );
 }
-sortBySize(sortByPaths(h)).forEach(function (file) {
+
+function getSum(numbers: number[]): number {
+  let sum = 0;
+  for (let i = 0; i < numbers.length; i++) {
+    sum += numbers[i];
+  }
+  return sum;
+}
+
+const v = Array.of<number>();
+const vv = Array.of<string>();
+(async () => sortBySize(sortByPaths(h)).forEach(function (file) {
   const [size, path] = file.split(/;/g) as [string, string];
-  console.log([Number.parseFloat(size), path.trim()]);
+  const tuple = ([Number.parseFloat(size), path.trim()] as const);
+  v.push(tuple[0]);
+  vv.push(tuple[1])
+ if  (tuple[0] >=50 && tuple[0] <100) {
+  console.log(tuple[0], " MB detected; requires git lfs ", tuple[1])
+ } else if (tuple[0] >=100) {
+  console.log(tuple[0], " MB detected; cannot remove from gitignore ", tuple[1])
+ } else return console.log(tuple[0], " MB");
+}))().then((_) => {
+  console.log(vv)
+  console.log(v.length, " files with a total size of ", getSum(v), " MB and an average size of ", getSum(v)/v.length, " MB");
 })
 
 

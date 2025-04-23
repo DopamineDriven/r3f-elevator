@@ -137,6 +137,21 @@ const transform = (props: TransformProps) =>
     })
   );
 
+  const normalizeToKTX2 = (input: ReturnType<typeof transform>) =>
+    Object.fromEntries(
+      Object.entries(input).map(([materialKey, mapSet]) => {
+        const converted = Object.fromEntries(
+          Object.entries(mapSet).map(([mapKey, url]) => {
+            const localPath = url
+              .replace("https://asrosscloud.com/textures/", "/r3f-ktx2/textures/")
+              .replace(/\.[^.]+$/, ".ktx2");
+            return [mapKey, localPath];
+          })
+        );
+        return [materialKey, converted];
+      })
+    );
+
 const fs = new Fs(process.cwd());
 
 // pretier-ignore
@@ -145,3 +160,10 @@ export const PBR_TEXTURES_RAW = ${JSON.stringify(transform(manipulate()), null, 
 `;
 
 fs.withWs("utils/__out__/pbr/pbr-textures-raw.ts", dataToWrite);
+
+// prettier-ignore
+const dataToWriteKTX2 = `
+export const PBR_TEXTURES_KTX2 = ${JSON.stringify(normalizeToKTX2(transform(manipulate())), null, 2)} as const;
+`;
+
+fs.withWs("utils/__out__/pbr/pbr-textures-ktx2.ts", dataToWriteKTX2);

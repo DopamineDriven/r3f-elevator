@@ -16,7 +16,7 @@ export const ElevatorDoor = ({ activated }: { activated: boolean }) => {
   // Animate between 0 (closed) and 1 (fully open)
   const spring = useSpringySplit(activated, {
     ease: "easeInOut",
-    visualDuration: 0.8
+    visualDuration: 200
   });
 
   useFrame(() => {
@@ -39,23 +39,23 @@ export const ElevatorDoor = ({ activated }: { activated: boolean }) => {
     <group position={[0, 0, 0.01]}>
       {/* Left Door */}
       <mesh ref={leftRef} castShadow>
-        <boxGeometry args={[0.5, 2.5, 0.05]} />
+        <boxGeometry args={[0.5, 2.75, 0.05]} />
         <PBRMaterial
           target="brushedStainlessSteelSatin"
           repeat={[2, 2]}
-          metalness={0}
-          roughness={1}
+          metalness={1.34}
+          roughness={0.85}
         />
       </mesh>
 
       {/* Right Door */}
-      <mesh ref={rightRef} castShadow>
-        <boxGeometry args={[0.5, 2.5, 0.05]} />
+      <mesh ref={rightRef}  castShadow>
+        <boxGeometry args={[0.5, 2.75, 0.05]} />
         <PBRMaterial
           target="brushedStainlessSteelSatin"
           repeat={[2, 2]}
-          metalness={1}
-          roughness={0.35}
+          roughness={0.85}
+          metalness={1.33}
         />
       </mesh>
     </group>
