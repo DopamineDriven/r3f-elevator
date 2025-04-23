@@ -128,14 +128,14 @@ export function ElevatorScene() {
         color="#ffffff"
         castShadow={false}
       />
-      {/* <spotLight
+      <spotLight
         position={[0, 2, -2.5]}
         angle={0.5}
         intensity={0.5}
         penumbra={0.3}
         color="#eeeeee"
         castShadow={false}
-      /> */}
+      />
       <SoftWallLight />
       <CombinedCameraController
         transitionProgress={transitionProgress}
