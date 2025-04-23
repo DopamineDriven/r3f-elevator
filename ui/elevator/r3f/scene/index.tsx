@@ -89,7 +89,8 @@ export function ElevatorScene() {
     <group position={[0, -0.5, 0]}>
       <Wall />
       <ElevatorFrame />
-      <ElevatorDoor activated={activated} />
+      <ElevatorDoor isLeft={true} activated={activated} />
+      <ElevatorDoor isLeft={false} activated={activated} />
       {/* <DebugDoor position={[-0.25, 0, 0.05]} color="lime" />
       <DebugDoor position={[0.25, 0, 0.05]} color="cyan" /> */}
       <ElevatorInterior activated={activated} />
