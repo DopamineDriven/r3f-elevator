@@ -23,7 +23,7 @@ export const Wall = ({
     metalness: levaMetalness,
     roughness: levaRoughness
   } = useControls({
-    SoftWallLight: folder(
+    Wall: folder(
       {
         wallTexture: {
           value: wallTexture,
@@ -33,13 +33,15 @@ export const Wall = ({
           value: metalness,
           min: 0,
           max: 5,
-          step: 0.1
+          step: 0.1,
+          label: "Wall Metalness"
         },
         roughness: {
           value: roughness,
           min: 0,
           max: 5,
-          step: 0.1
+          step: 0.1,
+          label: "Wall Roughness"
         }
       },
       { collapsed: true }
