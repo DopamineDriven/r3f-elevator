@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react";
 import { folder, useControls } from "leva";
 
 export const Wall = ({
-  wallTexture = "trueStuccoWhiteVaried",
+  wallTexture = "smoothStucco",
   metalness = 0,
   roughness = 1.0
 }: {
@@ -22,7 +22,7 @@ export const Wall = ({
   const metalnessRef = useRef(metalness);
   const roughnessRef = useRef(roughness);
   const textureRef = useRef(wallTexture);
-  
+
   const {
     wallTexture: levaWallTexture,
     metalness: levaMetalness,
