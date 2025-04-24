@@ -56,8 +56,8 @@ export function ElevatorDoor({
       <PBRMaterial
         target="brushedStainlessSteelSatin"
         repeat={[2, 2]}
-        metalness={1.34}
-        roughness={0.85}
+        // metalness={1.34}
+        // roughness={0.85}
       />
     </mesh>
   );

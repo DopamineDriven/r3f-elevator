@@ -147,7 +147,9 @@ export default function ElevatorApp() {
                 near={0.1}
                 far={100}
               />
-              <ElevatorScene />
+              <Suspense fallback={null}>
+                <ElevatorScene />
+              </Suspense>
               <ContactShadows
                 position={[0, -2, 0]}
                 opacity={0.65}

@@ -10,13 +10,13 @@ type MaterialKey = keyof typeof PBR_TEXTURES_KTX2;
 export function PBRMaterial<const Target extends MaterialKey>({
   target,
   repeat = [1, 1],
-  color = "#ffffff",
+  fallbackColor = "#ffffff",
   metalness = 0.5,
-  roughness = 0.5,
+  roughness = 0.5
 }: {
   target: Target;
   repeat?: [number, number];
-  color?: string;
+  fallbackColor?: string; // Only applied if no albedo map
   metalness?: number;
   roughness?: number;
 }) {
@@ -35,13 +35,19 @@ export function PBRMaterial<const Target extends MaterialKey>({
     };
   }, [textureProps, repeat]);
 
+  const hasMap = {
+    albedo: !!textureProps.albedo,
+    metalness: !!textureProps.metalness,
+    roughness: !!textureProps.roughness
+  };
+
   return (
     <meshStandardMaterial
       attach="material"
       {...textureProps}
-      color={color}
-      metalness={metalness}
-      roughness={roughness}
+      color={hasMap.albedo ? undefined : fallbackColor}
+      metalness={hasMap.metalness ? undefined : metalness}
+      roughness={hasMap.roughness ? undefined : roughness}
     />
   );
 }

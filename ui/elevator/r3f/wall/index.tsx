@@ -12,7 +12,7 @@ export const Wall = () => {
         <PBRMaterial
           target="smoothStucco"
           repeat={[10, 5]}
-          color="#b8b8b8"
+          fallbackColor="#b8b8b8"
           metalness={0.1}
           roughness={0.9}
         />
