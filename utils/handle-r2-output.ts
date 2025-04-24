@@ -145,7 +145,7 @@ function manipulate(
 const toLiteralObjectString = (obj: object) =>
   JSON.stringify(obj, null, 2)
     .replace(/"__UNDEFINED__"/g, "undefined")  // handles raw output
-    .replace(/"([^"]+)":/g, "$1:");            // remove quotes from keys (optional)
+    .replace(/"([^"]+)":/g, "$1:");            // remove quotes from keys
 
 export type TransformProps = NonNullable<Parameters<typeof manipulate>[0]>;
 const PLACEHOLDER = "__UNDEFINED__";
@@ -160,7 +160,7 @@ const transform = (props: TransformProps) =>
         })
       );
       // Inject metalness: undefined if missing
-             // eslint-disable-next-line no-prototype-builtins
+      // eslint-disable-next-line no-prototype-builtins
       if (!obj.hasOwnProperty("metalness")) (obj).metalness = PLACEHOLDER;
       return [k, obj];
     })
