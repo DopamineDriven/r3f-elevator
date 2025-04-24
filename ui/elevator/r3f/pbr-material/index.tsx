@@ -11,9 +11,9 @@ type MaterialKey = keyof typeof PBR_TEXTURES_KTX2;
 export function PBRMaterial<const Target extends MaterialKey>({
   target,
   repeat = [1, 1],
-  fallbackColor,
-  metalness,
-  roughness
+  fallbackColor = "#ffffff",
+  metalness = 0,
+  roughness = 1.0
 }: {
   target: Target;
   repeat?: [number, number];
