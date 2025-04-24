@@ -49,7 +49,7 @@ async function compressImageToKTX2(
 
     for (const [mapKey, url] of Object.entries(maps)) {
       if (!SUPPORTED_KEYS.includes(mapKey as SupportedKey)) continue;
-
+      if (!url) continue;
       const extension = "ktx2";
 
       const parsedPath = fs.parseUrl(url).pathname.replace(/^\/textures\//, "");

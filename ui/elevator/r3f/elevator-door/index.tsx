@@ -1,63 +1,64 @@
 "use client";
 
-import { useSpringySplit } from "@/ui/elevator/r3f/hooks/use-springy-split";
-import { PBRMaterial } from "@/ui/elevator/r3f/pbr-material";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
+import { animate, useSpring } from "motion/react";
 import * as THREE from "three";
+import { PBRMaterial } from "@/ui/elevator/r3f/pbr-material";
 
-const DOOR_CLOSED_X = 0.25;
 const DOOR_OPEN_X = 0.6;
+const DOOR_CLOSED_X = 0.25;
 
-export const ElevatorDoor = ({ activated }: { activated: boolean }) => {
-  const leftRef = useRef<THREE.Mesh>(null);
-  const rightRef = useRef<THREE.Mesh>(null);
+export function ElevatorDoor({
+  isLeft,
+  activated,
+  positionZ = 0.05
+}: {
+  isLeft: boolean;
+  activated: boolean;
+  positionZ?: number;
+}) {
+  const doorRef = useRef<THREE.Mesh>(null);
 
-  // Animate between 0 (closed) and 1 (fully open)
-  const spring = useSpringySplit(activated, {
-    ease: "easeInOut",
-    visualDuration: 200
+  // Create spring motion value for X position
+  const initialX = isLeft ? -DOOR_CLOSED_X : DOOR_CLOSED_X;
+  const doorX = useSpring(initialX, {
+    stiffness: 80,
+    damping: 50
   });
 
+  // Animate when state changes
+  useEffect(() => {
+    const target = isLeft
+      ? activated
+        ? -DOOR_OPEN_X
+        : -DOOR_CLOSED_X
+      : activated
+      ? DOOR_OPEN_X
+      : DOOR_CLOSED_X;
+
+    animate(doorX, target, {
+      stiffness: 80,
+      damping: 20
+    });
+  }, [activated, isLeft, doorX]);
+
   useFrame(() => {
-    const progress = spring.get();
-    console.log(progress);
-
-    const leftX = -THREE.MathUtils.lerp(DOOR_CLOSED_X, DOOR_OPEN_X, progress);
-    const rightX = THREE.MathUtils.lerp(DOOR_CLOSED_X, DOOR_OPEN_X, progress);
-
-    if (leftRef.current) {
-      leftRef.current.position.set(leftX, 0, 0.05);
-    }
-
-    if (rightRef.current) {
-      rightRef.current.position.set(rightX, 0, 0.05);
+    const x = doorX.get();
+    if (doorRef.current) {
+      doorRef.current.position.set(x, 0, positionZ);
     }
   });
 
   return (
-    <group position={[0, 0, 0.01]}>
-      {/* Left Door */}
-      <mesh ref={leftRef} castShadow>
-        <boxGeometry args={[0.5, 2.75, 0.05]} />
-        <PBRMaterial
-          target="brushedStainlessSteelSatin"
-          repeat={[2, 2]}
-          metalness={1.34}
-          roughness={0.85}
-        />
-      </mesh>
-
-      {/* Right Door */}
-      <mesh ref={rightRef}  castShadow>
-        <boxGeometry args={[0.5, 2.75, 0.05]} />
-        <PBRMaterial
-          target="brushedStainlessSteelSatin"
-          repeat={[2, 2]}
-          roughness={0.85}
-          metalness={1.33}
-        />
-      </mesh>
-    </group>
+    <mesh ref={doorRef} castShadow>
+      <boxGeometry args={[0.5, 2.75, 0.05]} />
+      <PBRMaterial
+        target="brushedStainlessSteelSatin"
+        repeat={[2, 2]}
+        // metalness={1.34}
+        // roughness={0.85}
+      />
+    </mesh>
   );
-};
+}

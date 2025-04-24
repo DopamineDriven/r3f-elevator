@@ -132,7 +132,7 @@ export default function ElevatorApp() {
       ) : (
         <>
           <div
-            className="pointer-events-none static inset-0 z-10 bg-black transition-opacity duration-500"
+            className="pointer-events-none absolute inset-0 z-10 bg-black transition-opacity duration-500"
             style={{ opacity: fadeOpacity }}
           />
           <Canvas
@@ -147,7 +147,7 @@ export default function ElevatorApp() {
                 near={0.1}
                 far={100}
               />
-              <ElevatorScene />
+                <ElevatorScene />
               <ContactShadows
                 position={[0, -2, 0]}
                 opacity={0.65}

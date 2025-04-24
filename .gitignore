@@ -39,10 +39,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-notes.md
+notes*.md
 
 utils/__out__/**/*.md
 utils/*.md
 
 public/r3f/*
 
+tmp/*
