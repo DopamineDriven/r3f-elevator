@@ -142,51 +142,60 @@ function manipulate(
   }
 }
 
-export type TransformProps = NonNullable<Parameters<typeof manipulate>[0]>;
+const toLiteralObjectString = (obj: object) =>
+  JSON.stringify(obj, null, 2)
+    .replace(/"__UNDEFINED__"/g, "undefined")  // handles raw output
+    .replace(/"([^"]+)":/g, "$1:");            // remove quotes from keys (optional)
 
+export type TransformProps = NonNullable<Parameters<typeof manipulate>[0]>;
+const PLACEHOLDER = "__UNDEFINED__";
 const transform = (props: TransformProps) =>
   Object.fromEntries(
     Object.entries(props).map(([k, v]) => {
-      return [
-        k,
-        Object.fromEntries(
-          v.map(([mapKey, url]) => {
-            const normalized =
-              mapKeyNormalizer[mapKey as keyof typeof mapKeyNormalizer] ??
-              mapKey;
-            return [normalized, url];
-          })
-        )
-      ] as const;
+      const obj = Object.fromEntries(
+        v.map(([mapKey, url]) => {
+          const normalized =
+            mapKeyNormalizer[mapKey as keyof typeof mapKeyNormalizer] ?? mapKey;
+          return [normalized, url];
+        })
+      );
+      // Inject metalness: undefined if missing
+             // eslint-disable-next-line no-prototype-builtins
+      if (!obj.hasOwnProperty("metalness")) (obj).metalness = PLACEHOLDER;
+      return [k, obj];
     })
   );
 
-const normalizeToKTX2 = (input: ReturnType<typeof transform>) =>
-  Object.fromEntries(
-    Object.entries(input).map(([materialKey, mapSet]) => {
-      const converted = Object.fromEntries(
-        Object.entries(mapSet).map(([mapKey, url]) => {
-          const localPath = url
-            .replace("https://asrosscloud.com/textures/", "/r3f-ktx2/textures/")
-            .replace(/\.[^.]+$/, ".ktx2");
-          return [mapKey, localPath];
-        })
-      );
-      return [materialKey, converted];
-    })
-  );
+  const normalizeToKTX2 = (input: ReturnType<typeof transform>) =>
+    Object.fromEntries(
+      Object.entries(input).map(([materialKey, mapSet]) => {
+        const converted = Object.fromEntries(
+          Object.entries(mapSet).map(([mapKey, url]) => {
+            if (url === undefined) return [mapKey, null];
+            const localPath = url
+              .replace("https://asrosscloud.com/textures/", "/r3f-ktx2/textures/")
+              .replace(/\.[^.]+$/, ".ktx2");
+            return [mapKey, localPath];
+          })
+        );
+        // Inject metalness: undefined if missing
+        // eslint-disable-next-line no-prototype-builtins
+        if (!converted.hasOwnProperty("metalness")) converted.metalness = PLACEHOLDER;
+        return [materialKey, converted];
+      })
+    );
 
 const fs = new Fs(process.cwd());
 
 // pretier-ignore
 const dataToWrite = `
-export const PBR_TEXTURES_RAW = ${JSON.stringify(transform(manipulate()), null, 2)} as const;
+export const PBR_TEXTURES_RAW = ${toLiteralObjectString(transform(manipulate()))} as const;
 `;
 
 fs.withWs("utils/__out__/pbr/pbr-textures-raw.ts", dataToWrite);
 // prettier-ignore
 const dataToWriteKTX2 = `
-export const PBR_TEXTURES_KTX2 = ${JSON.stringify(normalizeToKTX2(transform(manipulate())), null, 2)} as const;
+export const PBR_TEXTURES_KTX2 = ${toLiteralObjectString(normalizeToKTX2(transform(manipulate())))} as const;
 `;
 
 fs.withWs("utils/__out__/pbr/pbr-textures-ktx2.ts", dataToWriteKTX2);

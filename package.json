@@ -14,7 +14,8 @@
     "start": "next start",
     "latest:pnpm": "corepack use pnpm@latest",
     "update:pnpm": "curl -fsSL https://get.pnpm.io/install.sh | sh -",
-    "restore:git": "java -jar ../../../bfg.jar --delete-files 'Rubber001_8K-JPG_NormalGL.jpg'"
+    "restore:git": "java -jar ../../../bfg.jar --delete-files 'Rubber001_8K-JPG_NormalGL.jpg'",
+    "wsl2:version": "lsb_release -d"
   },
   "dependencies": {
     "@d0paminedriven/motion": "^1.4.0",
