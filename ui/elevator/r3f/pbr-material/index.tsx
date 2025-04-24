@@ -11,17 +11,19 @@ type MaterialKey = keyof typeof PBR_TEXTURES_KTX2;
 export function PBRMaterial<const Target extends MaterialKey>({
   target,
   repeat = [1, 1],
-  fallbackColor = "#ffffff",
-  metalness = 0,
-  roughness = 1
+  fallbackColor,
+  metalness,
+  roughness
 }: {
   target: Target;
   repeat?: [number, number];
-  fallbackColor?: string; // Only applied if no albedo map
+  fallbackColor?: string;
   metalness?: number;
   roughness?: number;
 }) {
   const textures = useKTX2Texture(target);
+
+  // ref to ensure ktx2-mediated-roughness-texture-maps are rendered crisply
   const reff = useRef(textures?.roughness ?? null);
 
   useEffect(() => {
@@ -40,12 +42,6 @@ export function PBRMaterial<const Target extends MaterialKey>({
   useFrame(() => {
     if (reff.current) reff.current.needsUpdate = true;
   });
-
-  // const hasMap = {
-  //   albedo: !!textureProps.albedo,
-  //   metalness: !!textureProps.metalness,
-  //   roughness: !!textureProps.roughness
-  // };
 
   return (
     <meshStandardMaterial

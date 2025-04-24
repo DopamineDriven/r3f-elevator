@@ -2,10 +2,11 @@
 
 import { Baseboard } from "@/ui/elevator/r3f/baseboard";
 import { PBRMaterial } from "@/ui/elevator/r3f/pbr-material";
+import { useEffect, useRef } from "react";
 import { folder, useControls } from "leva";
 
 export const Wall = ({
-  wallTexture = "trueStuccoWhiteVaried",
+  wallTexture = "smoothStucco",
   metalness = 0,
   roughness = 1.0
 }: {
@@ -18,6 +19,10 @@ export const Wall = ({
   metalness?: number;
   roughness?: number;
 }) => {
+  const metalnessRef = useRef(metalness);
+  const roughnessRef = useRef(roughness);
+  const textureRef = useRef(wallTexture);
+
   const {
     wallTexture: levaWallTexture,
     metalness: levaMetalness,
@@ -26,18 +31,25 @@ export const Wall = ({
     Wall: folder(
       {
         wallTexture: {
-          value: wallTexture,
+          value: "smoothStucco",
+          options: [
+            "trueStuccoWhiteUniform",
+            "smoothStucco",
+            "trueStuccoWhiteVaried",
+            "trueStuccoWhite",
+            "paintedStuccoWhite"
+          ] satisfies (typeof wallTexture)[],
           label: "Wall Texture"
         } as const,
         metalness: {
-          value: metalness,
+          value: 0,
           min: 0,
           max: 5,
           step: 0.1,
           label: "Wall Metalness"
         },
         roughness: {
-          value: roughness,
+          value: 1.0,
           min: 0,
           max: 5,
           step: 0.1,
@@ -47,17 +59,23 @@ export const Wall = ({
       { collapsed: true }
     )
   });
+
+  useEffect(() => {
+    if (metalnessRef.current) metalnessRef.current = levaMetalness;
+    if (roughnessRef.current) roughnessRef.current = levaRoughness;
+    if (textureRef.current) textureRef.current = levaWallTexture;
+  }, [levaMetalness, levaRoughness, levaWallTexture]);
   return (
     <group>
       {/* wall - made wider to fill more of the view */}
       <mesh position={[0, 0, -0.1]} receiveShadow>
         <boxGeometry args={[10, 5, 0.2]} />
         <PBRMaterial
-          target={levaWallTexture as typeof wallTexture}
+          target={textureRef.current}
           repeat={[10, 5]}
           fallbackColor="#b8b8b8"
-          metalness={levaMetalness}
-          roughness={levaRoughness}
+          metalness={metalnessRef.current}
+          roughness={roughnessRef.current}
         />
       </mesh>
 
