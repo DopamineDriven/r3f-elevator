@@ -12,8 +12,8 @@ export function PBRMaterial<const Target extends MaterialKey>({
   target,
   repeat = [1, 1],
   fallbackColor = "#ffffff",
-  metalness = 0,
-  roughness = 1.0
+  metalness,
+  roughness
 }: {
   target: Target;
   repeat?: [number, number];

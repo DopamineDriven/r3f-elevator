@@ -117,6 +117,7 @@ export function ElevatorDoor({
     <mesh ref={doorRef} castShadow>
       <boxGeometry args={[0.5, 2.75, 0.05]} />
       <PBRMaterial
+        fallbackColor="#777c83"
         target={textureRef.current}
         repeat={[2, 2]}
         metalness={metalnessRef.current}
