@@ -19,6 +19,7 @@ import { Canvas, extend } from "@react-three/fiber";
 import Cookies from "js-cookie";
 import { Leva } from "leva";
 import type { ThreeElement } from "@react-three/fiber";
+import { ACESFilmicToneMapping } from 'three';
 
 extend({
   BentPlaneGeometry,
@@ -136,6 +137,8 @@ export default function ElevatorApp() {
             style={{ opacity: fadeOpacity }}
           />
           <Canvas
+
+          gl={{ toneMapping: ACESFilmicToneMapping }}
             className="absolute top-0 left-0 z-20 min-h-[100dvh] min-w-screen items-center justify-center bg-black/80"
             shadows
             camera={{ fov: 40, near: 0.1, far: 1000, position: [0, 0, 6] }}>
