@@ -51,7 +51,7 @@ export const fileSlugs =${JSON.stringify(this.isolateSlugs(), null, 2)} as const
     this.withWs("lib/isolate-params.ts", this.genFileSlugsTemplate());
   }
 
-  private detectExportFile<const File extends string>(file: File) {
+  private detectExportFile<const F extends string>(file: F) {
     return /export\s+(?:function|const)\s+(\w+)/g.exec(file);
   }
   private readIt() {
