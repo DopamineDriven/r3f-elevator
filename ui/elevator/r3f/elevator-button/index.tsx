@@ -4,11 +4,11 @@ import { INDICATOR_COLORS } from "@/ui/elevator/r3f/constants/indicator-colors";
 import type { ThreeEvent } from "@react-three/fiber";
 
 export const ElevatorButton = ({
-  activated,
-  onClickAction
+  activated=false,
+  onClickAction=() => {}
 }: {
-  activated: boolean;
-  onClickAction:
+  activated?: boolean;
+  onClickAction?:
     | ((event: ThreeEvent<MouseEvent>) => void)
     | Readonly<((event: ThreeEvent<MouseEvent>) => void) | undefined>;
 }) => {

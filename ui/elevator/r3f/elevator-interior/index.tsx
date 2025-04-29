@@ -6,7 +6,7 @@ import { useFrame } from "@react-three/fiber";
 import { animate, useSpring } from "motion/react";
 import * as THREE from "three";
 
-export const ElevatorInterior = ({ activated }: { activated: boolean }) => {
+export const ElevatorInterior = ({ activated=false }: { activated?: boolean }) => {
   // Light intensity animation
   const lightIntensity = useSpring(0, { stiffness: 100, damping: 15 });
   const primaryLightRef = useRef<THREE.PointLight>(null);

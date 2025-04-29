@@ -2,7 +2,7 @@
 
 import { TriangleIndicator } from "@/ui/elevator/r3f/elevator-indicator";
 
-export const FloorIndicator = ({ activated }: { activated: boolean }) => {
+export const FloorIndicator = ({ activated=false }: { activated?: boolean }) => {
   return (
     <group position={[0, 1.505, 0.275]} renderOrder={20}>
       {/* Outer housing (light metallic bezel) */}

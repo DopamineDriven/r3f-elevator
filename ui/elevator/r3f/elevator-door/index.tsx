@@ -12,15 +12,15 @@ const DOOR_OPEN_X = 0.6;
 const DOOR_CLOSED_X = 0.25;
 
 export function ElevatorDoor({
-  isLeft,
-  activated,
+  isLeft =true,
+  activated=false,
   positionZ = 0.05,
   elevatorTexture = "brushedStainlessSteelSatin",
   metalness = 1.34,
   roughness = 1.0
 }: {
-  isLeft: boolean;
-  activated: boolean;
+  isLeft?: boolean;
+  activated?: boolean;
   positionZ?: number;
   elevatorTexture?: Exclude<
     keyof typeof PBR_TEXTURES_KTX2,
@@ -39,7 +39,6 @@ export function ElevatorDoor({
   const metalnessRef = useRef(metalness);
   const roughnessRef = useRef(roughness);
   const textureRef = useRef(elevatorTexture);
-
   const {
     elevatorTexture: levaElevatorTexture,
     metalness: levaMetalness,

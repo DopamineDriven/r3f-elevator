@@ -43,17 +43,126 @@ export function PBRMaterial<const Target extends MaterialKey>({
     if (reff.current) reff.current.needsUpdate = true;
   });
 
-  return (
-    <meshStandardMaterial
-      attach="material"
-      aoMap={textures?.ao}
-      map={textures?.albedo}
-      normalMap={textures?.normal}
-      roughnessMap={reff.current ?? textures?.roughness}
-      metalnessMap={textures?.metalness}
-      color={fallbackColor}
-      metalness={metalness}
-      roughness={roughness}
-    />
-  );
+  switch (target) {
+    case "smoothStucco": {
+      return (
+        <meshStandardMaterial
+          attach="material"
+          aoMap={textures?.ao}
+          map={textures?.albedo}
+          normalMap={textures?.normal}
+          roughnessMap={reff.current ?? textures?.roughness}
+          metalnessMap={textures?.metalness}
+          color={fallbackColor}
+          metalness={metalness}
+          roughness={roughness}
+        />
+      );
+    }
+    case "paintedStuccoWhite": {
+      return (
+        <meshStandardMaterial
+          attach="material"
+          aoMap={textures?.ao}
+          map={textures?.albedo}
+          normalMap={textures?.normal}
+          roughnessMap={reff.current ?? textures?.roughness}
+          metalnessMap={textures?.metalness}
+          color={fallbackColor}
+          metalness={metalness}
+          roughness={roughness}
+        />
+      );
+    }
+    case "elegantStoneTiles": {
+      return (
+        <meshStandardMaterial
+          attach="material"
+          aoMap={textures?.ao}
+          map={textures?.albedo}
+          normalMap={textures?.normal}
+          roughnessMap={reff.current ?? textures?.roughness}
+          metalnessMap={textures?.metalness}
+          color={fallbackColor}
+          metalness={metalness}
+          roughness={roughness}
+        />
+      );
+    }
+    case "subtleBlackGranite": {
+      return (
+        <meshStandardMaterial
+          attach="material"
+          aoMap={textures?.ao}
+          map={textures?.albedo}
+          normalMap={textures?.normal}
+          roughnessMap={reff.current ?? textures?.roughness}
+          metalnessMap={textures?.metalness}
+          color={fallbackColor}
+          metalness={metalness}
+          roughness={roughness}
+        />
+      );
+    }
+    case "trueStuccoWhite": {
+      return (
+        <meshStandardMaterial
+          attach="material"
+          aoMap={textures?.ao}
+          map={textures?.albedo}
+          normalMap={textures?.normal}
+          roughnessMap={reff.current ?? textures?.roughness}
+          metalnessMap={textures?.metalness}
+          color={fallbackColor}
+          metalness={metalness}
+          roughness={roughness}
+        />
+      );
+    }
+    case "trueStuccoWhiteUniform": {
+      return (
+        <meshStandardMaterial
+          attach="material"
+          aoMap={textures?.ao}
+          map={textures?.albedo}
+          normalMap={textures?.normal}
+          roughnessMap={reff.current ?? textures?.roughness}
+          metalnessMap={textures?.metalness}
+          color={fallbackColor}
+          metalness={metalness}
+          roughness={roughness}
+        />
+      );
+    }
+    case "trueStuccoWhiteVaried": {
+      return (
+        <meshStandardMaterial
+          attach="material"
+          aoMap={textures?.ao}
+          map={textures?.albedo}
+          normalMap={textures?.normal}
+          roughnessMap={reff.current ?? textures?.roughness}
+          metalnessMap={textures?.metalness}
+          color={fallbackColor}
+          metalness={metalness}
+          roughness={roughness}
+        />
+      );
+    }
+    default: {
+      return (
+        <meshPhysicalMaterial
+          attach="material"
+          aoMap={textures?.ao}
+          map={textures?.albedo}
+          normalMap={textures?.normal}
+          roughnessMap={reff.current ?? textures?.roughness}
+          metalnessMap={textures?.metalness}
+          color={fallbackColor}
+          metalness={metalness}
+          roughness={roughness}
+        />
+      );
+    }
+  }
 }

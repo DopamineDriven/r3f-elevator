@@ -172,5 +172,5 @@ export function middleware(request: NextRequest) {
 export const config = {
   // This matcher ensures we run middleware on all routes
   // except the explicitly excluded static paths (/_next/static, /_next/image, etc.).
-  matcher: ["/", "/elevator", "/resume", "/test"]
+  matcher: ["/", "/elevator", "/resume", "/test", "/isolate/:path", "/isolate"]
 };
